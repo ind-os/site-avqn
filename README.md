@@ -26,9 +26,10 @@ docker run --rm -p 4321:4321 -e ENVOI_HOTE=… -e AVQN_DESTINATAIRE=… site-avq
 - Santé : `GET /healthz.json` répond `200 {"ok":true,"sha":"…"}`. Le `sha` est
   l'argument de build facultatif `GIT_SHA`, vide sans lui.
 
-Sur le serveur d'AVQNOS, Coolify construit l'image à un commit de ce dépôt
-(build pack Dockerfile), et le kit d'Indos pose les variables ci-dessous, le
-mot de passe depuis le coffre du serveur.
+Sur le serveur d'AVQNOS, le kit d'Indos fait construire l'image par ce
+`Dockerfile`, à un commit de ce dépôt (`GIT_SHA` vaut ce commit), puis Coolify
+la sert ; le kit pose les variables ci-dessous, le mot de passe depuis le
+coffre du serveur.
 
 ## Les variables
 
