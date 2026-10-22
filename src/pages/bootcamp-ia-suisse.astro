@@ -1,0 +1,595 @@
+---
+import { etiquetteEtape } from "../lib/etiquettes";
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import ActionForm from "../components/form/ActionForm.astro";
+import FieldChoice from "../components/form/FieldChoice.astro";
+import FieldText from "../components/form/FieldText.astro";
+import FieldTextarea from "../components/form/FieldTextarea.astro";
+
+const title =
+  "Bootcamp IA & n8n en Suisse romande : préinscriptions 2027 | AVQN";
+const description =
+  "Un bootcamp IA intensif pour construire vos propres automatisations n8n et ne plus dépendre d'un prestataire. Session 2027 en Suisse romande : préinscrivez-vous.";
+
+// JSON-LD Course + CourseInstance — pas de startDate tant que la date 2027 n'est pas arrêtée.
+const courseJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: "Bootcamp Automatisation IA & n8n",
+  description,
+  provider: {
+    "@type": "Organization",
+    name: "AVQN",
+    sameAs: "https://www.avqn.ch",
+  },
+  hasCourseInstance: {
+    "@type": "CourseInstance",
+    courseMode: "onsite",
+    location: {
+      "@type": "Place",
+      name: "Lausanne",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Lausanne",
+        addressCountry: "CH",
+      },
+    },
+  },
+};
+
+// Le programme, quatre semaines.
+const etapes = [
+  {
+    semaine: "Semaine 1",
+    titre: "Mise en route",
+    corps:
+      "Installer n8n, construire votre premier workflow dans la foulée, voir des cas concrets. À la fin de la semaine, vous avez repéré vos propres cibles : ce qui vous coûte du temps, ce qui est répétitif.",
+  },
+  {
+    semaine: "Semaine 2",
+    titre: "Maîtriser n8n",
+    corps:
+      "Comprendre les mécaniques de n8n, connecter vos outils du quotidien (Gmail, Sheets, Agenda), intégrer l'IA dans vos flux. La semaine où l'outil arrête d'être une boîte noire.",
+  },
+  {
+    semaine: "Semaine 3",
+    titre: "Construire votre workflow",
+    corps:
+      "Cadrer, concevoir et construire votre automatisation, puis la tester et la déployer en conditions réelles. C'est souvent là que ça coince : c'est pour ça qu'on est plusieurs dans la salle.",
+  },
+  {
+    semaine: "Semaine 4",
+    titre: "Demo Day",
+    corps:
+      "Présenter votre workflow devant le groupe : ce qu'il fait, pourquoi vous l'avez construit comme ça, ce qu'il vous fait gagner. Savoir l'expliquer, c'est pouvoir le défendre en interne.",
+  },
+];
+
+// Ce que vous savez faire en sortant.
+const competences = [
+  {
+    titre: "Identifier les opportunités.",
+    corps:
+      "Repérer ce qui vaut la peine d'être automatisé, comme ce qui n'en vaut pas la peine.",
+  },
+  {
+    titre: "Architecturer vos flux.",
+    corps:
+      "Passer d'un problème embrouillé à un workflow logique qui tient debout.",
+  },
+  {
+    titre: "Maîtriser n8n.",
+    corps:
+      "Utiliser les fonctions essentielles, manipuler les données, connecter des outils externes.",
+  },
+  {
+    titre: "Exploiter l'IA.",
+    corps:
+      "Intégrer des modèles dans vos flux pour analyser, trier et rédiger, sans leur confier ce qu'ils font mal.",
+  },
+  {
+    titre: "Garder le contrôle.",
+    corps:
+      "Déployer, tester et maintenir vos automatisations sans appeler quelqu'un à chaque changement.",
+  },
+  {
+    titre: "Valoriser votre travail.",
+    corps: "Présenter ce que vous avez construit et en montrer l'impact.",
+  },
+];
+
+// Galerie « Bootcamp 2026 » — mapping copy → fichiers réels de public/images/bootcamp/.
+const galerie = [
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-ouverture-session.webp",
+    alt: "Ouverture d'une session du bootcamp n8n 2026 à Emploi Lausanne, la salle au complet face à la première diapositive",
+    legende: "L'ouverture de la session, avec les équipes d'Emploi Lausanne.",
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-emmanuel-bernard-formateur.webp",
+    alt: "Emmanuel Bernard explique une notion d'automatisation devant le groupe pendant le bootcamp n8n 2026 à Lausanne",
+    legende: "Une explication au tableau, entre deux exercices.",
+    phare: true,
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-atelier-participants.webp",
+    alt: "Diapositive « Atelier partie 1 : identifier votre workflow » devant les participants du bootcamp n8n 2026",
+    legende:
+      "Premier atelier : chacun part à la recherche du workflow qu'il a vraiment envie d'automatiser.",
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-atelier-post-its.webp",
+    alt: "Mains de participants qui organisent des post-it sur une table pendant l'atelier du bootcamp n8n 2026",
+    legende:
+      "Avant l'écran, le papier. Un workflow se dessine d'abord à la main.",
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-salle-groupe.webp",
+    alt: "Vue large de la salle pendant le bootcamp n8n 2026, participants debout et assis en discussion",
+    legende: "Un petit groupe, une salle, beaucoup d'allers-retours.",
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-participants-echange.webp",
+    alt: "Deux participants du bootcamp n8n 2026 rient ensemble pendant un exercice, lumière naturelle",
+    legende: "On travaille sérieusement sans se prendre au sérieux.",
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-accompagnement-individuel.webp",
+    alt: "Emmanuel Bernard accompagne un petit groupe de participants devant un workflow n8n affiché à l'écran",
+    legende:
+      "Le moment que je préfère : votre cas, votre écran, votre blocage.",
+  },
+  {
+    src: "/images/bootcamp/bootcamp-n8n-lausanne-2026-cloture-session.webp",
+    alt: "Emmanuel Bernard applaudit les participants lors de la clôture d'une session du bootcamp n8n 2026",
+    legende: "Clôture de session, applaudissements mérités.",
+  },
+];
+
+/** Une réponse de FAQ : du texte, éventuellement coupé par des liens internes. */
+type ReponseFaq = string | (string | { texte: string; href: string })[];
+
+const faqs: { question: string; answer: ReponseFaq }[] = [
+  {
+    question: "Quand a lieu la session 2027 ?",
+    answer:
+      "Elle n'a pas encore de date. Les préinscrits reçoivent les dates avant tout le monde et gardent la priorité sur les places.",
+  },
+  {
+    question: "Faut-il savoir coder ?",
+    answer:
+      "Non, aucun prérequis technique. Les participants viennent d'horizons très différents : indépendants, chefs de projet, administratif de PME. Ce qui compte, c'est d'avoir une tâche répétitive qui vous agace.",
+  },
+  {
+    question: "Combien coûte le bootcamp ?",
+    answer:
+      "Le tarif de la session 2027 sera communiqué avec les dates, aux préinscrits d'abord.",
+  },
+  {
+    question: "Bootcamp n8n ou coaching Claude Code : comment choisir ?",
+    answer: [
+      "Le bootcamp sert à automatiser ce que vous faites déjà : relances, tris, transferts entre outils. Le ",
+      {
+        texte: "coaching Claude Code",
+        href: "/coaching-ia-independant-suisse",
+      },
+      " sert à construire des outils qui n'existent pas encore. Les deux comparés en détail : ",
+      { texte: "Claude Code ou n8n", href: "/n8n-suisse/claude-code-ou-n8n" },
+      ".",
+    ],
+  },
+  {
+    question: "Peut-on l'organiser pour une équipe entière ?",
+    answer: [
+      "Oui, en intra-entreprise : programme adapté à vos outils et vos cas d'usage, sur site ou à distance, aux dates qui vous conviennent. Passez par la ",
+      { texte: "page contact", href: "/contact" },
+      " en le précisant.",
+    ],
+  },
+  {
+    question: "Je préfère travailler seul, sans groupe.",
+    answer: [
+      "Alors le bootcamp n'est pas fait pour vous, autant le dire franchement. Regardez plutôt le ",
+      { texte: "coaching individuel", href: "/coaching-ia-independant-suisse" },
+      " : trois séances en tête-à-tête, sur vos projets, à Lausanne ou en visio.",
+    ],
+  },
+];
+---
+
+<Layout title={title} description={description} structuredData={courseJsonLd}>
+  <PageHeader
+    title="Bootcamp IA — préinscriptions 2027"
+    subtitle="Quatre semaines pour construire vos propres automatisations et arrêter de dépendre d'un prestataire à chaque changement. La session 2026 est passée, les préinscriptions 2027 sont ouvertes."
+    breadcrumb={[{ label: "Bootcamp IA" }]}
+    ctaText="Me préinscrire pour 2027"
+    ctaHref="#preinscription"
+    ctaSecondaryText="Voir le programme"
+    ctaSecondaryHref="#programme"
+  />
+
+  {
+    /* Note sous les CTA du hero — PageHeader ne porte pas de slot dédié, bandeau propre en dessous. */
+  }
+  <section class="border-b border-divider bg-paper2">
+    <div
+      class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-4"
+    >
+      <p class="text-sm text-grey text-center">
+        La date n'est pas encore fixée. Les préinscrits sont prévenus en
+        premier.
+      </p>
+    </div>
+  </section>
+
+  <main class="min-h-screen">
+    {/* S2 — Passerelle Claude Code */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-8"
+      >
+        <p
+          class="border-l-2 border-swiss pl-6 text-lg text-grey leading-relaxed max-w-3xl"
+        >
+          Vous cherchez plutôt à construire des outils avec Claude Code, sans
+          attendre une session de groupe ? C'est une autre offre :
+          <a
+            href="/coaching-ia-independant-suisse"
+            class="font-semibold text-ink underline underline-offset-2 hover:text-swiss"
+            >le coaching Claude Code en tête-à-tête</a
+          >.
+        </p>
+      </div>
+    </section>
+
+    {/* S3 — Ce qu'est ce bootcamp */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Le principe</span>
+          <h2 class="text-3xl md:text-4xl">
+            Vous repartez avec une automatisation qui tourne
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            La plupart des formations vous expliquent un outil pendant trois
+            jours, puis vous rentrez chez vous et rien ne change. Ici on part de
+            ce qui vous prend du temps chaque semaine. On ne s'arrête que quand
+            votre automatisation tourne pour de vrai.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Vous construisez la vôtre, sur vos outils, avec vos données. Plus
+            exigeant qu'un exercice tout prêt, c'est aussi la seule façon de
+            savoir recommencer seul la semaine suivante.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            n8n est l'outil de ces quatre semaines : open source, connecté à peu
+            près à tout, hébergeable en Suisse, avec un rendu visuel de ce qu'il
+            fait. Pour apprendre à raisonner en automatisations, le meilleur
+            point de départ que je connaisse. L'outil est détaillé dans <a
+              href="/n8n-suisse"
+              class="font-semibold text-ink underline underline-offset-2 hover:text-swiss"
+              >le guide n8n en Suisse romande</a
+            >.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Aucun prérequis.</h3>
+            <p class="text-grey">
+              Si vous travaillez sur un ordinateur et que vous avez envie
+              d'apprendre, vous avez tout ce qu'il faut.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Petit groupe.</h3>
+            <p class="text-grey">
+              Huit participants au maximum, pour que chacun ait le temps d'être
+              aidé sur son propre cas.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">En présentiel à Lausanne.</h3>
+            <p class="text-grey">
+              On travaille ensemble dans la même salle. Sur ce genre
+              d'apprentissage, ça fait une vraie différence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* S4 — Le programme */}
+    <section id="programme" class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Le programme</span>
+          <h2 class="text-3xl md:text-4xl">Quatre semaines, quatre étapes</h2>
+        </div>
+        <div class="grid gap-0 border-t border-divider">
+          {
+            etapes.map((etape, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span
+                    class={`${etiquetteEtape(index)} mt-1 shrink-0 tabular-nums`}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <p class="font-mono text-xs uppercase tracking-widest text-grey mb-2">
+                      {etape.semaine}
+                    </p>
+                    <h3 class="text-lg md:text-xl mb-4">{etape.titre}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {etape.corps}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-sm text-grey max-w-3xl">
+          Le format 2027 (dates, rythme, tarif) sera précisé avant l'ouverture
+          des inscriptions.
+        </p>
+        <a
+          href="#preinscription"
+          class="inline-flex items-center gap-2 rounded-md bg-swiss px-8 py-4 text-sm font-semibold text-paper hover:bg-swiss-dark transition-colors"
+        >
+          Être prévenu de la session 2027
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    {/* S5 — Ce que vous savez faire à la fin */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5 mb-12">
+          <span class="kicker mb-2 block">Les compétences</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce que vous savez faire en sortant
+          </h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {
+            competences.map((competence) => (
+              <div class="border-l-2 border-ink pl-6">
+                <h3 class="text-ink mb-2">{competence.titre}</h3>
+                <p class="text-grey leading-relaxed">{competence.corps}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* S6 — Galerie Bootcamp 2026 */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5 mb-10">
+          <span class="kicker mb-2 block">Bootcamp 2026</span>
+          <h2 class="text-3xl md:text-4xl">À quoi ça ressemble, en vrai</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            La session 2026 était un pilote mené avec Emploi Lausanne : quatre
+            sessions, un groupe, un Demo Day. Voilà les photos.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          {
+            galerie.map((photo) => (
+              <figure
+                class:list={[
+                  "flex h-full flex-col overflow-hidden rounded-md border border-divider bg-paper",
+                  photo.phare && "col-span-2 md:col-span-2 row-span-2",
+                ]}
+              >
+                {/* La photo phare occupe toute la hauteur de sa cellule (deux
+                    rangées) : sans ça, la carte finit sur un vide beige. */}
+                <div
+                  class:list={[
+                    "overflow-hidden",
+                    photo.phare ? "min-h-0 flex-1" : "aspect-[4/3]",
+                  ]}
+                >
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    width="1600"
+                    height="1067"
+                    loading="lazy"
+                    class="h-full w-full object-cover"
+                  />
+                </div>
+                <figcaption class="px-4 py-3 text-sm text-grey leading-relaxed">
+                  {photo.legende}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* S7 — Témoignage */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Ce qu'en dit un participant</h2>
+        <blockquote
+          class="border border-divider bg-paper2 rounded-md p-8 max-w-4xl text-lg text-grey leading-relaxed"
+        >
+          « Avant la formation d'Emmanuel, je ne connaissais tout simplement pas
+          N8N. Et franchement, ça a été une belle découverte! Ce qui m'a le plus
+          marqué, c'est de réaliser qu'on peut automatiser pratiquement
+          n'importe quoi; des tâches qui prenaient du temps deviennent
+          soudainement triviales. La formation était claire, bien rythmée, et
+          surtout très concrète. Je suis ressorti avec l'envie d'aller plus loin
+          et d'intégrer N8N dans mes propres projets. Je recommande sans
+          hésiter! »
+          <footer
+            class="mt-4 font-mono text-sm uppercase tracking-widest text-grey"
+          >
+            Christopher — Participant du bootcamp
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    {/* S8 — Préinscription 2027 */}
+    <section id="preinscription" class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+          <div class="space-y-5">
+            <span class="kicker mb-2 block">Session 2027</span>
+            <h2 class="text-3xl md:text-4xl">
+              Préinscrivez-vous pour la prochaine session
+            </h2>
+            <p class="text-lg text-grey leading-relaxed">
+              Vous laissez votre email, vous êtes prévenu en premier quand les
+              dates, le lieu et le tarif sont fixés. Le groupe est petit : vous
+              aurez la priorité sur les places.
+            </p>
+            <p class="text-lg text-grey leading-relaxed">
+              Vous préinscrire ne vous engage à rien. C'est une liste d'attente,
+              pas une inscription.
+            </p>
+          </div>
+          <div
+            class="relative bg-paper border border-divider rounded-md p-6 md:p-8"
+          >
+            <ActionForm
+              source="avqn-bootcamp"
+              buttonText="Me préinscrire"
+              successMessage="C'est noté, vous êtes sur la liste. Je vous écris dès que la session 2027 a une date."
+              noteText="Vous êtes prévenu dès que la session 2027 est calée. Rien d'autre."
+            >
+              <FieldText
+                name="firstName"
+                label="Votre prénom"
+                autocomplete="given-name"
+              />
+              <FieldText
+                name="lastName"
+                label="Votre nom"
+                autocomplete="family-name"
+              />
+              <FieldText
+                name="company"
+                label="Votre structure"
+                autocomplete="organization"
+              />
+              <FieldChoice
+                name="season"
+                legend="Vous auriez une préférence entre le printemps et l'automne ?"
+                required
+                options={[
+                  { value: "Le printemps", label: "Le printemps" },
+                  { value: "L'automne", label: "L'automne" },
+                  { value: "Peu importe", label: "Peu importe" },
+                ]}
+              />
+              <FieldChoice
+                name="situation"
+                legend="C'est dans quel cadre ?"
+                required
+                options={[
+                  {
+                    value: "Je suis indépendant",
+                    label: "Je suis indépendant",
+                  },
+                  {
+                    value: "Dans mon entreprise ou mon institution",
+                    label: "Dans mon entreprise ou mon institution",
+                  },
+                  {
+                    value: "En recherche d'emploi ou en reconversion",
+                    label: "En recherche d'emploi ou en reconversion",
+                  },
+                  { value: "À titre personnel", label: "À titre personnel" },
+                ]}
+              />
+              <FieldChoice
+                name="comingWith"
+                legend="Vous viendriez…"
+                options={[
+                  { value: "Juste moi", label: "Juste moi" },
+                  {
+                    value: "Avec un ou deux collègues",
+                    label: "Avec un ou deux collègues",
+                  },
+                  {
+                    value: "Avec une équipe (3 personnes ou plus)",
+                    label: "Avec une équipe (3 personnes ou plus)",
+                  },
+                ]}
+              />
+              <FieldTextarea
+                name="message"
+                label="Qu'est-ce qui vous prend le plus de temps aujourd'hui, et que vous aimeriez confier à l'IA ?"
+              />
+            </ActionForm>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* S9 — FAQ */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">
+          Les questions qu'on me pose sur le bootcamp
+        </h2>
+        <div class="grid gap-0 border-t border-divider">
+          {
+            faqs.map((faq, index) => {
+              const parts =
+                typeof faq.answer === "string" ? [faq.answer] : faq.answer;
+              return (
+                <div class="py-8 border-b border-divider">
+                  <div class="flex gap-4 md:gap-6">
+                    <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                      <p class="text-grey leading-relaxed max-w-3xl">
+                        {parts.map((part) =>
+                          typeof part === "string" ? (
+                            part
+                          ) : (
+                            <a
+                              href={part.href}
+                              class="font-semibold text-ink underline underline-offset-2 hover:text-swiss"
+                            >
+                              {part.texte}
+                            </a>
+                          ),
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

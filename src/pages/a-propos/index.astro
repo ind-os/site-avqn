@@ -1,0 +1,363 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import PersonalKpis from "../../components/PersonalKpis.astro";
+
+const title = "Emmanuel Bernard, développeur depuis 20 ans, expert Claude Code";
+const description =
+  "20 ans de développement, puis Claude Code au quotidien en production. J'accompagne indépendants, équipes et PME de Suisse romande à construire avec l'IA. Basé à Lausanne.";
+
+// JSON-LD Person — sameAs LinkedIn omis (URL exacte à confirmer par Manu).
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Emmanuel Bernard",
+  jobTitle: "Consultant et formateur Claude Code",
+  worksFor: {
+    "@type": "Organization",
+    name: "AVQN",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Lausanne",
+    addressCountry: "CH",
+  },
+};
+
+// Ce qui guide chaque mission.
+const valeurs = [
+  {
+    titre: "Transmission",
+    corps: "Chaque mission inclut un transfert de compétences.",
+  },
+  {
+    titre: "Qualité",
+    corps:
+      "Des systèmes testés et documentés. Je livre du travail dont je suis fier.",
+  },
+  {
+    titre: "Sécurité",
+    corps:
+      "Vos données restent chez vous. Infrastructure auto-hébergée, hébergement suisse, conformité LPD et RGPD.",
+  },
+  {
+    titre: "Innovation",
+    corps:
+      "J'expérimente en continu, pour vous passer ce qui fonctionne vraiment plutôt que ce qui fait du bruit.",
+  },
+  {
+    titre: "Engagement humain",
+    corps:
+      "L'IA est un moyen, pas une fin. Les équipes restent au centre de chaque décision.",
+  },
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={personJsonLd}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Emmanuel Bernard, vingt ans de développement"
+    subtitle="Je construis des sites, des applications et des systèmes depuis vingt ans. Aujourd'hui, je travaille avec Claude Code tous les jours. J'aide les indépendants, les équipes et les PME romandes à s'en servir aussi."
+    breadcrumb={[{ label: "À propos" }]}
+    heroImage="/images/portraits/emmanuel-bernard-consultant-ia-lausanne-portrait-rire.webp"
+    heroImageAlt="Emmanuel Bernard, développeur et expert Claude Code basé à Lausanne, portrait"
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir le coaching Claude Code"
+    ctaSecondaryHref="/coaching-ia-independant-suisse"
+  />
+
+  <main class="min-h-screen">
+    {/* S2 — Le parcours */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Le parcours</span>
+          <h2 class="text-3xl md:text-4xl">Vingt ans de terrain</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            J'ai commencé par le web, puis les applications, puis les systèmes
+            qui font tourner des entreprises. Des projets qui tiennent quelques
+            semaines, d'autres qui tiennent des années.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Vingt ans de métier, ce n'est pas une technologie. C'est repérer un
+            projet qui va mal tourner, savoir ce qui coûte cher à maintenir et
+            distinguer une démo d'un système utilisable.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            J'ai passé des milliers d'heures sur Claude Code, les agents IA et
+            n8n. Je garde ce qui marche sur de vrais projets, pas seulement en
+            démo.
+          </p>
+        </div>
+        <PersonalKpis />
+      </div>
+    </section>
+
+    {/* S3 — Le constat */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Le constat</span>
+          <h2 class="text-3xl md:text-4xl mb-4">
+            C'est puissant, ce n'est pas simple
+          </h2>
+        </div>
+        <div
+          class="max-w-4xl border border-divider bg-paper rounded-md p-6 md:p-8 mt-8 space-y-5"
+        >
+          <p class="text-lg text-grey leading-relaxed">
+            Les modèles progressent vite. Bien les utiliser reste exigeant.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Une IA ne devine pas ce que vous avez en tête. Avec Claude Code, on
+            gagne du temps en cadrant, en découpant et en vérifiant le travail.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            La plupart des indépendants et des PME n'ont pas le temps de passer
+            par tous ces tâtonnements. C'est là que j'interviens.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* S4 — Pourquoi Claude Code */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-6"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Aujourd'hui</span>
+          <h2 class="text-3xl md:text-4xl">
+            Pourquoi Claude Code occupe la place centrale
+          </h2>
+        </div>
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            J'ai testé beaucoup d'outils ces dernières années. Claude Code est
+            celui qui a changé ma façon de travailler, pas seulement ma vitesse.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Il travaille dans vos vrais fichiers, en ligne de commande ou dans
+            votre éditeur. Il lit le code existant avant d'écrire, il exécute
+            les tests, il corrige ce qu'il a cassé. Il fait le travail avec
+            vous, ce qui demande d'apprendre à le diriger.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Diriger un agent plutôt que taper du code : cette compétence
+            s'apprend, beaucoup plus vite accompagné.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Ma propre entreprise tourne sur les outils que je construis avec
+            Claude Code : automatisations, agents, tableaux de bord. Ce que je
+            vous propose, je le vis au quotidien.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* S5 — Comment je travaille */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">La méthode</span>
+          <h2 class="text-3xl md:text-4xl">
+            On travaille sur vos cas, jamais sur des exercices
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Chaque accompagnement démarre sur ce que vous avez réellement sur le
+            feu : votre projet, votre code, vos frustrations de la semaine
+            dernière. Plus inconfortable qu'un exercice préparé, c'est aussi la
+            seule façon de savoir refaire seul ensuite.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-10 max-w-4xl">
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Je pars du terrain.</h3>
+            <p class="text-grey leading-relaxed">
+              Vos outils, vos processus, vos irritants concrets. Pas d'un slide
+              deck théorique.
+            </p>
+          </div>
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Du sur-mesure.</h3>
+            <p class="text-grey leading-relaxed">
+              Chaque mission est construite autour de votre contexte. Aucune
+              solution toute faite ne marche partout.
+            </p>
+          </div>
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Du transfert de compétences.</h3>
+            <p class="text-grey leading-relaxed">
+              L'objectif est de vous rendre autonome. Vous comprenez, vous
+              maîtrisez, vous faites évoluer ce qu'on a construit ensemble.
+            </p>
+          </div>
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Du pragmatisme.</h3>
+            <p class="text-grey leading-relaxed">
+              Je me concentre sur ce qui a le plus d'impact : des résultats
+              visibles vite, sans chantier pharaonique.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* S6 — Ce que je ne fais pas */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Les limites</span>
+          <h2 class="text-3xl md:text-4xl">Ce que je ne fais pas</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 md:gap-10 max-w-5xl">
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Remplacer vos équipes.</h3>
+            <p class="text-grey leading-relaxed">
+              L'automatisation supprime les tâches qui les ralentissent, pas les
+              personnes qui les font.
+            </p>
+          </div>
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Entretenir l'enthousiasme aveugle.</h3>
+            <p class="text-grey leading-relaxed">
+              Tous les problèmes ne se résolvent pas avec un workflow. Je vous
+              dis aussi quand ça ne vaut pas la peine.
+            </p>
+          </div>
+          <div class="border-l-2 border-ink pl-6">
+            <h3 class="text-ink mb-2">Vendre du rêve.</h3>
+            <p class="text-grey leading-relaxed">
+              Pas de « ROI x10 garanti » ni de « transformation digitale en
+              trois clics ». Des systèmes testés, documentés. Un avis honnête.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* S7 — Ce qui guide chaque mission */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-12">Ce qui guide chaque mission</h2>
+        <div
+          class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 max-w-5xl"
+        >
+          {
+            valeurs.map((valeur) => (
+              <div class="border-l-2 border-ink pl-6">
+                <h3 class="text-ink mb-2">{valeur.titre}</h3>
+                <p class="text-grey leading-relaxed">{valeur.corps}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* S8 — Ancré en Suisse romande */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-2 block">Le territoire</span>
+          <h2 class="text-3xl md:text-4xl mb-4">Ancré en Suisse romande</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Je suis basé à Lausanne et j'accompagne des indépendants et des PME
+            dans toute la Suisse romande. Le tête-à-tête se fait à Lausanne ou
+            en visio.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Les infrastructures que je mets en place sont hébergées en Suisse,
+            sur des serveurs dédiés : vos données ne sortent pas du pays. Le
+            détail est ici :{" "}
+            <a
+              href="/ia-lpd-suisse"
+              class="font-semibold text-ink underline underline-offset-2 hover:text-swiss"
+              >IA et protection des données en Suisse</a
+            >.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            En 2026, j'ai mené avec Emploi Lausanne un bootcamp pilote sur
+            l'automatisation et l'IA : quatre sessions, un Demo Day. La suite :{
+              " "
+            }
+            <a
+              href="/bootcamp-ia-suisse"
+              class="font-semibold text-ink underline underline-offset-2 hover:text-swiss"
+              >bootcamp 2027, préinscriptions ouvertes</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* S9 — Ils m'ont fait confiance */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <h2 class="text-3xl md:text-4xl">Ils m'ont fait confiance</h2>
+        <blockquote
+          class="border border-divider bg-paper rounded-md p-8 max-w-4xl text-lg text-grey leading-relaxed"
+        >
+          « Contrairement à d'autres prestataires qui nous auraient rendu
+          captifs de leurs services, Emmanuel nous a formés pour voler de nos
+          propres ailes. Un vrai partenaire pour les entreprises qui veulent
+          prendre le virage de l'IA et de l'automatisation. »
+          <footer
+            class="mt-4 font-mono text-sm uppercase tracking-widest text-grey"
+          >
+            Ewen Kerharo — Vétérinaire directeur, Groupe Vetmint
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    {/* S10 — CTA final */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <span class="kicker mb-4 block">Par où commencer</span>
+        <h2 class="text-3xl md:text-4xl mb-4">Un premier échange</h2>
+        <p class="text-lg text-grey leading-relaxed max-w-3xl mb-8">
+          On regarde ce qui vous prend du temps et ce que l'IA peut y changer.
+          Vous repartez avec une recommandation honnête, même si elle consiste à
+          ne rien faire. Sans engagement.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/contact"
+            class="inline-flex items-center gap-2 rounded-md bg-swiss px-10 py-5 text-sm font-semibold text-paper hover:bg-swiss-dark transition-colors"
+          >
+            Parler de votre projet
+            <span aria-hidden="true">→</span>
+          </a>
+          <a
+            href="/coaching-ia-independant-suisse"
+            class="inline-flex items-center rounded-md border border-ink px-10 py-5 text-sm font-semibold text-ink hover:bg-ink/[0.06] transition-colors"
+          >
+            Voir le coaching Claude Code
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

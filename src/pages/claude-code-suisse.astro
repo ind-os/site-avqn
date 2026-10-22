@@ -1,0 +1,405 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+
+const title = "Claude Code : ce que c'est, ce que ça change, comment démarrer";
+const description =
+  "Le guide Claude Code par un praticien qui l'utilise en production à Lausanne : ce que l'agent de code d'Anthropic fait vraiment, ce qu'il ne fait pas, par où démarrer.";
+
+// Ce que je construis avec, au quotidien.
+const realisations = [
+  {
+    titre: "L'outil interne que personne ne codait",
+    texte:
+      "Un petit tableau de bord, un connecteur entre deux logiciels, un script pour reprendre un export mensuel. Trop cher à faire développer, trop long à bricoler seul : ça s'avance en une séance.",
+  },
+  {
+    titre: "Le prototype qui devient un vrai produit",
+    texte:
+      "Une idée décrite le matin tourne le jour même. Elle se teste auprès de vraies personnes avant d'avoir coûté un franc.",
+  },
+  {
+    titre: "Le code que vous n'osiez pas toucher",
+    texte:
+      "Un projet hérité, mal documenté, écrit par quelqu'un d'autre. Claude Code le lit en entier, explique ce qu'il fait, puis le modifie.",
+  },
+  {
+    titre: "Le travail répétitif du développeur",
+    texte:
+      "Les tests, la migration de version, le renommage à trente endroits, la documentation jamais à jour. Un agent fait ça bien, pendant que vous gardez la tête sur les décisions.",
+  },
+];
+
+// Par où commencer, selon qui vous êtes
+const profils = [
+  {
+    titre: "Vous n'êtes pas développeur",
+    texte:
+      "Indépendant, patron de PME, chef de projet. Vous avez un outil en tête et personne pour le construire. Claude Code le rend possible, à condition de savoir cadrer la demande et vérifier le résultat.",
+    lienTexte: "Le coaching Claude Code individuel",
+    lienHref: "/coaching-ia-independant-suisse",
+  },
+  {
+    titre: "Vous développez déjà",
+    texte:
+      "Vous l'utilisez comme une autocomplétion améliorée. Il y a plus à en tirer : CLAUDE.md, agents spécialisés, hooks, travail en parallèle. On le fait sur votre dépôt.",
+    lienTexte: "Le coaching Claude Code individuel",
+    lienHref: "/coaching-ia-independant-suisse",
+  },
+  {
+    titre: "Vous avez une équipe",
+    texte:
+      "Vos développeurs s'y sont mis chacun dans leur coin, sans convention commune. Ça marche jusqu'au jour où plus personne ne relit ce qui part en production. Installer la pratique dans une équipe est un autre métier que la former à l'outil.",
+    lienTexte: "L'accompagnement d'équipe",
+    lienHref: "/formation-ia-entreprise-suisse",
+  },
+];
+
+const faqs = [
+  {
+    question: "Claude Code, c'est quoi en une phrase ?",
+    answer:
+      "Claude Code est un agent IA développé par Anthropic qui écrit, modifie et exécute du vrai code à partir d'instructions en langage naturel — il permet de construire un site ou un outil complet sans être développeur.",
+  },
+  {
+    question: "Faut-il savoir coder pour utiliser Claude Code ?",
+    answer:
+      "Non pour démarrer, oui pour tenir. On obtient très vite quelque chose qui tourne sans écrire une ligne. Ce qui s'apprend, c'est de lire ce que l'IA a produit et de mettre en ligne sans exposer vos données. Des semaines, pas des années.",
+  },
+  {
+    question: "Combien ça coûte, Claude Code ?",
+    answer:
+      "L'abonnement se prend directement chez Anthropic, avec plusieurs paliers selon l'intensité d'usage. Le vrai coût est ailleurs : le temps qu'on passe à comprendre comment s'en servir correctement.",
+  },
+  {
+    question: "Quelle différence avec Cursor, Copilot ou ChatGPT ?",
+    answer:
+      "Copilot complète votre code pendant que vous tapez. Cursor est un éditeur qui intègre l'IA. Claude Code est un agent : vous lui confiez une tâche entière, il l'exécute de bout en bout, commandes comprises.",
+  },
+  {
+    question: "C'est quoi, le vibe coding ?",
+    answer:
+      "Le vibe coding consiste à construire un logiciel en dialoguant avec une IA, en décrivant le résultat voulu plutôt qu'en écrivant le code soi-même. Très efficace pour prototyper — risqué en production sans garde-fous : sécurité, sauvegardes, revue du code.",
+  },
+  {
+    question: "Est-ce que mes données partent quelque part ?",
+    answer:
+      "Le code que vous soumettez transite par les serveurs d'Anthropic. Un point à regarder de près avec des données de clients ou de santé. Il existe des façons de cadrer ça proprement. On en parle ensemble.",
+  },
+];
+
+const webPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: title,
+  description,
+  url: "https://www.avqn.ch/claude-code-suisse",
+  inLanguage: "fr-CH",
+  about: {
+    "@type": "SoftwareApplication",
+    name: "Claude Code",
+    applicationCategory: "DeveloperApplication",
+    author: { "@type": "Organization", name: "Anthropic" },
+  },
+  author: {
+    "@type": "Person",
+    name: "Emmanuel Bernard",
+    url: "https://www.avqn.ch/a-propos",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={[webPageJsonLd, faqJsonLd]}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Claude Code, expliqué par quelqu'un qui l'utilise tous les jours"
+    subtitle="Ce que fait vraiment l'agent de code d'Anthropic, ce qu'il ne fait pas, par où commencer selon votre situation."
+    breadcrumb={[{ label: "Claude Code" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir le coaching individuel"
+    ctaSecondaryHref="/coaching-ia-independant-suisse"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. La réponse courte */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">En deux minutes</span>
+          <h2 class="text-3xl md:text-4xl">Claude Code, c'est quoi</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Claude Code est un agent de développement créé par Anthropic. Vous
+            lui décrivez ce que vous voulez, en français, dans le terminal ou
+            dans votre éditeur. Il lit vos fichiers, écrit le code, l'exécute,
+            corrige les erreurs, puis recommence jusqu'à ce que ça tourne.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            La différence avec un chatbot tient en un mot : il agit. ChatGPT
+            vous laisse recopier ; Claude Code travaille directement dans votre
+            projet — il installe ce qu'il faut, lance les tests, déploie.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Vous décrivez</h3>
+            <p class="text-grey leading-relaxed">
+              En français, comme à un collaborateur : le besoin, le contexte, le
+              résultat attendu. Pas de syntaxe à apprendre.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Il construit</h3>
+            <p class="text-grey leading-relaxed">
+              Claude Code écrit le code, l'exécute, voit les erreurs et les
+              corrige — en itérant jusqu'à un résultat qui tourne.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Vous validez</h3>
+            <p class="text-grey leading-relaxed">
+              Vous testez le résultat, demandez des ajustements, et décidez
+              quand c'est prêt. Vous restez aux commandes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Ce que je construis avec */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Sur le terrain</span>
+          <h2 class="text-3xl md:text-4xl">Ce que je construis avec</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Ce site est construit avec Claude Code. Le tableau de bord
+            multi-cliniques du groupe Vetmint aussi, livré en deux à trois
+            semaines ; son directeur le fait évoluer lui-même sans savoir coder.
+            Le détail de ce projet est sur la page
+            <a href="/expert-ia-suisse" class="font-bold underline"
+              >CTO IA à la demande</a
+            >. Le reste, ce sont des outils internes, des connecteurs et des
+            prototypes qui finissent en produits.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          {
+            realisations.map((carte) => (
+              <div class="border border-divider bg-paper2 rounded-md p-6">
+                <h3 class="text-xl mb-2">{carte.titre}</h3>
+                <p class="text-grey leading-relaxed">{carte.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 3. Ce qu'il ne fait pas seul */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Les limites</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce que Claude Code ne fait pas à votre place
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Il ne décide pas de votre architecture, de votre modèle de données,
+            de ce qui doit être sécurisé ni de ce qu'il faut tester. Il fait ce
+            que vous lui demandez, très vite, y compris quand la demande est
+            mauvaise.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Vous n'avez pas besoin d'écrire le code vous-même, mais de savoir
+            lire ce qui a été produit, quand dire non, comment revenir en
+            arrière. C'est là que se joue l'accompagnement : la différence entre
+            une démo et un outil sur lequel votre activité repose.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Ce qui casse sans cadre</h3>
+            <p class="text-grey leading-relaxed">
+              Données clients exposées, absence de sauvegardes, code que plus
+              personne ne comprend après trois mois d'ajouts improvisés. L'IA
+              exécute ce qu'on lui demande — y compris les mauvaises idées.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Vibe coding ou no-code</h3>
+            <p class="text-grey leading-relaxed">
+              Le no-code vous loue un outil dans les limites de sa plateforme.
+              Construire avec l'IA produit du vrai code qui vous appartient :
+              pas de plafond fonctionnel, pas d'abonnement captif, hébergement
+              où vous voulez — y compris en Suisse.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Par où commencer, selon qui vous êtes */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Selon votre situation</span>
+          <h2 class="text-3xl md:text-4xl">
+            Par où commencer, selon qui vous êtes
+          </h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          {
+            profils.map((profil) => (
+              <div class="flex flex-col border border-divider bg-paper2 rounded-md p-6">
+                <h3 class="text-xl mb-2">{profil.titre}</h3>
+                <p class="text-grey leading-relaxed mb-6">{profil.texte}</p>
+                <a
+                  href={profil.lienHref}
+                  class="mt-auto self-start text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+                >
+                  {profil.lienTexte} →
+                </a>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Claude Code ou n8n */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le bon outil</span>
+          <h2 class="text-3xl md:text-4xl">
+            Claude Code n'est pas toujours la réponse
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            La règle que j'applique : construire quelque chose qui n'existe pas,
+            c'est Claude Code ; faire circuler de l'information entre des outils
+            qui existent déjà, c'est n8n. Beaucoup de projets finissent avec un
+            peu des deux, et la recommandation que je fais est honnête, y
+            compris quand elle revient à vous dire que vous n'avez besoin de
+            personne.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            <a href="/n8n-suisse/claude-code-ou-n8n" class="font-bold underline"
+              >Comparatif : Claude Code ou n8n, quand choisir quoi</a
+            >
+            {" · "}
+            <a href="/agents-ia" class="font-bold underline"
+              >Les agents IA et les systèmes agentiques</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 6. FAQ */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Questions fréquentes</h2>
+        <div class="border-t border-divider">
+          {
+            faqs.map((faq, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-grey mt-8">
+          <a href="/ia-lpd-suisse" class="font-bold underline"
+            >IA et LPD en Suisse : ce que dit la loi</a
+          >
+        </p>
+      </div>
+    </section>
+
+    {/* 7. CTA final */}
+    <section data-theme="nocturne" class="border-b border-divider bg-paper">
+      <div class="quadrillage py-20 md:py-28">
+        {/* Un groupe de trois cases, dans les marges. */}
+        <i
+          class="case"
+          style="--x:0;--y:0;--c:var(--appoint-1)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          style="--x:1;--y:0;--c:var(--appoint-3)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          data-bord="droit"
+          style="--x:0;--y:1;--c:var(--appoint-2)"
+          aria-hidden="true"></i>
+        <div class="container-custom relative px-6 md:px-8">
+          <span class="kicker mb-6 block">Contact</span>
+          <h2 class="type-display-section text-ink mb-6 max-w-3xl">
+            Pas sûr que ce soit pour vous&nbsp;?
+          </h2>
+          <p class="text-lg text-grey leading-relaxed max-w-3xl mb-8">
+            Un entretien, sans engagement. Vous décrivez ce que vous voulez
+            faire, je vous dis si Claude Code est le bon outil et par quoi
+            commencer. Si la réponse est « rien pour l'instant », je vous le
+            dirai aussi.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/contact" class="btn-primary px-8 py-4">
+              Parler de votre projet
+              <span aria-hidden="true">→</span>
+            </a>
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="btn-outline px-8 py-4"
+            >
+              Découvrir le coaching individuel
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

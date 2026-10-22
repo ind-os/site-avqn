@@ -1,0 +1,72 @@
+---
+/**
+ * Bloc CTA de fin de page, paramétrable (la home et /services masquent le CTA
+ * global du Layout pour poser leur propre message). Même traitement que
+ * `CTASection` : bande nocturne, quadrillage, un seul primaire vermillon.
+ */
+interface Props {
+  kicker: string;
+  title: string;
+  body?: string;
+  ctaText: string;
+  ctaHref: string;
+  secondaryText?: string;
+  secondaryHref?: string;
+}
+
+const { kicker, title, body, ctaText, ctaHref, secondaryText, secondaryHref } =
+  Astro.props;
+---
+
+<section data-theme="nocturne" class="border-b border-divider bg-paper">
+  <div class="quadrillage py-24 md:py-32">
+    {/* Un groupe de trois cases, dans les marges. */}
+    <i class="case" style="--x:0;--y:0;--c:var(--appoint-1)" aria-hidden="true"
+    ></i>
+    <i class="case" style="--x:1;--y:1;--c:var(--appoint-3)" aria-hidden="true"
+    ></i>
+    <i
+      class="case"
+      data-bord="droit"
+      style="--x:0;--y:1;--c:var(--appoint-2)"
+      aria-hidden="true"></i>
+
+    <div class="container-custom relative px-6 text-center md:px-8">
+      <span class="kicker mb-6" data-reveal>{kicker}</span>
+      <h2
+        class="type-display-section reveal-nu mx-auto mb-8 max-w-4xl text-balance text-ink"
+        data-reveal
+      >
+        <span class="ligne-masquee"><span>{title}</span></span>
+      </h2>
+      {
+        body && (
+          <p
+            class="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-grey"
+            data-reveal
+            data-reveal-delay="2"
+          >
+            {body}
+          </p>
+        )
+      }
+      <div
+        class="flex flex-wrap items-center justify-center gap-4"
+        data-reveal
+        data-reveal-delay="3"
+      >
+        <a href={ctaHref} class="btn-primary px-8 py-4">
+          {ctaText}
+          <span aria-hidden="true">→</span>
+        </a>
+        {
+          secondaryText && secondaryHref && (
+            <a href={secondaryHref} class="btn-outline px-8 py-4">
+              {secondaryText}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

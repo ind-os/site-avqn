@@ -1,0 +1,406 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HomeHero from "../components/HomeHero.astro";
+import TestimonialsSection from "../components/TestimonialsSection.astro";
+import HomeCta from "../components/HomeCta.astro";
+import { etiquetteOffre } from "../lib/etiquettes";
+
+const title = "Automatisez votre business avec l'IA — Suisse romande | AVQN";
+const description =
+  "Emmanuel Bernard, à Lausanne. Agents IA, automatisation et formation pour les indépendants et les PME de Suisse romande : coaching individuel, accompagnement d'équipe, systèmes sur mesure.";
+
+const offres = [
+  {
+    cle: "coaching-individuel",
+    numero: "01",
+    titre: "Coaching individuel",
+    accroche: "Vous voulez faire plus, seul, avec l'IA comme bras droit.",
+    points: [
+      "Sur vos projets : chaque séance part de ce que vous avez réellement à faire cette semaine.",
+      "Trois séances de deux heures sur un mois, à Lausanne ou en visio.",
+      "Vous repartez autonome : vous savez quoi demander à l'IA, comment vérifier son travail et à quel moment vous en passer.",
+    ],
+    href: "/coaching-ia-independant-suisse",
+    lien: "Voir le coaching",
+  },
+  {
+    cle: "accompagnement-equipe",
+    numero: "02",
+    titre: "Accompagnement d'équipe",
+    accroche:
+      "Votre équipe doit livrer plus vite, avec des pratiques communes.",
+    points: [
+      "Dans votre code : ateliers et revues sur vos vrais projets, avec vos outils.",
+      "Six semaines, quatre à six personnes, en parallèle de votre activité.",
+      "L'équipe garde une méthode et une documentation à elle, qui restent après mon départ.",
+    ],
+    href: "/formation-ia-entreprise-suisse",
+    lien: "Voir l'accompagnement",
+  },
+  {
+    cle: "cto-ia",
+    numero: "03",
+    titre: "CTO IA à la demande",
+    accroche:
+      "Vous lancez un projet IA sans CTO : je tiens ce rôle le temps du projet.",
+    points: [
+      "Je décide avec vous quoi construire, comment, et où c'est hébergé.",
+      "Je le construis moi-même : outils, agents, systèmes, branchés sur l'existant.",
+      "Je vous forme à vous en servir et à le faire évoluer.",
+    ],
+    href: "/expert-ia-suisse",
+    lien: "En savoir plus",
+  },
+] as const;
+
+const faqs = [
+  {
+    question: "Faut-il savoir coder pour utiliser Claude Code ?",
+    answer:
+      "Non, mais il faut savoir ce que vous voulez obtenir. Claude Code écrit le code à partir d'instructions en français. Ce qui change tout, c'est la façon de cadrer la demande et de relire ce qui sort : c'est ce qu'on travaille en coaching.",
+  },
+  {
+    question: "Claude Code ou n8n, lequel me faut-il ?",
+    answer:
+      "Claude Code sert à construire ce qui n'existe pas : un site, un outil interne, un agent. n8n sert à faire tourner ce qui se répète : les connexions entre vos applications, les traitements réguliers. La page de comparaison répond en détail, un échange tranche en vingt minutes.",
+  },
+  {
+    question: "Mes données partent-elles à l'étranger ?",
+    answer:
+      "On en parle avant d'écrire la première ligne. Selon la sensibilité de vos données, on héberge en Suisse, on limite ce qui part au modèle et on documente ce qui circule. La page sur l'IA et la LPD détaille l'approche.",
+  },
+  {
+    question: "Combien ça coûte ?",
+    answer:
+      "Je travaille au forfait, cadré après un premier échange : vous savez ce que vous payez avant de commencer.",
+  },
+  {
+    question: "Vous travaillez à distance ?",
+    answer:
+      "Oui. Le coaching se fait en tête-à-tête à Lausanne ou en visio. L'accompagnement d'équipe se fait sur site ou à distance, souvent les deux.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={faqJsonLd}
+  hideGlobalCta={true}
+>
+  <main class="min-h-screen">
+    <HomeHero />
+
+    {/* Les offres */}
+    <section id="offres" class="border-b border-divider">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="px-6 pb-16 pt-10 md:px-10 md:pb-24 md:pt-14">
+          <div class="mb-12 md:mb-16" data-reveal>
+            <span class="kicker mb-6">Les offres</span>
+            <h2 class="type-display-section">Trois formats d'accompagnement</h2>
+          </div>
+
+          {
+            /* Chaque carte est cliquable en entier : la cible, c'est la carte */
+          }
+          <div class="grid gap-6 lg:grid-cols-3">
+            {
+              offres.map((offre, index) => (
+                <a
+                  href={offre.href}
+                  class="card card-hover group flex h-full flex-col md:p-8"
+                  data-reveal
+                  data-reveal-delay={String(index + 1)}
+                >
+                  <span class={etiquetteOffre(offre.cle)}>{offre.numero}</span>
+                  <h3 class="mt-4 font-serif text-2xl leading-tight text-ink md:text-3xl">
+                    {offre.titre}
+                  </h3>
+                  <p class="mt-4 text-base font-medium leading-snug text-ink">
+                    {offre.accroche}
+                  </p>
+
+                  <ul class="mt-6 space-y-3.5 border-t border-divider pt-6">
+                    {offre.points.map((point) => (
+                      <li class="flex items-start gap-3">
+                        <span
+                          class="mt-[0.55em] h-[0.4em] w-[0.4em] shrink-0 bg-swiss"
+                          aria-hidden="true"
+                        />
+                        <span class="text-sm leading-relaxed text-grey">
+                          {point}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <span class="mt-auto inline-flex items-center gap-2 pt-9 text-sm font-semibold text-ink transition-colors duration-150 group-hover:text-swiss">
+                    {offre.lien}
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </a>
+              ))
+            }
+          </div>
+
+          <p class="mt-8 text-grey" data-reveal>
+            Vous hésitez entre les trois&nbsp;? <a
+              href="/services"
+              class="link-underline">Comparer les formats côte à côte</a
+            >.
+          </p>
+
+          {/* Le bootcamp — hors des trois accompagnements, d'où le filet */}
+          <div class="mt-12 border-t border-divider pt-12 md:mt-14 md:pt-14">
+            <a
+              href="/bootcamp-ia-suisse"
+              class="objet group grid grid-cols-1 overflow-hidden md:grid-cols-12"
+              data-reveal
+              data-reveal-delay="4"
+            >
+              <div class="flex flex-col p-6 md:col-span-7 md:p-8">
+                <span class="kicker">Préinscription</span>
+
+                <h3
+                  class="mt-5 font-serif text-2xl leading-tight text-ink md:text-3xl"
+                >
+                  Bootcamp IA 2027
+                </h3>
+                <p class="mt-3 text-base font-medium leading-snug text-ink">
+                  Vous repartez avec vos propres automatisations qui tournent.
+                </p>
+                <ul
+                  class="mt-6 max-w-xl space-y-3.5 border-t border-divider pt-6"
+                >
+                  {
+                    [
+                      "Un format intensif, en petit groupe.",
+                      "Aucun prérequis technique.",
+                      "Le programme se précise : les préinscrits reçoivent les dates en premier.",
+                    ].map((point) => (
+                      <li class="flex items-start gap-3">
+                        <span
+                          class="mt-[0.55em] h-[0.4em] w-[0.4em] shrink-0 bg-swiss"
+                          aria-hidden="true"
+                        />
+                        <span class="text-sm leading-relaxed text-grey">
+                          {point}
+                        </span>
+                      </li>
+                    ))
+                  }
+                </ul>
+
+                <span
+                  class="mt-auto inline-flex items-center gap-2 pt-9 text-sm font-semibold text-ink transition-colors duration-150 group-hover:text-swiss"
+                >
+                  En savoir plus
+                  <span aria-hidden="true">→</span>
+                </span>
+              </div>
+
+              <div
+                class="min-h-[220px] border-t border-divider md:col-span-5 md:border-l md:border-t-0"
+              >
+                <img
+                  src="/images/bootcamp/bootcamp-n8n-lausanne-2026-atelier-participants.webp"
+                  alt="Participants du bootcamp n8n 2026 à Lausanne en atelier avec Emmanuel Bernard"
+                  class="h-full w-full object-cover"
+                  width="1600"
+                  height="1067"
+                  loading="lazy"
+                />
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <TestimonialsSection
+      sombre
+      title="Témoignages de clients"
+      order={[
+        "sebastien-debatty",
+        "ewen-kerharo",
+        "olivier-dommange",
+        "serge-reymond",
+        "antoine-aigroz",
+        "sebastian-haag",
+        "emilien-coutard",
+        "christopher",
+        "felix-sandri",
+      ]}
+    />
+
+    {/* Les rubriques */}
+    <section class="border-b border-divider bg-paper2">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="px-6 py-16 md:px-10 md:py-24">
+          <div class="mb-12 md:mb-16" data-reveal>
+            <span class="kicker mb-6">Rubriques</span>
+            <h2 class="type-display-section">
+              Construire avec Claude Code, automatiser avec n8n
+            </h2>
+          </div>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <div
+              class="card card-hover group bg-paper md:p-8"
+              data-reveal
+              data-reveal-delay="1"
+            >
+              <h3 class="font-serif text-2xl text-ink md:text-3xl">
+                Claude Code
+              </h3>
+              <p class="mt-4 leading-relaxed text-grey">
+                L'agent de code d'Anthropic, expliqué par quelqu'un qui
+                l'utilise en production.
+              </p>
+              <p class="mt-6">
+                <a
+                  href="/claude-code-suisse"
+                  class="inline-block border-b border-ink pb-1 font-mono text-sm uppercase tracking-widest transition-colors hover:text-swiss"
+                >
+                  Le guide Claude Code <span aria-hidden="true">→</span>
+                </a>
+              </p>
+              <ul class="mt-6 space-y-2 text-sm">
+                <li>
+                  <a
+                    href="/coaching-ia-independant-suisse"
+                    class="link-underline">Le coaching Claude Code individuel</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/n8n-suisse/claude-code-ou-n8n"
+                    class="link-underline"
+                    >Claude Code ou n8n : lequel pour votre besoin</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <div
+              class="card card-hover group bg-paper md:p-8"
+              data-reveal
+              data-reveal-delay="2"
+            >
+              <h3 class="font-serif text-2xl text-ink md:text-3xl">
+                Automatisation n8n
+              </h3>
+              <p class="mt-4 leading-relaxed text-grey">
+                Le guide n8n pour les PME romandes : ce que c'est, comment
+                l'héberger en Suisse, ce qu'il fait mieux que Zapier.
+              </p>
+              <p class="mt-6">
+                <a
+                  href="/n8n-suisse"
+                  class="inline-block border-b border-ink pb-1 font-mono text-sm uppercase tracking-widest transition-colors hover:text-swiss"
+                >
+                  Le guide n8n en Suisse romande <span aria-hidden="true"
+                    >→</span
+                  >
+                </a>
+              </p>
+              <ul class="mt-6 space-y-2 text-sm">
+                <li>
+                  <a
+                    href="/n8n-suisse/claude-code-ou-n8n"
+                    class="link-underline"
+                    >Claude Code ou n8n : lequel pour votre besoin</a
+                  >
+                </li>
+                <li>
+                  <a href="/bootcamp-ia-suisse" class="link-underline"
+                    >Le bootcamp IA</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* FAQ */}
+    <section class="border-b border-divider">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <div
+            class="border-b border-divider lg:col-span-4 lg:border-b-0 lg:border-r"
+          >
+            <div class="p-6 md:p-12 lg:sticky lg:top-32">
+              <span class="kicker mb-6">Questions fréquentes</span>
+              <h2 class="type-display-section mb-8">
+                Les questions qu'on me pose avant de démarrer
+              </h2>
+              <a href="/contact" class="btn-primary w-full py-5">Écrivez-moi</a>
+              <p
+                class="mt-4 text-center font-mono text-[10px] uppercase tracking-widest text-grey"
+              >
+                Sans engagement.
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-8">
+            {
+              faqs.map((faq, index) => (
+                <div
+                  class={`p-6 md:p-12 ${index !== faqs.length - 1 ? "border-b border-divider" : ""}`}
+                  data-reveal
+                >
+                  <div class="flex gap-4 md:gap-6">
+                    <span class="eyebrow shrink-0 pt-1 tabular-nums">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 class="mb-4 text-lg md:text-xl">{faq.question}</h3>
+                      <p class="leading-relaxed text-grey">{faq.answer}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+            <div class="border-t border-divider p-6 text-sm text-grey md:p-12">
+              À lire aussi : <a
+                href="/n8n-suisse/claude-code-ou-n8n"
+                class="link-underline">Claude Code ou n8n</a
+              >, <a href="/ia-lpd-suisse" class="link-underline"
+                >l'IA et la LPD</a
+              > et <a
+                href="/coaching-ia-independant-suisse"
+                class="link-underline">le coaching Claude Code</a
+              >.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <HomeCta
+      kicker="Contact"
+      title="Commencez par un message."
+      body="Vous m'expliquez où vous en êtes, je vous dis par quoi commencer. Si votre besoin ne relève pas de moi, je vous le dis aussi."
+      ctaText="Parler de votre projet"
+      ctaHref="/contact"
+      secondaryText="Voir le coaching Claude Code"
+      secondaryHref="/coaching-ia-independant-suisse"
+    />
+  </main>
+</Layout>

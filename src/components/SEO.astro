@@ -1,0 +1,130 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  article?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  /** Exclut la page de l'index (robots noindex). */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = "https://cdn.avqn.ch/images/website/aussi-vite-que-necessaire.jpg",
+  article = false,
+  structuredData,
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.site);
+
+const siteTitle = "AVQN";
+const fullTitle = title.includes(siteTitle) ? title : `${title} | ${siteTitle}`;
+
+// Schema.org JSON-LD — la fiche décrit AVQN, pas la page courante : sa
+// description est celle du positionnement, la même sur les seize pages.
+const DESCRIPTION_AVQN =
+  "AVQN aide les indépendants et les PME de Suisse romande à confier à l'IA ce qui leur prend du temps : agents IA, automatisation n8n et formation.";
+
+const consultantJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "AVQN - Emmanuel Bernard",
+  image: socialImageURL.href,
+  description: DESCRIPTION_AVQN,
+  url: Astro.site,
+  address: {
+    "@type": "PostalAddress",
+    postalCode: "1006",
+    addressLocality: "Lausanne",
+    addressRegion: "Vaud",
+    addressCountry: "CH",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 46.5197,
+    longitude: 6.6323,
+  },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Vaud" },
+    { "@type": "AdministrativeArea", name: "Genève" },
+    { "@type": "AdministrativeArea", name: "Fribourg" },
+    { "@type": "AdministrativeArea", name: "Neuchâtel" },
+    { "@type": "AdministrativeArea", name: "Valais" },
+    { "@type": "AdministrativeArea", name: "Jura" },
+  ],
+  sameAs: ["https://www.linkedin.com/in/emmbernard/"],
+  priceRange: "$$$",
+  knowsAbout: [
+    "Intelligence artificielle",
+    "Agents IA",
+    "IA agentique",
+    "Systèmes agentiques",
+    "Claude Code",
+    "Automatisation des processus",
+    "n8n",
+    "Conformité LPD",
+  ],
+  founder: {
+    "@type": "Person",
+    name: "Emmanuel Bernard",
+    jobTitle: "Consultant IA — agents, automatisation et formation",
+    sameAs: ["https://www.linkedin.com/in/emmbernard/"],
+  },
+};
+
+const extraStructuredData = Array.isArray(structuredData)
+  ? structuredData
+  : structuredData
+    ? [structuredData]
+    : [];
+
+const jsonLdNodes = [consultantJsonLd, ...extraStructuredData];
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+{/* Robots — noindex pour les pages internes */}
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Primary Meta Tags -->
+<title>{fullTitle}</title>
+<meta name="title" content={fullTitle} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={article ? "article" : "website"} />
+<meta property="og:url" content={Astro.url} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:site_name" content="AVQN" />
+<meta property="og:locale" content="fr_CH" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:title" content={fullTitle} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImageURL} />
+
+<!-- JSON-LD -->
+{
+  jsonLdNodes.map((node) => (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(node)}
+      is:inline
+    />
+  ))
+}

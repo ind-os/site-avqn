@@ -1,0 +1,399 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+
+const title = "Expert IA en Suisse romande : CTO IA à la demande | AVQN";
+const description =
+  "Vous lancez un projet IA sans CTO : je tiens ce rôle le temps du projet. Décider quoi construire, le construire, le mettre en production, vous passer les clés.";
+
+// Les trois volets du rôle, tels qu'ils sont annoncés sur la page d'accueil.
+const role = [
+  {
+    titre: "Je décide avec vous quoi construire, comment, et où c'est hébergé",
+    texte:
+      "Le périmètre, l'architecture, les outils, l'hébergement. Ce que le système voit, ce qu'il a le droit de faire et ce qui passe par vous se tranche au cadrage, pas à la fin.",
+  },
+  {
+    titre:
+      "Je le construis moi-même : outils, agents, systèmes, branchés sur l'existant",
+    texte:
+      "Le code, les connexions à vos outils, la logique métier. Vous voyez le chantier avancer et vous corrigez en cours de route.",
+  },
+  {
+    titre: "Je vous forme à vous en servir et à le faire évoluer",
+    texte:
+      "Je vous montre comment ça marche, où le modifier et quoi surveiller. La prochaine évolution ne dépend plus de moi.",
+  },
+];
+
+// Les quatre semaines du format « Projet en ligne ».
+const semaines = [
+  {
+    titre: "Cadrer",
+    texte:
+      "On définit la mission de l'agent, les outils auxquels il accède, ce qu'il fait seul et ce qui passe par vous. C'est la décision la plus importante du projet.",
+  },
+  {
+    titre: "Construire",
+    texte:
+      "L'agent, ses connexions, sa logique métier. Vous voyez le chantier avancer et vous corrigez en cours de route.",
+  },
+  {
+    titre: "Mettre en ligne",
+    texte:
+      "Hébergement, sauvegardes, alertes et séparation entre essais et production. Un outil sur lequel vous pouvez compter.",
+  },
+  {
+    titre: "Vous passer les clés",
+    texte:
+      "Je vous montre comment ça marche, où le modifier et quoi surveiller. La prochaine évolution ne dépend plus de moi.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Combien de temps avant que ça tourne ?",
+    answer:
+      "Quatre semaines, de la première séance à la mise en ligne. Un périmètre plus large se découpe en plusieurs projets plutôt qu'il ne s'étire.",
+  },
+  {
+    question: "Est-ce que je reste dépendant de vous après ?",
+    answer:
+      "C'est précisément ce qu'on cherche à éviter. Vous construisez avec moi pendant le projet, l'infrastructure est à votre nom, la passation fait partie du format. Certains clients repartent sans jamais me rappeler.",
+  },
+  {
+    question: "Comment se pose le cadre et le tarif ?",
+    answer:
+      "Après un premier échange, une fois le périmètre connu. Je travaille au forfait : vous savez ce que vous payez avant de commencer.",
+  },
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "CTO IA à la demande",
+  serviceType: "Direction technique d'un projet IA, en externe",
+  description:
+    "Tenir le rôle de CTO le temps d'un projet IA : décisions d'architecture et d'hébergement, construction de l'outil, mise en production et passation.",
+  url: "https://www.avqn.ch/expert-ia-suisse",
+  provider: {
+    "@type": "ProfessionalService",
+    name: "AVQN - Emmanuel Bernard",
+    url: "https://www.avqn.ch",
+  },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Suisse romande" },
+    { "@type": "City", name: "Lausanne" },
+  ],
+  audience: {
+    "@type": "BusinessAudience",
+    name: "Indépendants et PME de Suisse romande",
+  },
+  availableLanguage: "fr",
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={[serviceJsonLd, faqJsonLd]}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Un expert IA dans le rôle du CTO, le temps de votre projet"
+    subtitle="Vous lancez un projet IA sans CTO : je tiens ce rôle le temps du projet. Je décide avec vous quoi construire, je le construis, et je vous forme à le faire évoluer."
+    breadcrumb={[{ label: "CTO IA à la demande" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir le déroulé"
+    ctaSecondaryHref="#deroule"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Le rôle */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le rôle</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce que je tiens pendant le projet
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Un projet IA demande trois choses qu'une entreprise sans direction
+            technique n'a pas sous la main : quelqu'un qui tranche les choix
+            d'architecture, quelqu'un qui construit, quelqu'un qui transmet.
+            J'occupe les trois places pendant le projet, puis je les rends :
+            l'infrastructure est à votre nom, et la passation fait partie du
+            format.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          {
+            role.map((volet) => (
+              <div class="border border-divider bg-paper2 rounded-md p-6">
+                <h3 class="text-xl mb-2">{volet.titre}</h3>
+                <p class="text-grey leading-relaxed">{volet.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <p class="text-lg text-grey leading-relaxed max-w-4xl">
+          L'hébergement et ce qui sort de chez vous sont des décisions de ce
+          rôle, prises au cadrage :
+          <a href="/ia-lpd-suisse" class="font-bold underline"
+            >IA, LPD et données suisses</a
+          >.
+        </p>
+      </div>
+    </section>
+
+    {/* 2. Le déroulé — le format « Projet en ligne » */}
+    <section
+      id="deroule"
+      class="border-b border-divider bg-paper2 scroll-mt-24"
+    >
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le déroulé</span>
+          <h2 class="text-3xl md:text-4xl">
+            Projet en ligne : quatre semaines et c'est en production
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Le format standard de mes projets s'appelle « Projet en ligne ». En
+            quatre semaines, votre projet tourne sur un environnement
+            professionnel et vous savez le faire évoluer.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Les deux résultats comptent : un outil que personne ne sait modifier
+            redevient un poste de dépense au premier changement de besoin. Vous
+            construisez donc avec moi, en copilote.
+          </p>
+        </div>
+
+        <ol class="grid md:grid-cols-2 gap-6">
+          {
+            semaines.map((semaine, index) => (
+              <li class="border border-divider bg-paper rounded-md p-6">
+                <span class="kicker mb-3 block">
+                  Semaine {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 class="text-xl mb-2">{semaine.titre}</h3>
+                <p class="text-grey leading-relaxed">{semaine.texte}</p>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="max-w-4xl border border-divider rounded-md p-8 bg-paper">
+          <h3 class="text-2xl mb-4">Ce que vous repartez avec</h3>
+          <ul class="space-y-3 text-lg text-grey">
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Un agent ou un système qui tourne en production, pas une démo.</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Un environnement pro à votre nom : hébergement, accès, données.</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >La documentation de ce qui a été construit et comment le
+                modifier.</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <p class="text-lg text-grey leading-relaxed max-w-4xl">
+          Le détail des briques que je construis — agents, systèmes agentiques,
+          connexion à vos outils, garde-fous — est sur
+          <a href="/agents-ia" class="font-bold underline"
+            >la page des agents IA sur mesure</a
+          >.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="btn-primary px-6 py-4">
+            Parler de votre projet
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. La preuve : Vetmint */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Un cas réel</span>
+          <h2 class="text-3xl md:text-4xl">
+            Vetmint : sept cliniques pilotées depuis un outil que le client fait
+            évoluer seul
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Vetmint est une chaîne de cliniques vétérinaires de Suisse romande,
+            dirigée par Sébastien Debatty. Avant le projet, le suivi reposait
+            sur des rapports Excel consolidés à la main chaque mois. La
+            performance par clinique, par vétérinaire, par type d'acte restait
+            enfouie dans les fichiers.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Le projet a été mené en deux à trois semaines, en deux temps.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Centraliser</h3>
+            <p class="text-grey leading-relaxed">
+              Une base PostgreSQL sur mesure : cliniques, vétérinaires, types
+              d'animaux, types d'actes, transactions. Un
+              <a href="/n8n-suisse" class="font-bold underline">workflow n8n</a>
+              reçoit chaque mois les rapports Excel des sept cliniques, les lit, détecte
+              les incohérences et met la base à jour. Elle devient la source de vérité
+              unique.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Visualiser</h3>
+            <p class="text-grey leading-relaxed">
+              Un tableau de bord sur mesure, hébergé sur le VPS de l'entreprise.
+              Évolution mensuelle du chiffre d'affaires par clinique, panier
+              moyen par vétérinaire, répartition des revenus par type d'animal,
+              performance par type d'acte.
+            </p>
+          </div>
+        </div>
+
+        <p class="text-lg text-grey leading-relaxed max-w-4xl">
+          Le plus important : Sébastien peut enrichir l'outil lui-même. La
+          solution est modulaire, bâtie avec des briques open source, sur un
+          serveur qui appartient à Vetmint.
+        </p>
+
+        <blockquote
+          class="border border-divider bg-paper2 rounded-md p-8 max-w-4xl text-lg text-grey leading-relaxed space-y-4"
+        >
+          <p>
+            « Je consulte ce dashboard plusieurs fois par jour pour mes
+            décisions stratégiques. Je ne m'attendais pas à pouvoir faire
+            évoluer un outil aussi sophistiqué par mes propres moyens, alors que
+            je ne sais pas coder. J'ai pu ajouter plusieurs vues par moi-même.
+          </p>
+          <p>
+            Sans l'IA, le développement d'un outil personnalisé de cette
+            envergure aurait pris plusieurs mois et coûté des dizaines de
+            milliers de francs — au point que le ROI aurait été difficilement
+            atteignable. Aujourd'hui, quand on maîtrise le potentiel de l'IA, le
+            retour sur investissement est immédiat. Et surtout, je ne suis pas
+            resté dépendant d'un prestataire pour faire évoluer mon outil. »
+          </p>
+          <footer class="flex items-center gap-4 pt-2">
+            <img
+              src="https://cdn.avqn.ch/images/temoignage-sebastien-debatty-vetmint-formation-n8n-lausanne.webp"
+              alt="Sébastien Debatty, directeur du Groupe Vetmint"
+              width="56"
+              height="56"
+              loading="lazy"
+              decoding="async"
+              class="h-14 w-14 rounded-md object-cover shrink-0"
+            />
+            <span class="font-mono text-sm uppercase tracking-widest text-grey">
+              Sébastien Debatty, directeur du Groupe Vetmint
+            </span>
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+
+    {/* 4. FAQ */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Questions fréquentes</h2>
+        <div class="border-t border-divider">
+          {
+            faqs.map((faq, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 5. CTA final */}
+    <section data-theme="nocturne" class="border-b border-divider bg-paper">
+      <div class="quadrillage py-20 md:py-28">
+        {/* Un groupe de trois cases, dans les marges. */}
+        <i
+          class="case"
+          style="--x:0;--y:0;--c:var(--appoint-1)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          style="--x:1;--y:0;--c:var(--appoint-3)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          data-bord="droit"
+          style="--x:0;--y:1;--c:var(--appoint-2)"
+          aria-hidden="true"></i>
+        <div class="container-custom relative px-6 md:px-8">
+          <span class="kicker mb-6 block">Contact</span>
+          <h2 class="type-display-section text-ink mb-6 max-w-3xl">
+            Commençons par cadrer le projet
+          </h2>
+          <p class="text-lg text-grey leading-relaxed max-w-3xl mb-8">
+            Un échange, sans engagement. On regarde ce qui vous coûte du temps,
+            ce qui est automatisable et ce qui ne l'est pas encore. À la fin,
+            vous savez quoi construire, dans quel ordre, avec quel outil.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/contact" class="btn-primary px-8 py-4">
+              Parler de votre projet
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="/agents-ia" class="btn-outline px-8 py-4">
+              Ce que je construis
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -1,0 +1,183 @@
+---
+/**
+ * Socle de formulaire — ce qui est vrai pour TOUS les formulaires du site,
+ * et rien d'autre : l'email (seul champ requis), le bouton d'envoi, l'état
+ * d'envoi, l'erreur, le message de succès, la note sous le bouton, et le POST
+ * vers `/api/contact`.
+ *
+ * Les champs se composent depuis la page appelante, entre les balises. La
+ * collecte est générique : tout champ portant un `name` part dans la
+ * soumission (FormData natif), sans liste blanche ici ni côté serveur.
+ */
+import { CHAMP, LIBELLE } from "./classes";
+import { iconeSolar } from "../../lib/icone";
+
+interface Props {
+  /** Slug de la source côté OS : `avqn-contact`, `avqn-bootcamp`… */
+  source: string;
+  buttonText: string;
+  successMessage: string;
+  /** Mention affichée sous le bouton. */
+  noteText?: string;
+  /** Placeholder du champ email. */
+  emailPlaceholder?: string;
+}
+
+const {
+  source,
+  buttonText,
+  successMessage,
+  noteText = "Seul l'email est requis. Le reste m'aide juste à préparer l'échange.",
+  emailPlaceholder = "vous@exemple.ch",
+} = Astro.props;
+
+/** L'email porte l'identifiant de la source : deux socles peuvent cohabiter. */
+const emailId = `email-${source}`;
+---
+
+<div data-formulaire data-source={source}>
+  {
+    /* Région live permanente : c'est elle qui annonce l'issue de l'envoi.
+      Toujours présente dans l'arbre d'accessibilité, sans emprise visuelle. */
+  }
+  <p class="sr-only" role="status" aria-live="polite" data-annonce></p>
+
+  {/* Écran de succès — révélé quand la soumission est passée. */}
+  <div class="py-6 text-center" data-succes hidden>
+    <div
+      class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-md border border-swiss bg-swiss/5"
+    >
+      <Fragment set:html={iconeSolar("check-linear", "h-7 w-7 text-swiss")} />
+    </div>
+    <p class="text-lg leading-relaxed text-ink">{successMessage}</p>
+  </div>
+
+  {
+    /* `action`/`method` réels : si le contrôleur ne prend pas la main, la
+      soumission part en POST form-urlencoded — jamais en GET dans l'URL. */
+  }
+  <form
+    class="space-y-4 text-left"
+    method="post"
+    action="/api/contact"
+    data-form
+  >
+    <input type="hidden" name="source" value={source} />
+
+    {/* Email — le seul champ requis */}
+    <div>
+      <label for={emailId} class={LIBELLE}>
+        Votre email <span class="text-swiss">*</span>
+      </label>
+      <input
+        type="email"
+        name="email"
+        id={emailId}
+        required
+        autocomplete="email"
+        placeholder={emailPlaceholder}
+        class={CHAMP}
+      />
+    </div>
+
+    {/* Les champs composés par la page */}
+    <slot />
+
+    <p class="text-sm text-swiss font-medium" data-erreur hidden></p>
+
+    <button
+      type="submit"
+      class="btn-primary w-full py-4 disabled:cursor-not-allowed disabled:opacity-45"
+      data-bouton
+    >
+      <span data-label>{buttonText}</span><span aria-hidden="true" data-fleche
+        >→</span
+      >
+    </button>
+
+    <p class="text-xs text-grey text-center">{noteText}</p>
+  </form>
+</div>
+
+<script>
+  /**
+   * Contrôleur du socle. Un seul module pour tous les formulaires de la page :
+   * il ne connaît aucun champ, il délègue la collecte à `collecte.ts`.
+   */
+  import { collecter } from "./collecte";
+
+  const MESSAGE_GENERIQUE =
+    "Une erreur est survenue. Veuillez réessayer ou nous contacter à hello@avqn.ch.";
+
+  document
+    .querySelectorAll<HTMLElement>("[data-formulaire]")
+    .forEach((bloc) => {
+      const form = bloc.querySelector<HTMLFormElement>("[data-form]");
+      const succes = bloc.querySelector<HTMLElement>("[data-succes]");
+      const erreur = bloc.querySelector<HTMLElement>("[data-erreur]");
+      const bouton = bloc.querySelector<HTMLButtonElement>("[data-bouton]");
+      const label = bloc.querySelector<HTMLElement>("[data-label]");
+      const fleche = bloc.querySelector<HTMLElement>("[data-fleche]");
+      const annonce = bloc.querySelector<HTMLElement>("[data-annonce]");
+      const source = bloc.dataset.source;
+      if (
+        !form ||
+        !succes ||
+        !erreur ||
+        !bouton ||
+        !label ||
+        !fleche ||
+        !annonce ||
+        !source
+      )
+        return;
+
+      const labelInitial = label.textContent ?? "";
+      let enCours = false;
+
+      form.addEventListener("submit", async (evenement) => {
+        evenement.preventDefault();
+        if (enCours) return;
+        enCours = true;
+        bouton.disabled = true;
+        label.textContent = "Envoi…";
+        fleche.hidden = true;
+        erreur.hidden = true;
+        erreur.textContent = "";
+        annonce.textContent = "";
+
+        const corps = collecter(new FormData(form), source);
+
+        try {
+          const reponse = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(corps),
+          });
+          if (reponse.ok) {
+            form.hidden = true;
+            succes.hidden = false;
+            annonce.textContent =
+              succes.textContent?.trim() ?? "Message envoyé.";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+          const charge = await reponse.json().catch(() => null);
+          throw new Error(charge?.error ?? MESSAGE_GENERIQUE);
+        } catch (err) {
+          erreur.textContent =
+            err instanceof Error && err.message
+              ? err.message
+              : MESSAGE_GENERIQUE;
+          erreur.hidden = false;
+          annonce.textContent = erreur.textContent;
+          console.error(err);
+        } finally {
+          enCours = false;
+          bouton.disabled = false;
+          label.textContent = labelInitial;
+          fleche.hidden = false;
+        }
+      });
+    });
+</script>

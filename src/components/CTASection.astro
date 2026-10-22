@@ -1,0 +1,38 @@
+---
+/**
+ * Bloc CTA global (avant le footer). Contenu fixe — utilisé uniquement par Layout.astro.
+ *
+ * Bande nocturne : `data-theme="nocturne"` rebascule les rôles de la charte
+ * (fond charbon, texte papier, filets blanc léger) pour toute la section ; les
+ * classes du site (`bg-paper`, `text-ink`…) pointant sur ces rôles, rien
+ * d'autre n'a besoin de changer. Modèle : l'inscription de `/exemples/site`.
+ */
+---
+
+<section data-theme="nocturne" class="border-b border-divider bg-paper">
+  <div class="quadrillage py-24 md:py-32">
+    {/* Un groupe de trois cases, dans les marges. */}
+    <i class="case" style="--x:0;--y:0;--c:var(--appoint-1)" aria-hidden="true"
+    ></i>
+    <i class="case" style="--x:1;--y:1;--c:var(--appoint-3)" aria-hidden="true"
+    ></i>
+    <i
+      class="case"
+      data-bord="droit"
+      style="--x:0;--y:1;--c:var(--appoint-2)"
+      aria-hidden="true"></i>
+
+    <div class="container-custom relative px-6 text-center md:px-8" data-reveal>
+      <span class="kicker mb-6 block">Contact</span>
+      <h2
+        class="type-display-section mx-auto mb-12 max-w-5xl text-balance text-ink"
+      >
+        Un projet en tête&nbsp;? <em>Parlons-en.</em>
+      </h2>
+      <a href="/contact" class="btn-primary px-8 py-4">
+        Parler de votre projet
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

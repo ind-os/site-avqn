@@ -1,0 +1,44 @@
+---
+/**
+ * KPIs personnels (même contenu que la section À propos sur la HP).
+ * `stacked` : une colonne — adapté à une sidebar étroite (ex. page À propos).
+ */
+interface Props {
+  className?: string;
+  /** Une seule colonne (sidebar) au lieu du grille 3 colonnes md+ */
+  stacked?: boolean;
+  /** Sans ligne horizontale au-dessus (ex. sous un titre sur la page À propos) */
+  noTopBorder?: boolean;
+}
+
+const { className = "", stacked = false, noTopBorder = false } = Astro.props;
+
+const topRule = noTopBorder
+  ? stacked
+    ? "flex flex-col gap-8 sm:gap-10 pt-8"
+    : "grid grid-cols-1 md:grid-cols-3 gap-10 pt-8"
+  : stacked
+    ? "flex flex-col gap-8 sm:gap-10 pt-10 border-t border-divider"
+    : "grid grid-cols-1 md:grid-cols-3 gap-10 pt-10 border-t border-divider";
+---
+
+<div class:list={[topRule, className]}>
+  <div>
+    <div class="font-serif text-3xl sm:text-4xl mb-2 text-ink">+50 000</div>
+    <div class="font-mono text-[10px] uppercase tracking-widest text-grey">
+      Heures de développement
+    </div>
+  </div>
+  <div>
+    <div class="font-serif text-3xl sm:text-4xl mb-2 text-ink">+150</div>
+    <div class="font-mono text-[10px] uppercase tracking-widest text-grey">
+      Projets livrés
+    </div>
+  </div>
+  <div>
+    <div class="font-serif text-3xl sm:text-4xl mb-2 text-ink">+45 000</div>
+    <div class="font-mono text-[10px] uppercase tracking-widest text-grey">
+      Automatisations téléchargées
+    </div>
+  </div>
+</div>

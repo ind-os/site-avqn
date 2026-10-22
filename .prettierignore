@@ -1,0 +1,10 @@
+dist
+node_modules
+.pnpm-store
+pnpm-lock.yaml
+*.min.js
+.astro
+plan-page-*.md
+
+# Copies de la charte (apps/styleguide) — on ne les édite pas, on les recopie.
+src/styles/charte/

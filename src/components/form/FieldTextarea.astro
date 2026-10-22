@@ -1,0 +1,40 @@
+---
+/**
+ * Champ de texte long. Même contrat que `FieldText` : le `name` est la clé
+ * transmise dans la soumission.
+ */
+import { CHAMP, LIBELLE } from "./classes";
+
+interface Props {
+  /** Nom du champ = clé de la soumission. */
+  name: string;
+  label: string;
+  placeholder?: string;
+  rows?: number;
+  required?: boolean;
+  /** Identifiant HTML si le `name` ne suffit pas (deux formulaires par page). */
+  id?: string;
+}
+
+const {
+  name,
+  label,
+  placeholder,
+  rows = 4,
+  required = false,
+  id = name,
+} = Astro.props;
+---
+
+<div>
+  <label for={id} class={LIBELLE}
+    >{label}{required && <span class="text-swiss"> *</span>}</label
+  >
+  <textarea
+    name={name}
+    id={id}
+    rows={rows}
+    required={required}
+    placeholder={placeholder}
+    class={`${CHAMP} resize-y`}></textarea>
+</div>

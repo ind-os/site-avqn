@@ -1,0 +1,109 @@
+/* Copie de apps/styleguide/public/tokens.css : la charte de l'instance. Ne pas éditer ici.
+   Après un changement de charte : cd apps/styleguide && npm run exports, puis recopier ce fichier.
+   Une copie plutôt qu'un @import distant : le contexte Docker d'une app ne voit pas ses voisines,
+   et une page ne doit pas dépendre d'un second hôte pour s'afficher. */
+:root {
+  --couleur-papier: #FAF8F3;
+  --couleur-papier-2: #F1EDE4;
+  --couleur-encre: #211C17;
+  --couleur-charbon: #131313;
+  --couleur-charbon-2: #1E1E1E;
+  --couleur-vermillon: #E0542B;
+  --couleur-vermillon-fonce: #C94A24;
+  --couleur-gris: #6B645C;
+  --couleur-gris-nuit: #B8B8B8;
+  --couleur-filet: #E7E1D8;
+  --couleur-jaune: #FFC94D;
+  --couleur-ciel: #B9D3F7;
+  --couleur-menthe: #A8DDB5;
+  --couleur-rose: #F7B5C4;
+  --couleur-lilas: #CDBBF5;
+  --couleur-rouge: #B3261E;
+  --couleur-rouge-nuit: #F2877B;
+  --couleur-vert: #2F7A4D;
+  --couleur-vert-nuit: #7CCB97;
+  --couleur-bleu: #3B7DD8;
+  --couleur-ambre: #B8860F;
+  --couleur-framboise: #D65F8C;
+  --couleur-violet: #7657C9;
+  --couleur-emeraude: #2C9A6A;
+  --rayon-aucun: 0;
+  --rayon-s: 6px;
+  --rayon-m: 12px;
+  --rayon-l: 20px;
+  --rayon-pilule: 999px;
+  --trait-fin: 1px;
+  --trait-objet: 1.5px;
+  --ombre-aucune: none;
+  --ombre-posee: 0 1px 2px rgba(33, 28, 23, 0.08);
+  --ombre-flottante: 0 8px 24px rgba(33, 28, 23, 0.12);
+  --ombre-objet: 6px 6px 0 var(--teinte-ombre);
+  --espace-xs: 4px;
+  --espace-sm: 8px;
+  --espace-md: 16px;
+  --espace-lg: 32px;
+  --espace-xl: 64px;
+  --espace-2xl: 128px;
+  --duree-vif: 150ms;
+  --duree-pose: 350ms;
+  --duree-rotation: 900ms;
+  --duree-souffle: 2400ms;
+  --courbe-suisse: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --courbe-rebond: cubic-bezier(0.3, 1.6, 0.5, 1);
+  --police-titre: "Instrument Serif", serif;
+  --police-texte: "Geist", system-ui, sans-serif;
+  --police-mono: "Geist Mono", monospace;
+  --police-choc: "Anton", sans-serif;
+  --taille-hero: clamp(2.5rem, 6vw, 4.5rem);
+  --taille-titre: clamp(2rem, 4vw, 3.25rem);
+  --taille-corps: clamp(1.25rem, 2.2vw, 1.6rem);
+  --taille-choc: clamp(3rem, 9vw, 7rem);
+  --taille-appui: 1.0625rem;
+  --taille-surtitre: 0.8125rem;
+  --taille-meta: 0.75rem;
+  --fond: var(--couleur-papier);
+  --surface: var(--couleur-papier-2);
+  --texte: var(--couleur-encre);
+  --discret: var(--couleur-gris);
+  --filet: var(--couleur-filet);
+  --trait: var(--couleur-encre);
+  --accent: var(--couleur-vermillon);
+  --accent-appuye: var(--couleur-vermillon-fonce);
+  --sur-accent: var(--couleur-papier);
+  --appoint-1: var(--couleur-jaune);
+  --appoint-2: var(--couleur-ciel);
+  --appoint-3: var(--couleur-menthe);
+  --appoint-4: var(--couleur-rose);
+  --appoint-5: var(--couleur-lilas);
+  --sur-appoint: var(--couleur-encre);
+  --teinte-ombre: var(--couleur-jaune);
+  --danger: var(--couleur-rouge);
+  --succes: var(--couleur-vert);
+  --donnee-1: var(--couleur-vermillon);
+  --donnee-2: var(--couleur-bleu);
+  --donnee-3: var(--couleur-ambre);
+  --donnee-4: var(--couleur-framboise);
+  --donnee-5: var(--couleur-violet);
+  --donnee-6: var(--couleur-emeraude);
+  --quadrillage-couleur: rgba(33, 28, 23, 0.05);
+  --quadrillage-pas: 46px;
+}
+[data-theme="nocturne"] {
+  --fond: var(--couleur-charbon);
+  --surface: var(--couleur-charbon-2);
+  --texte: var(--couleur-papier);
+  --discret: var(--couleur-gris-nuit);
+  --filet: rgba(255, 255, 255, 0.12);
+  --trait: var(--couleur-papier);
+  --danger: var(--couleur-rouge-nuit);
+  --succes: var(--couleur-vert-nuit);
+  --quadrillage-couleur: rgba(255, 255, 255, 0.055);
+  --quadrillage-pas: 46px;
+}
+.type-hero { font-family: var(--police-titre); font-size: var(--taille-hero); line-height: 1.02; }
+.type-titre { font-family: var(--police-titre); font-size: var(--taille-titre); line-height: 1.05; }
+.type-corps { font-family: var(--police-titre); font-size: var(--taille-corps); line-height: 1.35; }
+.type-choc { font-family: var(--police-choc); font-size: var(--taille-choc); line-height: 0.95; text-transform: uppercase; }
+.type-appui { font-family: var(--police-texte); font-size: var(--taille-appui); line-height: 1.5; font-weight: 500; }
+.type-surtitre { font-family: var(--police-mono); font-size: var(--taille-surtitre); font-weight: 600; text-transform: uppercase; letter-spacing: 0.22em; }
+.type-meta { font-family: var(--police-mono); font-size: var(--taille-meta); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; }

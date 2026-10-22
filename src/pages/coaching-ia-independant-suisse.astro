@@ -1,0 +1,592 @@
+---
+import { etiquetteEtape } from "../lib/etiquettes";
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { citation } from "../data/temoignages";
+
+const title =
+  "Coaching IA pour indépendants : Claude Code sur vos projets | AVQN";
+const description =
+  "Coaching IA individuel pour indépendants et développeurs, à Lausanne ou en visio : trois séances Claude Code sur vos projets réels, pas sur des exercices. Installation, CLAUDE.md, agents, mise en production.";
+
+// À qui ce coaching s'adresse
+const publics = [
+  {
+    titre: "L'indépendant qui a un outil à construire",
+    texte:
+      "Vous avez une idée précise et personne pour la coder. On construit votre outil ensemble. Vous repartez en sachant le faire évoluer.",
+  },
+  {
+    titre: "Le développeur qui plafonne",
+    texte:
+      "Vous utilisez déjà Claude Code, mais il vous sert surtout d'autocomplétion. On passe à CLAUDE.md, aux agents spécialisés et à une vraie revue, sur votre dépôt.",
+  },
+  {
+    titre: "Le responsable qui veut décider en connaissance de cause",
+    texte:
+      "Vous devez décider pour votre équipe. Trois séances les mains dans le projet, puis vous décidez avec des faits.",
+  },
+];
+
+// Le déroulé, étape par étape
+const etapes = [
+  {
+    kicker: "Avant",
+    titre: "Le premier échange",
+    texte:
+      "On parle de ce que vous voulez construire et d'où vous partez. Je vous recommande le coaching, une séance, autre chose ou rien pour l'instant.",
+  },
+  {
+    kicker: "Séance 1",
+    titre: "Installer et cadrer",
+    texte:
+      "Votre machine, votre projet. On installe, on configure et on écrit le premier CLAUDE.md. Puis on choisit un premier chantier assez petit pour aboutir, assez utile pour compter.",
+  },
+  {
+    kicker: "Séance 2",
+    titre: "Prendre de la vitesse sans perdre le contrôle",
+    texte:
+      "On reprend ce que vous avez fait, surtout ce qui a mal tourné. Vous apprenez à découper une demande, relire l'agent, revenir en arrière et poser des garde-fous.",
+  },
+  {
+    kicker: "Séance 3",
+    titre: "Mettre en ligne et tenir dans la durée",
+    texte:
+      "Votre projet passe en conditions réelles : hébergement, sauvegardes et vérifications avant mise en ligne. On voit aussi la suite. Vous repartez avec une méthode qui sert sur le projet suivant.",
+  },
+];
+
+// Ce que vous saurez faire à la fin
+const acquis = [
+  {
+    titre: "Cadrer une demande",
+    texte: "Formuler une demande claire et découper ce qui est trop gros.",
+  },
+  {
+    titre: "Relire ce que l'IA produit",
+    texte: "Repérer ce qui est fragile, faux ou simplement inutile.",
+  },
+  {
+    titre: "Garder le contrôle du projet",
+    texte: "Versionner, revenir en arrière et savoir ce qui a changé.",
+  },
+  {
+    titre: "Configurer votre environnement",
+    texte:
+      "Un fichier CLAUDE.md qui tient, les commandes et les agents adaptés à votre façon de travailler.",
+  },
+  {
+    titre: "Mettre en ligne sans trembler",
+    texte:
+      "Vérifier l'hébergement, les sauvegardes et les données avant de mettre en ligne.",
+  },
+  {
+    titre: "Continuer seul",
+    texte: "Savoir quoi faire quand ça bloque. Savoir où chercher.",
+  },
+];
+
+const faqs = [
+  {
+    question: "Je ne suis pas développeur. Ce coaching est-il pour moi ?",
+    answer:
+      "Oui, c'est même le cas le plus fréquent. Claude Code écrit le code ; vous apprenez à lui demander la bonne chose, à vérifier, à mettre en ligne sans casse. Le directeur du groupe Vetmint fait évoluer son tableau de bord multi-cliniques sans savoir coder.",
+  },
+  {
+    question: "Pourquoi pas un cours en ligne ou des vidéos ?",
+    answer:
+      "Parce qu'un cours en ligne ne peut pas ouvrir votre projet. Vos vraies difficultés viennent de votre contexte : votre code existant, vos données, vos contraintes.",
+  },
+  {
+    question: "Trois séances, ce n'est pas un peu court ?",
+    answer:
+      "Le coaching ne remplace pas votre pratique, il l'oriente : le vrai travail se fait entre les séances, avec un accès direct quand vous bloquez. Si le projet demande davantage, on ajoute des séances à l'unité.",
+  },
+  {
+    question:
+      "J'ai déjà essayé Claude Code et ça part en vrille au bout d'une heure.",
+    answer:
+      "Presque toujours les trois mêmes causes : une demande trop large, aucun garde-fou pour revenir en arrière, aucun contexte donné à l'agent sur votre projet. C'est le programme de la première séance.",
+  },
+  {
+    question: "En visio, est-ce que ça vaut le présentiel ?",
+    answer:
+      "Oui. On travaille sur votre machine dans les deux cas, avec partage d'écran en visio. En région lausannoise, le tête-à-tête est avec plaisir.",
+  },
+  {
+    question: "On travaille forcément avec Claude Code ?",
+    answer:
+      "Claude Code pour construire, n8n pour faire circuler de l'information entre des outils existants, parfois les deux. On en parle ensemble.",
+  },
+  {
+    question: "Et pour mon équipe ?",
+    answer:
+      "Le coaching individuel installe une pratique chez une personne. Une équipe demande en plus des conventions communes et une revue partagée : c'est un format différent, sur six semaines.",
+  },
+];
+
+// Citations affichées : deux génériques (placeholders) et un verbatim réel du corpus.
+const citations = [
+  citation("felix-sandri"),
+  citation("sebastian-haag"),
+  citation("antoine-aigroz"),
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Coaching Claude Code individuel",
+  serviceType: "Coaching Claude Code en 1-to-1",
+  description:
+    "Coaching Claude Code individuel : trois séances de deux heures sur quatre à six semaines, sur vos projets réels, à Lausanne ou en visio.",
+  url: "https://www.avqn.ch/coaching-ia-independant-suisse",
+  provider: {
+    "@type": "ProfessionalService",
+    name: "AVQN - Emmanuel Bernard",
+    url: "https://www.avqn.ch",
+  },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Suisse romande" },
+    { "@type": "City", name: "Lausanne" },
+  ],
+  availableLanguage: "fr",
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Coaching Claude Code",
+      description:
+        "Trois séances de deux heures réparties sur quatre à six semaines, accès direct entre les séances. Tarif communiqué lors du premier échange.",
+      availability: "https://schema.org/InStock",
+      url: "https://www.avqn.ch/coaching-ia-independant-suisse#formats",
+    },
+    {
+      "@type": "Offer",
+      name: "Séance à l'unité",
+      description:
+        "Une séance de deux heures, à Lausanne ou en visio. Tarif communiqué lors du premier échange.",
+      availability: "https://schema.org/InStock",
+      url: "https://www.avqn.ch/coaching-ia-independant-suisse#formats",
+    },
+  ],
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={[serviceJsonLd, faqJsonLd]}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Coaching individuel, sur vos vrais projets"
+    subtitle="Trois séances en tête-à-tête sur ce que vous avez réellement à construire, jusqu'à ce que vous avanciez seul. À Lausanne ou en visio, en français."
+    breadcrumb={[{ label: "Coaching IA pour indépendants" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir les formats"
+    ctaSecondaryHref="#formats"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Le constat */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le vrai blocage</span>
+          <h2 class="text-3xl md:text-4xl">
+            Le problème n'est presque jamais l'outil
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            La première heure est euphorique : ça écrit, ça teste, ça corrige
+            tout seul. Puis le projet grossit. Les réponses deviennent
+            approximatives, vous perdez le fil de ce qui a changé, quelque chose
+            casse et vous ne savez pas quoi remettre en place. À la fin de la
+            semaine, vous avez beaucoup de code et peu de confiance.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Ce qui manque, c'est une méthode. Elle ne s'attrape pas dans une
+            vidéo : elle dépend de ce que vous construisez. Aujourd'hui encore,
+            il m'arrive de me faire avoir : je demande trop d'un coup, je ne
+            relis pas assez, puis je passe l'heure suivante à défaire. La
+            différence, c'est que je sais quoi faire quand ça arrive.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Pour qui */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Pour qui</span>
+          <h2 class="text-3xl md:text-4xl">À qui ce coaching s'adresse</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          {
+            publics.map((profil) => (
+              <div class="border border-divider bg-paper2 rounded-md p-6">
+                <h3 class="text-xl mb-2">{profil.titre}</h3>
+                <p class="text-grey leading-relaxed">{profil.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-lg text-grey leading-relaxed max-w-3xl">
+          Le point commun : vous arrivez avec un vrai projet. Pas une envie
+          vague de « se mettre à l'IA ».
+        </p>
+      </div>
+    </section>
+
+    {/* 3. Le déroulé */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-12"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le déroulé</span>
+          <h2 class="text-3xl md:text-4xl">Comment ça se passe</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Trois séances de deux heures sur quatre à six semaines, en
+            tête-à-tête, à Lausanne ou en visio. Entre deux séances, vous
+            travaillez seul sur votre projet : c'est là que l'autonomie
+            s'installe.
+          </p>
+        </div>
+
+        <ol class="border-t border-divider">
+          {
+            etapes.map((etape, index) => (
+              <li class="grid gap-4 md:grid-cols-12 md:gap-8 border-b border-divider py-8 md:py-10">
+                <div class="md:col-span-3">
+                  <span class={etiquetteEtape(index)}>{etape.kicker}</span>
+                </div>
+                <div class="md:col-span-9 max-w-3xl">
+                  <h3 class="text-xl md:text-2xl mb-3">{etape.titre}</h3>
+                  <p class="text-grey leading-relaxed">{etape.texte}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="border-l-2 border-swiss bg-paper2 rounded-r-md p-6 md:p-8">
+          <h3 class="text-xl md:text-2xl mb-3">
+            Vous n'êtes pas seul entre deux rendez-vous
+          </h3>
+          <p class="text-grey leading-relaxed max-w-3xl">
+            Vous avez un accès direct pendant le coaching. Un blocage, un doute,
+            une erreur : vous écrivez, je réponds. Cela évite de rester coincé
+            seul une soirée.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Ce que vous saurez faire à la fin */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le résultat</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce que vous saurez faire à la fin
+          </h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-x-10 gap-y-8">
+          {
+            acquis.map((item) => (
+              <div class="border-l-2 border-ink pl-6">
+                <h3 class="text-xl mb-2">{item.titre}</h3>
+                <p class="text-grey leading-relaxed">{item.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Le différenciateur */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="grid gap-10 lg:grid-cols-12 lg:gap-14 lg:items-start">
+          <div class="lg:col-span-7 space-y-5">
+            <span class="kicker block">La différence</span>
+            <h2 class="text-3xl md:text-4xl">
+              Sur vos projets, pas sur des exercices
+            </h2>
+            <p class="text-lg text-grey leading-relaxed">
+              Beaucoup de formations Claude Code partent d'un projet fabriqué
+              pour l'occasion. Vos difficultés arrivent sur votre vrai projet.
+            </p>
+            <p class="text-lg text-grey leading-relaxed">
+              Ici, on ouvre votre projet dès la première séance : code hérité,
+              contraintes métier, client qui change d'avis ou base de données
+              mal fichue.
+            </p>
+            <p class="text-lg text-grey leading-relaxed">
+              Je code encore tous les jours en production. Ce que je vous montre
+              est issu de ce travail.
+            </p>
+            <p class="text-grey leading-relaxed">
+              <a
+                href="/formation-ia-entreprise-suisse"
+                class="font-bold underline">Voir l'accompagnement d'équipe</a
+              ><br />
+              <a href="/claude-code-suisse" class="font-bold underline"
+                >Claude Code, ce que c'est et ce que ça change</a
+              >
+            </p>
+          </div>
+          <div class="lg:col-span-5">
+            <img
+              src="/images/portraits/emmanuel-bernard-coaching-individuel-ia-lausanne.webp"
+              alt="Emmanuel Bernard en séance de coaching individuel Claude Code à Lausanne"
+              class="w-full rounded-md border border-divider object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 5 bis. Seul ou accompagné */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le choix</span>
+          <h2 class="text-3xl md:text-4xl">Seul·e ou accompagné·e&nbsp;?</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            En solo, vous irez loin sur un prototype. Pour un outil dont votre
+            activité dépend, il y a deux chemins : apprendre à le construire
+            vous-même, avec les réflexes qui évitent les mois perdus — c'est ce
+            coaching ; ou me le faire construire et vous le faire livrer en
+            production, c'est le
+            <a href="/expert-ia-suisse" class="font-bold underline"
+              >CTO IA à la demande</a
+            >. Dans les deux cas, l'objectif est le même : que vous gardiez les
+            clés.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Pour comparer les formats côte à côte :
+            <a href="/services" class="font-bold underline"
+              >choisir comment travailler avec moi</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 6. Prérequis */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Prérequis</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce dont vous avez besoin pour commencer
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Un ordinateur, un projet, l'envie de mettre les mains dedans. Pas
+            besoin de savoir programmer ni de connaître le terminal : on
+            l'apprivoise en séance 1.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Ce qui aide vraiment : arriver avec un besoin précis. « Je veux un
+            tableau de bord qui reprend mes exports comptables » est un
+            excellent point de départ. « Je veux voir ce que l'IA peut faire »
+            nous fera perdre la première séance.
+          </p>
+        </div>
+        <a
+          href="/contact"
+          class="inline-block px-8 py-4 rounded-md bg-swiss text-paper font-semibold text-sm hover:bg-swiss-dark transition-colors"
+        >
+          Parler de votre projet
+        </a>
+      </div>
+    </section>
+
+    {/* 7. Formats */}
+    <section id="formats" class="border-b border-divider scroll-mt-24">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Formats</span>
+          <h2 class="text-3xl md:text-4xl">
+            Deux formats, selon ce que vous cherchez
+          </h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-2">
+          <div class="objet flex flex-col p-8">
+            <span class="kicker mb-4 block">Le format recommandé</span>
+            <h3 class="text-2xl md:text-3xl mb-2">Coaching Claude Code</h3>
+            <p class="text-lg text-ink mb-3">
+              Tarif communiqué lors du premier échange
+            </p>
+            <p
+              class="font-mono text-xs uppercase tracking-widest text-grey mb-5"
+            >
+              3 séances de 2 h · 4 à 6 semaines · Lausanne ou visio
+            </p>
+            <p class="text-grey leading-relaxed mb-8">
+              Le parcours complet, avec l'accès direct entre les séances. Le
+              format que je recommande dans la grande majorité des cas.
+            </p>
+            <a href="/contact" class="btn-primary mt-auto px-8 py-4">
+              Parler de votre projet
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="card flex flex-col p-8">
+            <h3 class="text-2xl md:text-3xl mb-2">Séance à l'unité</h3>
+            <p class="text-lg text-ink mb-3">
+              Tarif communiqué lors du premier échange
+            </p>
+            <p
+              class="font-mono text-xs uppercase tracking-widest text-grey mb-5"
+            >
+              2 h · Lausanne ou visio
+            </p>
+            <p class="text-grey leading-relaxed mb-8">
+              Pour un blocage précis : une architecture à valider, un projet qui
+              part en vrille, une décision à trancher. Vous repartez avec la
+              solution et la raison derrière.
+            </p>
+            <a href="/contact" class="btn-outline mt-auto px-8 py-4">
+              Réserver une séance
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 8. FAQ */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Questions fréquentes</h2>
+        <div class="border-t border-divider">
+          {
+            faqs.map((faq, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-grey mt-8">
+          <a href="/formation-ia-entreprise-suisse" class="font-bold underline"
+            >Voir l'accompagnement d'équipe</a
+          >
+        </p>
+      </div>
+    </section>
+
+    {/* 9. Témoignages */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Ils sont devenus autonomes</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce qu'en disent les personnes accompagnées
+          </h2>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3 md:items-start">
+          {
+            citations.map((c) => (
+              <figure class="border border-divider bg-paper2 rounded-md p-6">
+                <blockquote class="text-grey leading-relaxed">
+                  « {c.texte} »
+                </blockquote>
+                <figcaption class="mt-5 font-mono text-xs uppercase tracking-widest text-grey">
+                  {c.attribution}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 10. CTA final */}
+    <section data-theme="nocturne" class="border-b border-divider bg-paper">
+      <div class="quadrillage py-20 md:py-28">
+        {/* Un groupe de trois cases, dans les marges. */}
+        <i
+          class="case"
+          style="--x:0;--y:0;--c:var(--appoint-1)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          style="--x:1;--y:0;--c:var(--appoint-3)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          data-bord="droit"
+          style="--x:0;--y:1;--c:var(--appoint-2)"
+          aria-hidden="true"></i>
+        <div class="container-custom relative px-6 md:px-8">
+          <span class="kicker mb-6 block">Contact</span>
+          <h2 class="type-display-section text-ink mb-6 max-w-3xl">
+            Commençons par un entretien
+          </h2>
+          <p class="text-lg text-grey leading-relaxed max-w-3xl mb-8">
+            Vous me racontez ce que vous voulez construire et où vous bloquez.
+            Je vous dis ce que ça demande, quel format a du sens, combien de
+            temps c'est réaliste.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/contact" class="btn-primary px-8 py-4">
+              Parler de votre projet
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="/claude-code-suisse" class="btn-outline px-8 py-4">
+              Comprendre Claude Code d'abord
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

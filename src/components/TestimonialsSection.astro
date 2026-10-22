@@ -1,0 +1,59 @@
+---
+/**
+ * Section témoignages — corpus verbatim (`src/data/temoignages.ts`), titre et
+ * ordre pilotés par la page. Les témoignages non listés dans `order` restent
+ * affichés, à la suite.
+ */
+import { temoignages } from "../data/temoignages";
+import TestimonialsCarousel from "./TestimonialsCarousel.tsx";
+
+interface Props {
+  title: string;
+  /** Identifiants des témoignages à placer en tête, dans cet ordre. */
+  order?: string[];
+  /** Bande nocturne : la section passe la parole, le registre visuel change avec. */
+  sombre?: boolean;
+}
+
+const { title, order = [], sombre = false } = Astro.props;
+
+/** Rang de tri : la position dans `order`, puis l'ordre naturel du corpus. */
+function rang(id: string, index: number) {
+  const position = order.indexOf(id);
+  return position === -1 ? order.length + index : position;
+}
+
+const ordonnes = temoignages
+  .map((temoignage, index) => ({
+    temoignage,
+    cle: rang(temoignage.id, index),
+  }))
+  .sort((a, b) => a.cle - b.cle)
+  .map((entry) => entry.temoignage);
+---
+
+<section
+  data-theme={sombre ? "nocturne" : undefined}
+  class:list={["border-b border-divider", sombre && "bg-paper"]}
+>
+  <div
+    class:list={[
+      "container-custom relative border-divider xl:border-l xl:border-r",
+    ]}
+  >
+    <div class="relative z-10 px-6 pb-12 pt-16 md:px-10 md:pb-16 md:pt-24">
+      <div data-reveal>
+        <h2 class="type-display-section">
+          {title}
+        </h2>
+      </div>
+    </div>
+    <div
+      class="relative z-10 px-6 pb-16 md:px-10 md:pb-24"
+      data-reveal
+      data-reveal-delay="1"
+    >
+      <TestimonialsCarousel client:load testimonials={ordonnes} />
+    </div>
+  </div>
+</section>

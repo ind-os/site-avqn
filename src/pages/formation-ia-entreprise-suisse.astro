@@ -1,0 +1,512 @@
+---
+import { etiquetteEtape } from "../lib/etiquettes";
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import { citation } from "../data/temoignages";
+
+const title =
+  "Formation IA en entreprise : adopter Claude Code en équipe | AVQN";
+const description =
+  "Formation IA en entreprise en Suisse romande : six semaines pour mettre Claude Code entre les mains d'une équipe. Conventions CLAUDE.md, revue de code, garde-fous, sur vos dépôts.";
+
+// Six semaines, sur votre code
+const temps = [
+  {
+    kicker: "Semaines 1 et 2",
+    titre: "Poser le socle commun",
+    texte:
+      "Votre base de code réelle. Installation homogène, premier fichier CLAUDE.md qui décrit votre architecture, vos conventions, vos interdits. Chacun sort avec le même point de départ.",
+  },
+  {
+    kicker: "Semaines 3 et 4",
+    titre: "Travailler pour de vrai",
+    texte:
+      "L'équipe traite de vraies tâches du backlog avec l'agent. On relit ce qui sort : le bon, le fragile et ce qui n'aurait pas dû être proposé. C'est la partie la plus utile, et parfois la moins confortable.",
+  },
+  {
+    kicker: "Semaines 5 et 6",
+    titre: "Installer les garde-fous",
+    texte:
+      "On écrit ce qui reste après mon départ : règles de revue, tests attendus, ce qui exige une relecture humaine et les agents utiles chez vous.",
+  },
+];
+
+// Ce qui reste après six semaines
+const livrables = [
+  {
+    titre: "Vos conventions, écrites",
+    texte:
+      "Un CLAUDE.md par dépôt, maintenu par l'équipe. Il donne à l'agent le contexte qu'un nouveau collègue mettrait du temps à acquérir.",
+  },
+  {
+    titre: "Une règle de revue adaptée",
+    texte:
+      "Les erreurs d'une IA ne sont pas au même endroit que celles d'un collègue. L'équipe repart avec une liste de points de contrôle issue de ses propres incidents.",
+  },
+  {
+    titre: "Des garde-fous automatiques",
+    texte:
+      "Tests, contrôles de style et vérifications avant mise en production : ce qui peut être vérifié automatiquement ne dépend pas de l'attention de chacun.",
+  },
+];
+
+// La capacité reste chez vous
+const capacites = [
+  {
+    titre: "Confier une tâche entière à l'agent",
+    texte:
+      "Découper, cadrer, laisser travailler, reprendre la main au bon moment.",
+  },
+  {
+    titre: "Relire vite et bien",
+    texte:
+      "Repérer en quelques minutes ce qui est fragile dans un diff produit par une IA.",
+  },
+  {
+    titre: "Tenir des conventions communes",
+    texte: "Le même cadre pour tout le monde, maintenu par l'équipe elle-même.",
+  },
+  {
+    titre: "Décider ce qui est automatisé",
+    texte:
+      "Ce qui part sans validation, ce qui attend un humain. La frontière est écrite, pas implicite.",
+  },
+  {
+    titre: "Former le prochain arrivant",
+    texte:
+      "Votre documentation existe. Un nouveau développeur est opérationnel en quelques jours.",
+  },
+];
+
+// Le cadre standard
+const cadre = [
+  { label: "Durée", detail: "6 semaines" },
+  { label: "Participants", detail: "4 à 6 personnes de votre équipe" },
+  {
+    label: "Lieu",
+    detail: "Chez vous en Suisse romande, ou à distance, souvent les deux",
+  },
+  {
+    label: "Support de travail",
+    detail: "Vos dépôts, votre backlog, vos processus",
+  },
+  {
+    label: "Point de départ",
+    detail: "Un premier échange, sans engagement",
+  },
+  { label: "Tarif", detail: "Sur devis, après ce premier échange" },
+];
+
+const faqs = [
+  {
+    question: "Mon équipe utilise déjà Claude Code. Qu'est-ce que ça apporte ?",
+    answer:
+      "Les équipes que je rencontre l'utilisent souvent déjà. Ce qui manque, c'est un cadre partagé : conventions, revue et frontière entre ce qui part seul et ce qui attend un humain.",
+  },
+  {
+    question: "On a déjà des tests et de la revue de code. C'est suffisant ?",
+    answer:
+      "C'est un bon point de départ, ça ne suffit pas. Une revue humaine est calibrée pour les erreurs qu'un humain fait ; un agent en fait d'autres, du code qui a l'air correct et traite mal un cas limite. Il faut recalibrer, pas repartir de zéro.",
+  },
+  {
+    question: "Comment gérer les développeurs qui ne veulent pas s'y mettre ?",
+    answer:
+      "En les écoutant, parce qu'ils ont souvent raison sur le fond. La réticence porte sur la qualité de ce qui part en production, le sujet même de cet accompagnement. Les plus critiques deviennent régulièrement les meilleures relectrices.",
+  },
+  {
+    question: "Nos données de clients peuvent-elles être exposées ?",
+    answer:
+      "Le code soumis à l'agent transite par les serveurs du fournisseur. Plusieurs façons de cadrer ça existent selon la sensibilité de vos dépôts. On tranche ce point par écrit pendant l'accompagnement.",
+  },
+  {
+    question: "Six semaines, on n'a pas ce temps-là.",
+    answer:
+      "Six semaines calendaires, pas six semaines de formation à plein temps. Vos développeurs continuent sur leur backlog : c'est précisément le support de l'accompagnement.",
+  },
+  {
+    question: "Et si on veut juste une journée de découverte ?",
+    answer:
+      "Une journée fait découvrir un outil, elle n'installe pas une pratique dans une équipe. Si c'est ce que vous cherchez, dites-le-moi, je vous orienterai.",
+  },
+];
+
+// Citations affichées : deux verbatims réels du corpus et une générique (placeholder).
+const citations = [
+  citation("serge-reymond"),
+  citation("olivier-dommange"),
+  citation("ewen-kerharo"),
+];
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Accompagnement d'équipe Claude Code",
+  serviceType: "Accompagnement à l'adoption de Claude Code en équipe",
+  description:
+    "Six semaines sur vos dépôts et vos processus réels pour que votre équipe travaille avec Claude Code sans que la qualité du code en pâtisse : conventions communes, revue adaptée, garde-fous.",
+  url: "https://www.avqn.ch/formation-ia-entreprise-suisse",
+  provider: {
+    "@type": "ProfessionalService",
+    name: "AVQN - Emmanuel Bernard",
+    url: "https://www.avqn.ch",
+  },
+  areaServed: [{ "@type": "AdministrativeArea", name: "Suisse romande" }],
+  availableLanguage: "fr",
+  offers: {
+    "@type": "Offer",
+    name: "Accompagnement d'équipe, 6 semaines",
+    description:
+      "Sur devis, après un premier échange. 4 à 6 personnes, sur vos dépôts et votre backlog.",
+    availability: "https://schema.org/InStock",
+    url: "https://www.avqn.ch/contact",
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={[serviceJsonLd, faqJsonLd]}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Accompagnement d'équipe : six semaines sur vos dépôts"
+    subtitle="Six semaines sur vos dépôts et vos processus réels, pour que votre équipe travaille avec Claude Code sans que la qualité du code en pâtisse. Conventions communes, revue, garde-fous."
+    breadcrumb={[{ label: "Formation IA en entreprise" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir le déroulé des six semaines"
+    ctaSecondaryHref="#deroule"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Le constat */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Ce qui se passe déjà chez vous</span>
+          <h2 class="text-3xl md:text-4xl">
+            L'IA est entrée dans votre équipe par la porte de derrière
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Personne n'a pris de décision. Deux développeurs se sont abonnés de
+            leur côté, un troisième utilise l'outil de son éditeur, un quatrième
+            n'y touche pas parce qu'il trouve ça dangereux. Pendant quelques
+            semaines, tout va bien : les tickets se ferment plus vite.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Puis quelqu'un doit reprendre le travail d'un autre. Le code
+            fonctionne, il est propre, il est même bien nommé. Simplement, plus
+            personne ne sait pourquoi il fait ce qu'il fait. La dette technique
+            classique se voit : elle est laide, elle est lente. Celle-là est
+            invisible.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Si le sujet est encore neuf pour vous : <a
+              href="/claude-code-suisse"
+              class="font-bold underline">ce qu'est Claude Code, en clair</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. L'angle */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le sujet</span>
+          <h2 class="text-3xl md:text-4xl">
+            La vitesse, votre équipe la trouvera toute seule
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            En deux jours, n'importe quel développeur correct produit beaucoup
+            plus de code avec un agent. Aucun accompagnement ne se justifie pour
+            ça.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Ce qui demande du travail, c'est que ce code tienne : relu par
+            quelqu'un qui sait quoi chercher, couvert par des tests que l'agent
+            n'a pas écrits seul, conforme aux conventions de la maison. Et
+            réversible quand la mise en production tourne mal un vendredi soir.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Ces réflexes existent déjà chez vous pour le code écrit à la main.
+            Il faut les réoutiller pour un code produit dix fois plus vite, par
+            quelqu'un qui n'assiste à aucune réunion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. Le déroulé */}
+    <section id="deroule" class="border-b border-divider scroll-mt-24">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-12"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le déroulé</span>
+          <h2 class="text-3xl md:text-4xl">Six semaines, sur votre code</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Quatre à six personnes, sur vos dépôts, avec vos contraintes. Aucune
+            journée sur un projet d'exercice. Le rythme s'ajuste à votre charge,
+            la forme standard est celle-ci.
+          </p>
+        </div>
+
+        <ol class="border-t border-divider">
+          {
+            temps.map((etape, index) => (
+              <li class="grid gap-4 md:grid-cols-12 md:gap-8 border-b border-divider py-8 md:py-10">
+                <div class="md:col-span-3">
+                  <span class={etiquetteEtape(index)}>{etape.kicker}</span>
+                </div>
+                <div class="md:col-span-9 max-w-3xl">
+                  <h3 class="text-xl md:text-2xl mb-3">{etape.titre}</h3>
+                  <p class="text-grey leading-relaxed">{etape.texte}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="border-l-2 border-swiss bg-paper2 rounded-r-md p-6 md:p-8">
+          <h3 class="text-xl md:text-2xl mb-3">
+            Ce que je fais pendant ce temps
+          </h3>
+          <p class="text-grey leading-relaxed max-w-3xl">
+            Je travaille avec vos développeurs, pas devant eux. Sessions en
+            binôme, revues de pull requests réelles, réponses aux questions
+            quand elles arrivent. Aucune journée de diaporama.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Ce qu'on installe */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le livrable</span>
+          <h2 class="text-3xl md:text-4xl">Ce qui reste après six semaines</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          {
+            livrables.map((carte) => (
+              <div class="border border-divider bg-paper2 rounded-md p-6">
+                <h3 class="text-xl mb-2">{carte.titre}</h3>
+                <p class="text-grey leading-relaxed">{carte.texte}</p>
+              </div>
+            ))
+          }
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Un cadre sur les données</h3>
+            <p class="text-grey leading-relaxed mb-4">
+              Ce qui peut être soumis à un modèle, ce qui ne doit jamais sortir,
+              comment traiter les dépôts qui contiennent des données de clients.
+              Un point à trancher explicitement en Suisse.
+            </p>
+            <a
+              href="/ia-lpd-suisse"
+              class="text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              IA et LPD en Suisse : ce que dit la loi →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Le résultat */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le résultat</span>
+          <h2 class="text-3xl md:text-4xl">La capacité reste chez vous</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-x-10 gap-y-8">
+          {
+            capacites.map((item) => (
+              <div class="border-l-2 border-ink pl-6">
+                <h3 class="text-xl mb-2">{item.titre}</h3>
+                <p class="text-grey leading-relaxed">{item.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 6. Format et cadre */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Le format</span>
+          <h2 class="text-3xl md:text-4xl">Le cadre standard</h2>
+        </div>
+
+        <dl class="border-t border-divider max-w-4xl">
+          {
+            cadre.map((ligne) => (
+              <div class="grid gap-1 md:grid-cols-12 md:gap-8 border-b border-divider py-5">
+                <dt class="md:col-span-4">
+                  <span class="kicker block">{ligne.label}</span>
+                </dt>
+                <dd class="md:col-span-8 text-lg text-grey">{ligne.detail}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            Le devis se pose après un premier échange : quatre développeurs sur
+            un seul dépôt et six personnes réparties sur cinq applications ne
+            demandent pas le même travail. Au forfait, connu avant de commencer.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Pour faire monter une seule personne,
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="font-bold underline">le coaching Claude Code individuel</a
+            > est plus adapté et bien moins cher.
+          </p>
+        </div>
+
+        <a
+          href="/contact"
+          class="inline-block px-8 py-4 rounded-md bg-swiss text-paper font-semibold text-sm hover:bg-swiss-dark transition-colors"
+        >
+          Parler de votre projet
+        </a>
+      </div>
+    </section>
+
+    {/* 7. FAQ */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Questions fréquentes</h2>
+        <div class="border-t border-divider">
+          {
+            faqs.map((faq, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <p class="text-grey mt-8">
+          <a href="/ia-lpd-suisse" class="font-bold underline"
+            >IA et LPD en Suisse</a
+          >
+        </p>
+      </div>
+    </section>
+
+    {/* 8. Témoignages */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Des équipes devenues autonomes</span>
+          <h2 class="text-3xl md:text-4xl">
+            Ce qu'en disent les équipes accompagnées
+          </h2>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3 md:items-start">
+          {
+            citations.map((c) => (
+              <figure class="border border-divider bg-paper2 rounded-md p-6">
+                <blockquote class="text-grey leading-relaxed">
+                  « {c.texte} »
+                </blockquote>
+                <figcaption class="mt-5 font-mono text-xs uppercase tracking-widest text-grey">
+                  {c.attribution}
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 9. CTA final */}
+    <section data-theme="nocturne" class="border-b border-divider bg-paper">
+      <div class="quadrillage py-20 md:py-28">
+        {/* Un groupe de trois cases, dans les marges. */}
+        <i
+          class="case"
+          style="--x:0;--y:0;--c:var(--appoint-1)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          style="--x:1;--y:0;--c:var(--appoint-3)"
+          aria-hidden="true"></i>
+        <i
+          class="case"
+          data-bord="droit"
+          style="--x:0;--y:1;--c:var(--appoint-2)"
+          aria-hidden="true"></i>
+        <div class="container-custom relative px-6 md:px-8">
+          <span class="kicker mb-6 block">Contact</span>
+          <h2 class="type-display-section text-ink mb-6 max-w-3xl">
+            Commençons par regarder votre situation
+          </h2>
+          <p class="text-lg text-grey leading-relaxed max-w-3xl mb-8">
+            Un entretien, sans engagement. Comment votre équipe travaille
+            aujourd'hui, ce qui est déjà en place, ce qui vous inquiète. J'en
+            ressors avec une recommandation honnête.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="/contact" class="btn-primary px-8 py-4">
+              Parler de votre projet
+              <span aria-hidden="true">→</span>
+            </a>
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="btn-outline px-8 py-4"
+            >
+              Le coaching individuel
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

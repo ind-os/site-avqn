@@ -1,0 +1,141 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  /** Image latérale optionnelle — si absente, le formulaire est centré pleine largeur. */
+  image?: string;
+  imageAlt?: string;
+  pageTitle: string;
+  pageDescription: string;
+  /** Troisième colonne du bloc contact (ex. « Lausanne et en visio partout ailleurs »). */
+  location?: string;
+}
+
+const {
+  title,
+  description,
+  image,
+  imageAlt,
+  pageTitle,
+  pageDescription,
+  location,
+} = Astro.props;
+---
+
+<Layout title={pageTitle} description={pageDescription} hideGlobalCta={true}>
+  <main class="min-h-screen">
+    <section class="quadrillage border-b border-divider">
+      {/* Un groupe de deux cases dans la bande du haut, à droite. */}
+      <i
+        class="case"
+        data-bord="droit"
+        style="--x:0;--y:0;--c:var(--appoint-3)"
+        aria-hidden="true"></i>
+      <i
+        class="case"
+        data-bord="droit"
+        style="--x:1;--y:0;--c:var(--appoint-1)"
+        aria-hidden="true"></i>
+      <div
+        class="container-custom relative border-divider xl:border-l xl:border-r"
+      >
+        {
+          image ? (
+            /* Disposition deux colonnes : formulaire à gauche, image à droite */
+            <div class="grid md:grid-cols-2 gap-0 min-h-[80vh]">
+              <div class="p-6 md:p-8 lg:p-12 flex flex-col justify-start items-center border-b md:border-b-0 md:border-r border-divider md:pt-12 lg:pt-16">
+                <div class="w-full max-w-lg flex flex-col items-stretch">
+                  <h1 class="type-display-section mb-8 text-center text-balance">
+                    {title}
+                  </h1>
+                  <div class="relative w-full mb-8">
+                    <div class="objet relative p-6 text-center md:p-8">
+                      <slot name="formulaire" />
+                    </div>
+                  </div>
+                  <p class="text-grey leading-relaxed text-center text-balance">
+                    {description}
+                  </p>
+                </div>
+              </div>
+              <div class="overflow-hidden min-h-[300px] md:min-h-0">
+                <img
+                  src={image}
+                  alt={imageAlt}
+                  class="w-full h-full object-cover opacity-80"
+                />
+              </div>
+            </div>
+          ) : (
+            /* Disposition centrée pleine largeur : formulaire au centre */
+            <div class="flex flex-col items-center px-6 py-16 md:py-24 lg:py-32">
+              <div class="w-full max-w-xl flex flex-col items-stretch">
+                <h1 class="type-display-section mb-4 text-center text-balance">
+                  {title}
+                </h1>
+                <p class="text-grey leading-relaxed text-center text-balance mb-10">
+                  {description}
+                </p>
+                <div class="relative w-full">
+                  {/* Carte formulaire — l'objet posé sur le quadrillage. */}
+                  <div class="objet relative p-6 md:p-10">
+                    <slot name="formulaire" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    {/* Sections propres à la page (ex. « ce qui se passe ensuite ») */}
+    <slot />
+
+    {/* Contact — commun à toutes les pages d'action */}
+    <section class="border-b border-divider">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="px-6 md:px-8 py-12 md:py-16">
+          <div class="flex flex-wrap gap-12 md:gap-16">
+            <div>
+              <span
+                class="font-mono text-xs uppercase tracking-widest text-grey block mb-2"
+                >Email</span
+              >
+              <a
+                href="mailto:hello@avqn.ch"
+                class="text-lg font-semibold text-ink hover:text-swiss transition-colors"
+                >hello@avqn.ch</a
+              >
+            </div>
+            <div>
+              <span
+                class="font-mono text-xs uppercase tracking-widest text-grey block mb-2"
+                >LinkedIn</span
+              >
+              <a
+                href="https://www.linkedin.com/in/emmbernard/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-lg font-semibold text-ink hover:text-swiss transition-colors"
+                >linkedin.com/in/emmbernard</a
+              >
+            </div>
+            {
+              location && (
+                <div>
+                  <span class="font-mono text-xs uppercase tracking-widest text-grey block mb-2">
+                    Où
+                  </span>
+                  <span class="text-lg font-semibold text-ink">{location}</span>
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

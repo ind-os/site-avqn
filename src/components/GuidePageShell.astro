@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "./PageHeader.astro";
+
+interface Props {
+  seoTitle: string;
+  seoDescription: string;
+  headerTitle: string;
+  headerSubtitle: string;
+  /** Racine du fil d'Ariane (ex. « Claude Code » → /claude-code). */
+  breadcrumbRootLabel: string;
+  breadcrumbRootHref: string;
+  /** Dernier segment du fil d'Ariane. */
+  breadcrumbCurrentLabel: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  seoTitle,
+  seoDescription,
+  headerTitle,
+  headerSubtitle,
+  breadcrumbRootLabel,
+  breadcrumbRootHref,
+  breadcrumbCurrentLabel,
+  structuredData,
+} = Astro.props;
+---
+
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  structuredData={structuredData}
+>
+  <PageHeader
+    title={headerTitle}
+    subtitle={headerSubtitle}
+    breadcrumb={[
+      { label: breadcrumbRootLabel, href: breadcrumbRootHref },
+      { label: breadcrumbCurrentLabel },
+    ]}
+  />
+  <main class="min-h-screen">
+    <slot />
+  </main>
+</Layout>

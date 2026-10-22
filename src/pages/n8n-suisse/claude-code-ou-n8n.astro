@@ -1,0 +1,553 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const title = "Claude Code ou n8n : lequel choisir pour automatiser | AVQN";
+const description =
+  "n8n pour connecter vos outils et faire tourner vos workflows, Claude Code pour construire ce qui n'existe pas encore. Le comparatif honnête d'un praticien qui utilise les deux.";
+
+const faqs = [
+  {
+    question: "Faut-il savoir coder pour utiliser Claude Code ?",
+    answer:
+      "Non, mais il faut apprendre à le piloter : décrire précisément ce qu'on veut, relire ce qui a été produit, savoir où ça tourne. Quelques semaines, pas quelques minutes.",
+  },
+  {
+    question:
+      "n8n devient-il inutile maintenant qu'on peut tout coder avec l'IA ?",
+    answer:
+      "Non, c'est même un contresens fréquent. Pouvoir écrire du code ne rend pas souhaitable d'en écrire partout. Un workflow qu'un collègue peut ouvrir et corriger reste plus solide qu'un script que personne ne comprend.",
+  },
+  {
+    question: "Peut-on commencer par n8n et passer au code ensuite ?",
+    answer:
+      "C'est le chemin le plus fréquent et le plus sain. On automatise d'abord ce qui se règle avec des blocs, on voit ce qui résiste, puis on construit sur mesure là où c'est justifié.",
+  },
+  {
+    question: "Les deux peuvent-ils être hébergés en Suisse ?",
+    answer:
+      "Oui dans les deux cas. n8n s'installe sur votre infrastructure ; le logiciel produit avec Claude Code tourne où vous décidez. Attention, héberger en Suisse ne suffit pas : un audit LPD valide une gouvernance, pas une adresse IP.",
+  },
+  {
+    question: "Lequel coûte le plus cher ?",
+    answer:
+      "Un workflow n8n bien ciblé est presque toujours le point d'entrée le moins cher. Un développement sur mesure coûte davantage ; il se justifie quand il produit un actif que vous gardez.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
+// Signaux « n8n suffit » et « Claude Code s'impose ».
+const signauxN8n = [
+  {
+    titre: "Le besoin se déclenche",
+    texte:
+      "Il y a un événement clair au départ (un formulaire soumis, un email reçu, un paiement encaissé, huit heures du matin) et une suite d'étapes prévisible derrière.",
+  },
+  {
+    titre: "Tout passe par des outils qui existent",
+    texte:
+      "Votre CRM, votre facturation, votre boîte mail, votre agenda, vos feuilles de calcul. n8n leur parle déjà : rien à écrire pour les brancher.",
+  },
+  {
+    titre: "Personne dans l'équipe n'écrit de code",
+    texte:
+      "L'interface visuelle se transmet : un collègue peut ouvrir un workflow, comprendre ce qu'il fait et le corriger. C'est souvent ce qui décide.",
+  },
+  {
+    titre: "Vous voulez de la robustesse sans effort d'ingénierie",
+    texte:
+      "Reprises automatiques, gestion d'erreurs, alertes, conditions : c'est dans la boîte, vous n'avez pas à le construire.",
+  },
+];
+
+const signauxClaudeCode = [
+  {
+    titre: "La logique devient touffue",
+    texte:
+      "Des règles métier qui s'imbriquent, des cas particuliers, des calculs qui dépendent les uns des autres. Un workflow à quarante blocs et trois embranchements est un signal clair : il vous faut du code.",
+  },
+  {
+    titre: "Il faut une interface",
+    texte:
+      "Un tableau de bord, un espace client, un formulaire métier, une application. Personne ne construit ça en reliant des blocs.",
+  },
+  {
+    titre: "Il n'y a pas de connecteur",
+    texte:
+      "Un logiciel métier ancien, une API interne, un format de fichier exotique. Il faut écrire la connexion. Claude Code écrit ça vite.",
+  },
+  {
+    titre: "Vous voulez un agent, pas une séquence",
+    texte:
+      "Un agent qui comprend le contexte, encaisse l'imprévu et décide de la suite dans le cadre que vous lui fixez, plutôt qu'un enchaînement d'étapes prévues à l'avance.",
+  },
+];
+
+// Tableau de décision — rendu en tableau dès md, empilé en cartes sur mobile.
+const criteres = [
+  {
+    critere: "Forme du besoin",
+    n8n: "Une séquence déclenchée",
+    claudeCode: "Un logiciel à construire",
+  },
+  {
+    critere: "Prise en main",
+    n8n: "Quelques heures",
+    claudeCode: "Quelques jours, avec accompagnement",
+  },
+  {
+    critere: "Logique métier complexe",
+    n8n: "Bonne, jusqu'à un certain point",
+    claudeCode: "Sans limite pratique",
+  },
+  {
+    critere: "Interface utilisateur",
+    n8n: "Non",
+    claudeCode: "Oui",
+  },
+  {
+    critere: "Connexion à un outil sans connecteur",
+    n8n: "À écrire à la main",
+    claudeCode: "Écrite par l'agent",
+  },
+  {
+    critere: "Transmissible à une équipe non technique",
+    n8n: "Oui, c'est son point fort",
+    claudeCode: "Demande un minimum de bagage",
+  },
+  {
+    critere: "Ce qui tourne ensuite",
+    n8n: "Le workflow, sur votre serveur",
+    claudeCode: "Le logiciel produit, sur votre serveur",
+  },
+  {
+    critere: "Hébergement en Suisse",
+    n8n: "Oui",
+    claudeCode: "Oui",
+  },
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={faqJsonLd}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Claude Code ou n8n : quel outil pour quel besoin"
+    subtitle="Deux outils excellents, deux terrains différents. Voilà comment je tranche, projet par projet."
+    breadcrumb={[
+      { label: "Guide n8n Suisse", href: "/n8n-suisse" },
+      { label: "Claude Code ou n8n" },
+    ]}
+    ctaText="Trancher votre cas en 30 minutes"
+    ctaHref="/contact"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Ouverture */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">La vraie question</span>
+          <h2 class="text-3xl md:text-4xl">
+            La question n'est pas « lequel est le meilleur »
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            On me la pose presque à chaque premier rendez-vous. Les deux font
+            très bien leur métier ; simplement, ce ne sont pas les mêmes
+            métiers. n8n connecte des outils qui existent déjà et fait circuler
+            l'information entre eux. Claude Code crée ce qui n'existe pas
+            encore.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Poser la question dans l'autre sens fonctionne mieux : est-ce que
+            tout ce dont j'ai besoin existe déjà quelque part, ou est-ce qu'il
+            faut construire ? La réponse désigne l'outil toute seule.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Ce que chacun est */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Les deux outils</span>
+          <h2 class="text-3xl md:text-4xl">Ce que chacun est, en une ligne</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-divider bg-paper rounded-md p-6">
+            <h3 class="text-xl mb-2">n8n</h3>
+            <p class="text-grey leading-relaxed">
+              Une plateforme d'automatisation : vous reliez des blocs dans une
+              interface visuelle, un déclencheur lance la séquence. Un
+              formulaire arrive, la fiche CRM se crée, le commercial est
+              notifié, la relance part. Configuré une fois, il travaille tous
+              les jours.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper rounded-md p-6">
+            <h3 class="text-xl mb-2">Claude Code</h3>
+            <p class="text-grey leading-relaxed">
+              Un agent de développement : vous décrivez ce que vous voulez en
+              français, il écrit et modifie du vrai code, vous validez. Il
+              travaille directement dans votre projet, pas dans une fenêtre de
+              chat.
+            </p>
+          </div>
+        </div>
+
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            D'où la vraie différence : n8n vous donne un catalogue de connexions
+            prêtes à l'emploi, dans lequel vous assemblez. Claude Code vous
+            donne la capacité de produire ce qui n'est dans aucun catalogue.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            <a href="/n8n-suisse" class="font-bold underline"
+              >Le guide n8n en Suisse romande</a
+            >
+            {" · "}
+            <a href="/claude-code-suisse" class="font-bold underline"
+              >Claude Code, expliqué par un praticien</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. Quand n8n suffit */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Choisir n8n</span>
+          <h2 class="text-3xl md:text-4xl">Quand n8n suffit largement</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            De loin le cas le plus fréquent. Beaucoup de projets présentés comme
+            « il nous faudrait un outil sur mesure » se règlent avec trois
+            workflows bien posés.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          {
+            signauxN8n.map((signal) => (
+              <div class="border border-divider rounded-md p-6">
+                <h3 class="text-xl mb-2">{signal.titre}</h3>
+                <p class="text-grey leading-relaxed">{signal.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            Dans ces cas-là, sortir Claude Code serait une erreur de jugement :
+            vous paieriez un développement pour obtenir moins bien qu'un
+            assemblage de blocs existant, en étant le seul à pouvoir le
+            maintenir. Pour vous former :
+            <a href="/bootcamp-ia-suisse" class="font-bold underline"
+              >apprendre n8n en bootcamp</a
+            >.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/n8n-suisse#cas-usage" class="btn-outline px-6 py-4">
+            Voir ce qu'on automatise avec n8n
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Quand Claude Code s'impose */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Choisir Claude Code</span>
+          <h2 class="text-3xl md:text-4xl">Quand Claude Code s'impose</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          {
+            signauxClaudeCode.map((signal) => (
+              <div class="border border-divider bg-paper rounded-md p-6">
+                <h3 class="text-xl mb-2">{signal.titre}</h3>
+                <p class="text-grey leading-relaxed">{signal.texte}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            La contrepartie est réelle : du code, ça se maintient. Un endroit où
+            il vit, des sauvegardes, quelqu'un qui sait le faire évoluer.
+            Faisable sans être développeur, pas sans avoir appris. C'est ce
+            qu'on installe pendant un
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="font-bold underline">coaching Claude Code individuel</a
+            >. Si vous préférez faire construire plutôt que construire :
+            <a href="/expert-ia-suisse" class="font-bold underline"
+              >CTO IA à la demande</a
+            >.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/coaching-ia-independant-suisse"
+            class="btn-primary px-6 py-4"
+          >
+            Apprendre à construire avec Claude Code
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Le tableau de décision */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">En un coup d'œil</span>
+          <h2 class="text-3xl md:text-4xl">Le tableau de décision</h2>
+        </div>
+
+        {/* Mobile : une carte par critère. Desktop : le tableau. */}
+        <div class="space-y-4 md:hidden">
+          {
+            criteres.map((ligne) => (
+              <div class="border border-divider rounded-md p-5">
+                <h3 class="text-lg mb-3">{ligne.critere}</h3>
+                <dl class="space-y-2 text-sm">
+                  <div class="flex flex-col gap-0.5">
+                    <dt class="eyebrow normal-case tracking-normal text-ink">
+                      n8n
+                    </dt>
+                    <dd class="text-grey">{ligne.n8n}</dd>
+                  </div>
+                  <div class="flex flex-col gap-0.5">
+                    <dt class="eyebrow normal-case tracking-normal text-ink">
+                      Claude Code
+                    </dt>
+                    <dd class="text-grey">{ligne.claudeCode}</dd>
+                  </div>
+                </dl>
+              </div>
+            ))
+          }
+        </div>
+
+        <div
+          class="hidden md:block overflow-x-auto border border-divider rounded-md"
+        >
+          <table class="w-full text-left text-sm md:text-base">
+            <thead class="bg-paper2 border-b border-divider">
+              <tr>
+                <th class="p-4 font-semibold">Critère</th>
+                <th class="p-4 font-semibold">n8n</th>
+                <th class="p-4 font-semibold">Claude Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                criteres.map((ligne, index) => (
+                  <tr
+                    class={
+                      index !== criteres.length - 1
+                        ? "border-b border-divider"
+                        : ""
+                    }
+                  >
+                    <td class="p-4 font-bold">{ligne.critere}</td>
+                    <td class="p-4">{ligne.n8n}</td>
+                    <td class="p-4">{ligne.claudeCode}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <p class="text-lg text-grey leading-relaxed max-w-4xl">
+          Une ligne mérite d'être relue deux fois : la transmissibilité. C'est
+          le critère qui fait basculer le plus de décisions, alors qu'on le
+          regarde presque toujours en dernier.
+        </p>
+      </div>
+    </section>
+
+    {/* 6. Les deux ensemble */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">La combinaison</span>
+          <h2 class="text-3xl md:text-4xl">Le plus souvent, c'est les deux</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Dans les projets que je livre, la question « l'un ou l'autre » ne
+            survit pas à la première séance. La répartition qui revient le plus
+            souvent : n8n tient les tuyaux, ce qui déclenche, ce qui circule, ce
+            qui alerte. Le code tient l'intelligence et l'interface. L'agent
+            décide, le workflow exécute.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Le tableau de bord de Vetmint fonctionne comme ça. Un workflow n8n
+            reçoit chaque mois les rapports Excel des sept cliniques, les lit,
+            contrôle les incohérences et alimente une base PostgreSQL sur
+            mesure. L'interface de pilotage, elle, a été conçue à part.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Et l'usage le plus discret des deux : Claude Code sert aussi à
+            construire vos
+            <a href="/n8n-suisse" class="font-bold underline">workflows n8n</a>
+            plus vite. Écrire un nœud de code, débugger une transformation, générer
+            une configuration.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/expert-ia-suisse" class="btn-outline px-6 py-4">
+            Voir le cas Vetmint en détail
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 7. Comment on tranche */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">La décision</span>
+          <h2 class="text-3xl md:text-4xl">Comment on tranche votre cas</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Aucun article ne peut décider à votre place, y compris celui-ci. La
+            bonne réponse dépend de trois choses : la forme réelle de votre
+            processus, ce qu'il y a déjà dans vos outils, puis qui dans l'équipe
+            fera vivre le résultat.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            C'est ce qu'on regarde ensemble, sans engagement : n8n, Claude Code,
+            les deux, ou rien pour l'instant. Si la réponse est « n8n vous
+            suffit », vous l'entendrez.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="btn-primary px-6 py-4">
+            Parler de votre projet
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 8. FAQ */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Questions fréquentes</h2>
+        <div class="grid gap-0 border-t border-divider">
+          {
+            faqs.map((faq, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 9. CTA de fin */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Par où commencer</span>
+          <h2 class="text-3xl md:text-4xl">On regarde votre cas ensemble</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Trente minutes suffisent en général à savoir de quel côté penche
+            votre projet. Vous repartez avec une recommandation claire et
+            l'ordre dans lequel attaquer.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="btn-primary px-6 py-4">
+            Parler de votre projet
+          </a>
+          <a href="/bootcamp-ia-suisse" class="btn-outline px-6 py-4">
+            Apprendre n8n en bootcamp
+          </a>
+        </div>
+
+        <div class="max-w-4xl border-t border-divider pt-8">
+          <h3 class="eyebrow mb-4">Pour aller plus loin</h3>
+          <ul class="space-y-2 text-lg text-grey">
+            <li>
+              <a href="/n8n-suisse" class="link-underline"
+                >n8n en Suisse romande : le guide complet</a
+              >
+            </li>
+            <li>
+              <a href="/claude-code-suisse" class="link-underline"
+                >Claude Code, expliqué par un praticien</a
+              >
+            </li>
+            <li>
+              <a href="/coaching-ia-independant-suisse" class="link-underline"
+                >Coaching Claude Code individuel</a
+              >
+            </li>
+            <li>
+              <a href="/agents-ia" class="link-underline"
+                >Agents IA et systèmes agentiques sur mesure</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

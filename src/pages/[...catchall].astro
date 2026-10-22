@@ -1,0 +1,37 @@
+---
+// Catch-all on-demand : porte les VRAIS 301 (statut HTTP) pour les routes
+// supprimées/renommées, puis tombe sur le 404 pour le reste.
+//
+// Pourquoi ici et pas `redirects` ni middleware :
+//  - `redirects` en mode `static` génère des pages meta-refresh (soft redirect),
+//    insuffisant pour le SEO.
+//  - le middleware ne tourne pas pour un chemin SANS page (le serveur statique
+//    renvoie 404 sans passer par le SSR).
+// Un catch-all `prerender:false` est, lui, rendu à la demande pour tout chemin
+// non couvert par un fichier statique : c'est le bon endroit pour un 301 propre.
+//
+// Table de vérité des redirections : `src/lib/redirects.ts`.
+export const prerender = false;
+
+import { resolveRedirect } from "../lib/redirects";
+
+const target = resolveRedirect(Astro.url.pathname);
+if (target && target !== Astro.url.pathname) {
+  return Astro.redirect(target, 301);
+}
+
+// Aucune redirection : 404 (statut + page d'erreur du site).
+Astro.response.status = 404;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0; url=/404" />
+    <title>Page introuvable — AVQN</title>
+  </head>
+  <body>
+    <p>Page introuvable. <a href="/404">Voir la page d'erreur</a>.</p>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+---
+/**
+ * Choix multiple — un groupe de cases à cocher dans un `fieldset`/`legend`.
+ * Les valeurs cochées partent jointes par « , » sous la clé `name`.
+ */
+import { CONTROLE, LEGENDE, OPTION } from "./classes";
+
+interface Props {
+  /** Nom du groupe = clé de la soumission. */
+  name: string;
+  legend: string;
+  options: { value: string; label: string }[];
+}
+
+const { name, legend, options } = Astro.props;
+---
+
+<fieldset>
+  <legend class={LEGENDE}>{legend}</legend>
+  <div class="space-y-2">
+    {
+      options.map((option) => (
+        <label class={OPTION}>
+          <input
+            type="checkbox"
+            name={name}
+            value={option.value}
+            class={`${CONTROLE} rounded-[2px]`}
+          />
+          <span>{option.label}</span>
+        </label>
+      ))
+    }
+  </div>
+</fieldset>

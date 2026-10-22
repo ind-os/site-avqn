@@ -1,0 +1,493 @@
+---
+import { etiquetteEtape } from "../../lib/etiquettes";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const title = "Agents IA et systèmes agentiques sur mesure en Suisse | AVQN";
+const description =
+  "Conception d'agents IA branchés sur vos outils et vos données, du simple assistant au système agentique complet. Livrés en production, hébergés en Suisse. Lausanne.";
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Agents IA et systèmes agentiques sur mesure",
+  serviceType: "Conception d'agents IA sur mesure",
+  description:
+    "Conception, mise en production et passation d'agents IA branchés sur vos outils et vos données, du simple agent au système agentique complet.",
+  url: "https://avqn.ch/agents-ia",
+  provider: {
+    "@type": "ProfessionalService",
+    name: "AVQN - Emmanuel Bernard",
+    url: "https://avqn.ch",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "CH",
+  },
+  audience: {
+    "@type": "BusinessAudience",
+    name: "Indépendants et PME de Suisse romande",
+  },
+};
+
+const faqs = [
+  {
+    question: "Qu'est-ce qu'un agent IA, concrètement ?",
+    answer:
+      "Un programme qui s'appuie sur un modèle d'IA pour accomplir une mission de bout en bout : il lit vos demandes, consulte vos outils, applique vos règles métier et exécute, sans intervention à chaque étape.",
+  },
+  {
+    question: "Faut-il être une grande entreprise ?",
+    answer:
+      "Non. Un indépendant ou une PME de quelques personnes peut déployer un premier agent utile en quelques semaines : tri des demandes entrantes, qualification de leads, préparation de documents.",
+  },
+  {
+    question: "Et si mon besoin ne justifie pas d'agent ?",
+    answer:
+      "Je vous le dis. Un workflow classique coûte moins cher, casse moins souvent et se maintient plus facilement. C'est ce qu'on tranche ensemble.",
+  },
+  {
+    question: "Mes données restent-elles en Suisse ?",
+    answer:
+      "C'est un choix d'architecture, décidé avec vous. Je privilégie des infrastructures hébergées en Suisse et une gouvernance conforme à la LPD : minimisation, traçabilité des accès, contrôle de ce que l'agent peut voir et faire.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+
+// Les quatre étapes d'un premier agent, dans l'ordre.
+const etapes = [
+  {
+    titre: "Choisissez une mission, pas une technologie",
+    texte:
+      "« Plus aucun lead ne reste sans réponse 24 h » est un bon point de départ. « Je veux un agent IA » n'en est pas un.",
+  },
+  {
+    titre: "Cadrez ce que l'agent peut voir et faire",
+    texte:
+      "Quels outils, quelles données, quelles actions sans validation et lesquelles avec. C'est le travail le plus important.",
+  },
+  {
+    titre: "Démarrez supervisé",
+    texte:
+      "L'agent propose, vous validez. Quand la qualité est prouvée sur des semaines, vous élargissez son autonomie.",
+  },
+  {
+    titre: "Mesurez",
+    texte:
+      "Temps gagné, délai de réponse, erreurs évitées. Un agent qu'on ne mesure pas est un agent qu'on finit par débrancher.",
+  },
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={[serviceJsonLd, faqJsonLd]}
+  hideGlobalCta
+>
+  <PageHeader
+    title="Des agents IA construits pour vos process"
+    subtitle="Pas un chatbot posé sur votre site. Un agent branché sur vos outils, qui applique vos règles et fait le travail."
+    breadcrumb={[{ label: "Agents IA" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Le problème */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Le point de départ</span>
+          <h2 class="text-3xl md:text-4xl">
+            L'IA générique s'arrête là où votre métier commence
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Tout le monde a désormais un assistant IA ouvert dans un onglet. Il
+            rédige bien, il résume bien, il ne sait rien de vous : il ne voit
+            pas votre CRM, il ignore vos règles de facturation, il ne peut rien
+            déclencher. C'est vous qui faites le copier-coller.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Un agent IA sur mesure, c'est l'étape d'après. On lui donne accès à
+            vos données, on lui écrit son cadre, on lui branche les actions
+            qu'il a le droit de faire. Il exécute, dans les limites que vous
+            avez posées.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Le modèle est disponible pour tout le monde. Le vrai travail, c'est
+            de l'intégrer à vos outils sans lui donner les clés de la maison.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Ce que je construis */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Le périmètre</span>
+          <h2 class="text-3xl md:text-4xl">Ce que je construis</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Deux niveaux. Un agent seul suffit souvent pour commencer ; un
+            système agentique se justifie quand plusieurs missions se croisent
+            et doivent partager les mêmes outils.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-divider bg-paper rounded-md p-6">
+            <h3 class="text-xl mb-2">Des agents IA sur mesure</h3>
+            <p class="text-grey leading-relaxed">
+              Un agent, une mission. Il lit les demandes entrantes, consulte vos
+              outils, applique vos règles métier et exécute l'action attendue.
+              Trier et qualifier, analyser et synthétiser, préparer et rédiger,
+              surveiller et alerter : les quatre familles qui reviennent le
+              plus.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper rounded-md p-6">
+            <h3 class="text-xl mb-2">Des systèmes agentiques</h3>
+            <p class="text-grey leading-relaxed">
+              Quand un agent ne suffit plus, je répartis les rôles, les accès et
+              les validations entre plusieurs agents. On garde aussi la trace de
+              ce qui a été fait.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper rounded-md p-6">
+            <h3 class="text-xl mb-2">La connexion à vos outils (MCP)</h3>
+            <p class="text-grey leading-relaxed">
+              Un agent n'est utile que branché. Le protocole MCP donne à un
+              modèle un accès contrôlé à vos systèmes : CRM, boîte mail, agenda,
+              facturation, base de données. Un accès par outil, des droits
+              explicites, rien qui traîne.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper rounded-md p-6">
+            <h3 class="text-xl mb-2">L'orchestration et les garde-fous</h3>
+            <p class="text-grey leading-relaxed">
+              Reprise sur erreur, alertes, historique des actions et validation
+              humaine là où elle compte. C'est ce qui rend le système fiable.
+            </p>
+          </div>
+        </div>
+
+        <p class="text-lg text-grey leading-relaxed max-w-4xl">
+          Mon entreprise tourne sur un système de ce type : des agents branchés
+          sur mon CRM, mes e-mails et mon infrastructure, qui exécutent le
+          quotidien. Ce que je déploie chez mes clients, je l'utilise tous les
+          jours.
+        </p>
+      </div>
+    </section>
+
+    {/* 3. Agent ou automatisation */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">La bonne brique</span>
+          <h2 class="text-3xl md:text-4xl">
+            Un agent, ou une simple automatisation ?
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            À poser avant d'écrire la moindre ligne. Un workflow suit un chemin
+            fixe, décidé à l'avance : ce déclencheur, ces étapes, ce résultat.
+            Un agent comprend le contexte, encaisse l'imprévu et choisit la
+            suite dans le cadre que vous lui avez donné.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Beaucoup de besoins ne demandent pas d'agent. Une relance de devis,
+            un rapprochement bancaire, un rapport consolidé le lundi matin : un
+            workflow fait ça très bien, pour moins cher. C'est le terrain d'
+            <a href="/n8n-suisse" class="font-bold underline"
+              >automatiser avec n8n en Suisse romande</a
+            >. Les deux se combinent : l'agent décide, le workflow exécute.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            <a href="/n8n-suisse/claude-code-ou-n8n" class="font-bold underline"
+              >Comparatif : Claude Code ou n8n, quel outil pour quel besoin</a
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Pour qui */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Pour qui</span>
+          <h2 class="text-3xl md:text-4xl">À qui ça s'adresse</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Je travaille avec des indépendants et des PME de Suisse romande,
+            entre deux et cinquante personnes. Le point commun n'est pas le
+            secteur, c'est le moment : une activité qui tourne, des processus
+            réels, quelqu'un qui passe trop de temps à faire circuler de
+            l'information entre des outils.
+          </p>
+        </div>
+
+        <div class="max-w-4xl border border-divider bg-paper rounded-md p-8">
+          <h3 class="text-2xl mb-4">Ça marche bien quand</h3>
+          <ul class="space-y-3 text-lg text-grey">
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >le processus est identifié et se répète, même s'il n'est pas
+                parfaitement propre ;</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >il y a une personne côté client qui connaît le métier et qui a
+                du temps à y consacrer ;</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >vous voulez garder la main sur l'outil après la livraison, pas
+                signer pour une dépendance à vie.</span
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            Ça marche mal quand le processus est encore flou. Automatiser un
+            chaos donne un chaos plus rapide : on stabilise d'abord. Je le dis
+            dès le premier échange, plutôt qu'après la facture.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Pour construire vous-même plutôt que faire construire :
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="font-bold underline"
+              >travailler en autonomie avec Claude Code</a
+            >.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="btn-primary px-6 py-4">
+            Vérifier si votre cas s'y prête
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Par où commencer */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">La marche à suivre</span>
+          <h2 class="text-3xl md:text-4xl">Par où commencer</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            L'ordre compte plus que la technologie. Les quatre étapes qui font
+            la différence entre un agent qui tient et un agent qu'on débranche
+            au bout de trois mois.
+          </p>
+        </div>
+
+        <ol class="grid md:grid-cols-2 gap-6">
+          {
+            etapes.map((etape, index) => (
+              <li class="card bg-paper">
+                <span class={`${etiquetteEtape(index)} mb-3 tabular-nums`}>
+                  Étape {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 class="text-xl mb-2">{etape.titre}</h3>
+                <p class="text-grey leading-relaxed">{etape.texte}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    {/* 6. Comment on y accède */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Comment on y accède</span>
+          <h2 class="text-3xl md:text-4xl">
+            Faire construire, ou apprendre à construire
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div
+            class="flex flex-col border border-divider bg-paper2 rounded-md p-6"
+          >
+            <h3 class="text-xl mb-2">Vous me le faites construire</h3>
+            <p class="text-grey leading-relaxed mb-4">
+              Je tiens le rôle de direction technique le temps du projet : je
+              tranche l'architecture avec vous, je construis l'agent et ses
+              connexions, je le mets en production et je vous passe les clés.
+              C'est ainsi qu'a été livré le tableau de bord multi-cliniques du
+              groupe Vetmint, que son directeur fait évoluer lui-même sans
+              savoir coder.
+            </p>
+            <a
+              href="/expert-ia-suisse"
+              class="mt-auto self-start text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              CTO IA à la demande →
+            </a>
+          </div>
+          <div
+            class="flex flex-col border border-divider bg-paper2 rounded-md p-6"
+          >
+            <h3 class="text-xl mb-2">Vous apprenez à le construire</h3>
+            <p class="text-grey leading-relaxed mb-4">
+              Sur vos vrais projets, en tête-à-tête : cadrer une demande, lire
+              ce que l'agent produit, mettre en ligne sans exposer vos données.
+              À la fin, vous n'avez plus besoin de moi.
+            </p>
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="mt-auto self-start text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              Le coaching Claude Code individuel →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 7. Vos données */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Données et conformité</span>
+          <h2 class="text-3xl md:text-4xl">Où vivent vos données</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Un agent voit ce que vous lui donnez à voir. C'est une décision
+            d'architecture, prise au cadrage, pas une case à cocher à la fin. Ma
+            manière de faire : minimiser ce qui sort de chez vous, héberger en
+            Suisse quand le projet le permet, garder la trace de ce que l'agent
+            a consulté et déclenché, séparer les actions qui partent seules de
+            celles qui attendent une validation humaine.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Un audit LPD ne valide pas une adresse IP suisse, il valide une
+            gouvernance. Le sujet est traité dans
+            <a href="/ia-lpd-suisse" class="font-bold underline"
+              >IA, LPD et données suisses</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 8. FAQ */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">Questions fréquentes</h2>
+        <div class="grid gap-0 border-t border-divider">
+          {
+            faqs.map((faq, index) => (
+              <div class="py-8 border-b border-divider">
+                <div class="flex gap-4 md:gap-6">
+                  <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 class="text-lg md:text-xl mb-4">{faq.question}</h3>
+                    <p class="text-grey leading-relaxed max-w-3xl">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {/* 9. CTA de fin */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Par où commencer</span>
+          <h2 class="text-3xl md:text-4xl">
+            Un entretien, une recommandation honnête
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Un échange, sans engagement. On regarde ce qui vous coûte du temps,
+            ce qui est automatisable et ce qui ne l'est pas encore. À la fin,
+            vous savez quoi construire, dans quel ordre, avec quel outil.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="/contact" class="btn-primary px-6 py-4">
+            Parler de votre projet
+          </a>
+          <a
+            href="/coaching-ia-independant-suisse"
+            class="btn-outline px-6 py-4"
+          >
+            Apprendre à construire vous-même
+          </a>
+        </div>
+
+        <div class="max-w-4xl border-t border-divider pt-8">
+          <h3 class="eyebrow mb-4">Pour aller plus loin</h3>
+          <ul class="space-y-2 text-lg text-grey">
+            <li>
+              <a href="/expert-ia-suisse" class="link-underline"
+                >CTO IA à la demande : faire construire votre agent</a
+              >
+            </li>
+            <li>
+              <a href="/claude-code-suisse" class="link-underline"
+                >Claude Code, expliqué par un praticien</a
+              >
+            </li>
+            <li>
+              <a href="/n8n-suisse" class="link-underline"
+                >Automatiser avec n8n en Suisse romande</a
+              >
+            </li>
+            <li>
+              <a href="/ia-lpd-suisse" class="link-underline"
+                >IA, LPD et données suisses</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

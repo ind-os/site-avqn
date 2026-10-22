@@ -1,0 +1,41 @@
+/* Copie de apps/styleguide/src/styles/quadrillage.css : le quadrillage et ses cases allumées.
+   Ne pas éditer ici — la source est apps/styleguide. Lit les rôles de charte/tokens.css. */
+.quadrillage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    repeating-linear-gradient(to right, var(--quadrillage-couleur) 0 1px, transparent 1px var(--quadrillage-pas)),
+    repeating-linear-gradient(to bottom, var(--quadrillage-couleur) 0 1px, transparent 1px var(--quadrillage-pas));
+}
+
+.case {
+  position: absolute;
+  z-index: -1;
+  width: var(--quadrillage-pas);
+  height: var(--quadrillage-pas);
+  left: calc(var(--quadrillage-pas) * var(--x));
+  top: calc(var(--quadrillage-pas) * var(--y));
+  background: var(--c);
+  animation: allumer var(--duree-pose) var(--courbe-rebond);
+}
+
+/* Comptée depuis la droite, une case se cale sur la dernière colonne entière :
+   la grille part du bord gauche, et la largeur n'est pas un multiple du pas. */
+.case[data-bord='droit'] {
+  left: calc(round(down, 100%, var(--quadrillage-pas)) - var(--quadrillage-pas) * (var(--x) + 1));
+}
+
+@keyframes allumer {
+  from {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+/* Sur petit écran, les cases du bord droit passeraient sous le texte : on ne garde que celles de gauche. */
+@media (max-width: 640px) {
+  .case[data-bord='droit'] {
+    display: none;
+  }
+}

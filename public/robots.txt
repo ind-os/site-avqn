@@ -1,0 +1,6 @@
+# Le site AVQN, servi par l'instance Indos. Les pages portent la balise canonique
+# vers https://www.avqn.ch, la forme que l'apex rejoint par une 301 du proxy.
+User-agent: *
+Allow: /
+
+Sitemap: https://www.avqn.ch/sitemap-index.xml

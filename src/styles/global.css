@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+/* La charte de l'instance — copies de apps/styleguide, jamais éditées ici.
+   Le site ne code plus une couleur : il lit les rôles (`--fond`, `--texte`,
+   `--accent`…) et les groupes de forme et de mouvement. */
+@import "./charte/tokens.css";
+@import "./charte/quadrillage.css";
+
+/* Les alias historiques du site, rebranchés sur les rôles : les seize pages
+   gardent `bg-paper`, `text-ink`, `text-swiss`…, seule la source change.
+   `inline` fait pointer chaque utilitaire sur `var(--<rôle>)` : une section en
+   `data-theme="nocturne"` bascule donc sans qu'on y touche. */
+@theme inline {
+  --color-paper: var(--fond);
+  --color-paper2: var(--surface);
+  --color-ink: var(--texte);
+  --color-body: var(--texte);
+  --color-grey: var(--discret);
+  --color-divider: var(--filet);
+  --color-swiss: var(--accent);
+  --color-swiss-dark: var(--accent-appuye);
+
+  --font-sans: var(--police-texte);
+  --font-serif: var(--police-titre);
+  --font-display: var(--police-titre);
+  --font-mono: var(--police-mono);
+
+  /* Angles doux : `rounded-md` vaut le rayon des boutons, champs et cartes. */
+  --radius-sm: var(--rayon-s);
+  --radius-md: var(--rayon-m);
+
+  --shadow-soft: var(--ombre-posee);
+  --shadow-lift: var(--ombre-flottante);
+}
+
+/* L'échelle de titres au-delà de 4xl garde l'interligne serré de la charte. */
+@theme {
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1.05;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1.05;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1.05;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1.05;
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1.05;
+}
+
+@layer base {
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+    /* Décale les ancres sous la nav sticky */
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-paper text-body;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Titres : Instrument Serif — la serif porte le message, chasse naturelle.
+     L'emphase se dit par un fragment en italique vermillon (<em>), jamais par du gras. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-normal leading-[1.05] text-ink;
+    text-wrap: balance;
+  }
+
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+    text-wrap: pretty;
+  }
+
+  /* Emphase de marque : fragment en italique vermillon dans un titre serif. */
+  h1 em,
+  h2 em,
+  h3 em,
+  h4 em {
+    @apply font-serif;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* Sélection : voile vermillon léger sur le papier. */
+  ::selection {
+    background-color: color-mix(in srgb, var(--accent) 24%, transparent);
+  }
+
+  /* Anneau de focus vermillon, net et accessible — jamais supprimé. */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+}
+
+@layer components {
+  /* ----------------------------------------------------------------------
+     TYPOGRAPHIE — l'échelle de la charte (`brand/tokens/typographie.json`).
+     ---------------------------------------------------------------------- */
+
+  /* Hero / titre de page — le rôle `hero` de l'échelle. */
+  .type-display-mega {
+    @apply font-serif font-normal;
+    font-size: var(--taille-hero);
+    line-height: 1.02;
+  }
+
+  /* Titre de section — le rôle `titre` de l'échelle. */
+  .type-display-section {
+    @apply font-serif font-normal;
+    font-size: var(--taille-titre);
+    line-height: 1.05;
+  }
+
+  /* Kicker — le rôle `surtitre` de l'échelle, précédé d'un carré vermillon
+     plein. Une catégorie réelle, jamais un ornement. */
+  .kicker {
+    @apply inline-flex items-center font-mono uppercase text-swiss leading-none;
+    font-size: var(--taille-surtitre);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+  }
+  /* La marge (plutôt qu'un `gap`) tient aussi quand la page passe le kicker
+     en `block` pour le mettre sur sa propre ligne. */
+  .kicker::before {
+    content: "";
+    @apply mr-2.5 inline-block h-[0.7em] w-[0.7em] bg-swiss;
+    flex: none;
+  }
+
+  /* Eyebrow — le rôle `meta` de l'échelle : sur-titre discret, sans carré. */
+  .eyebrow {
+    @apply font-mono uppercase text-grey;
+    font-size: var(--taille-meta);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+
+  /* Valeur chiffrée (stats) — serif, chiffres tabulaires. */
+  .stat-value {
+    @apply font-serif tabular-nums leading-none text-ink;
+  }
+
+  /* Étiquette — pilule en aplat d'appoint, texte `sur-appoint`. Catégories,
+     numéros d'étape, pastilles. Une couleur par catégorie, la même partout :
+     la table des correspondances vit dans `src/lib/etiquettes.ts`. */
+  .etiquette {
+    @apply inline-flex items-center font-mono uppercase leading-none;
+    padding: 0.4em 0.8em;
+    border-radius: var(--rayon-pilule);
+    font-size: var(--taille-meta);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    background: var(--appoint-1);
+    color: var(--sur-appoint);
+  }
+  .etiquette-1 {
+    background: var(--appoint-1);
+  }
+  .etiquette-2 {
+    background: var(--appoint-2);
+  }
+  .etiquette-3 {
+    background: var(--appoint-3);
+  }
+  .etiquette-4 {
+    background: var(--appoint-4);
+  }
+  .etiquette-5 {
+    background: var(--appoint-5);
+  }
+
+  /* ----------------------------------------------------------------------
+     BOUTONS — un seul primaire vermillon par vue. Rayon `rayon-m`, label Geist
+     demi-gras. Au survol la couleur change ; rien ne se déplace.
+     ---------------------------------------------------------------------- */
+
+  .btn-primary,
+  .btn-outline,
+  .btn-on-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border px-6 py-3 text-sm font-semibold leading-none select-none;
+    transition:
+      background-color var(--duree-vif) var(--courbe-suisse),
+      border-color var(--duree-vif) var(--courbe-suisse),
+      color var(--duree-vif) var(--courbe-suisse);
+  }
+
+  /* Primaire — l'action qui compte : fond vermillon, texte papier, hover assombri. */
+  .btn-primary {
+    @apply border-transparent bg-swiss text-paper hover:bg-swiss-dark;
+  }
+
+  /* Secondaire — contour `trait` en `trait-objet`, texte encre, hover voile encre. */
+  .btn-outline {
+    @apply bg-transparent text-ink hover:bg-ink/[0.06];
+    border-width: var(--trait-objet);
+    border-color: var(--trait);
+  }
+
+  /* Sur fond encre (sections inversées) — bordure papier, hover papier plein. */
+  .btn-on-dark {
+    @apply border-paper bg-transparent text-paper hover:bg-paper hover:text-ink;
+  }
+
+  /* ----------------------------------------------------------------------
+     SURFACES & CARTES
+     ---------------------------------------------------------------------- */
+
+  .container-custom {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Carte — surface à peine détachée : filet fin, rayon `rayon-m`, à plat. */
+  .card {
+    @apply bg-paper2 border border-divider rounded-md p-6;
+    transition: border-color var(--duree-vif) var(--courbe-suisse);
+  }
+  /* Carte cliquable — au survol elle prend un contour `trait`, elle ne bouge pas. */
+  .card-hover:hover {
+    border-color: var(--trait);
+  }
+
+  /* L'objet posé — fond opaque, contour `trait`, ombre dure teintée. Un seul
+     par écran : c'est ce qu'on met en avant (`brand/doctrine/quadrillage.md`). */
+  .objet {
+    background: var(--surface);
+    border: var(--trait-objet) solid var(--trait);
+    border-radius: var(--rayon-m);
+    box-shadow: var(--ombre-objet);
+  }
+
+  /* ----------------------------------------------------------------------
+     LIENS
+     ---------------------------------------------------------------------- */
+
+  /* Lien à soulignement vermillon. */
+  .link-underline {
+    @apply relative font-medium text-ink hover:text-swiss;
+    transition: color var(--duree-vif) var(--courbe-suisse);
+  }
+  .link-underline::after {
+    content: "";
+    @apply absolute left-0 -bottom-0.5 h-px w-0 bg-swiss;
+    transition: width var(--duree-vif) var(--courbe-suisse);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    @apply w-full;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   RÉVÉLATION AU SCROLL — pilotée par IntersectionObserver (Layout.astro), sur
+   la courbe suisse. Sans JS / si reduced-motion : le contenu reste visible.
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 1;
+}
+
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.7s var(--courbe-suisse),
+    transform 0.7s var(--courbe-suisse);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Délais en cascade (enfants révélés successivement) */
+[data-reveal-delay="1"] {
+  transition-delay: 80ms;
+}
+[data-reveal-delay="2"] {
+  transition-delay: 160ms;
+}
+[data-reveal-delay="3"] {
+  transition-delay: 240ms;
+}
+[data-reveal-delay="4"] {
+  transition-delay: 320ms;
+}
+[data-reveal-delay="5"] {
+  transition-delay: 400ms;
+}
+[data-reveal-delay="6"] {
+  transition-delay: 480ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   GESTES DE MOTION — le mouvement répond à un geste, il ne décore pas. Chaque
+   geste a son garde-fou reduced-motion dans le bloc @media en fin de fichier.
+   -------------------------------------------------------------------------- */
+
+/* Révélation « nue » : l'élément ne bouge pas lui-même, il sert de déclencheur
+   à l'animation de ses enfants (titre masqué, kicker frappé). */
+html.js [data-reveal].reveal-nu {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* Titre : chaque ligne monte de derrière son masque. */
+.ligne-masquee {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
+html.js [data-reveal] .ligne-masquee > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--courbe-suisse);
+}
+html.js [data-reveal].is-visible .ligne-masquee > span {
+  transform: none;
+}
+html.js [data-reveal].is-visible .ligne-masquee:nth-child(2) > span {
+  transition-delay: 110ms;
+}
+
+/* Portrait : un recadrage qui se pose. */
+html.js [data-reveal] .photo-pose {
+  transform: scale(1.05);
+  transition: transform 1.2s var(--courbe-suisse);
+}
+html.js [data-reveal].is-visible .photo-pose {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] .ligne-masquee > span,
+  html.js [data-reveal].is-visible .ligne-masquee > span {
+    transform: none;
+    transition: none;
+  }
+  html.js [data-reveal] .photo-pose,
+  html.js [data-reveal].is-visible .photo-pose {
+    transform: none;
+    transition: none;
+  }
+  /* Les cases du quadrillage s'allument sans animation. */
+  .case {
+    animation: none;
+  }
+}

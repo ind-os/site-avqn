@@ -1,0 +1,187 @@
+---
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer.astro";
+import CTASection from "../components/CTASection.astro";
+import { iconeSolar } from "../lib/icone";
+import "../styles/global.css";
+import "../styles/fonts.css";
+
+import SEO from "../components/SEO.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  /** Masque le CTA global (ex. pages /contact/* déjà orientées conversion). */
+  hideGlobalCta?: boolean;
+  /** Exclut la page de l'index (robots noindex). */
+  noindex?: boolean;
+}
+
+const {
+  title = "AVQN — Automatisez votre business avec l'IA | Suisse romande",
+  description = "J'aide les indépendants et les PME de Suisse romande à confier à l'IA ce qui leur prend du temps : agents IA, automatisations n8n et formation.",
+  image,
+  structuredData,
+  hideGlobalCta = false,
+  noindex = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    {
+      /* Accord de la barre de navigation mobile avec le rôle `fond` de la
+        charte. `<meta>` ne lit pas de variable CSS : la valeur est relevée en
+        fin de body, une fois la feuille de styles appliquée. */
+    }
+    <meta name="theme-color" />
+    {
+      /* Marque le JS actif AVANT le paint : évite tout flash du contenu masqué
+        par le système de révélation au scroll (cf. global.css [data-reveal]). */
+    }
+    <script is:inline>
+      document.documentElement.classList.add("js");
+    </script>
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      structuredData={structuredData}
+      noindex={noindex}
+    />
+
+    {
+      /* Préchargement des fonts critiques : la serif qui porte + le corps Geist. */
+    }
+    <link
+      rel="preload"
+      href="/fonts/InstrumentSerif-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Geist-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Geist-SemiBold.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body class="font-sans antialiased text-body bg-paper">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:text-paper focus:px-5 focus:py-3 focus:font-semibold focus:uppercase focus:tracking-widest focus:text-xs"
+    >
+      Aller au contenu
+    </a>
+    <Navigation client:load currentPath={Astro.url.pathname} />
+    <div id="main-content">
+      <slot />
+    </div>
+    {!hideGlobalCta && <CTASection />}
+    <Footer />
+
+    {
+      /* Révélation au scroll — léger, sans dépendance, respecte reduced-motion. */
+    }
+    <script is:inline>
+      (() => {
+        const els = document.querySelectorAll("[data-reveal]");
+        if (!els.length) return;
+        const reduce = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+        if (reduce || !("IntersectionObserver" in window)) {
+          els.forEach((el) => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -4% 0px", threshold: 0.04 },
+        );
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+
+    {/* Bouton flottant « retour en haut » */}
+    <button
+      id="back-to-top"
+      aria-label="Remonter en haut"
+      class="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-md border border-ink bg-paper text-ink shadow-lift transition-colors duration-150 hover:bg-ink hover:text-paper opacity-0 pointer-events-none"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <Fragment set:html={iconeSolar("alt-arrow-up-linear", "h-5 w-5")} />
+    </button>
+
+    <script is:inline>
+      (() => {
+        const btn = document.getElementById("back-to-top");
+        if (!btn) return;
+        const THRESHOLD = 600;
+        const motionQuery = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+
+        const update = () => {
+          const visible = window.scrollY > THRESHOLD;
+          btn.classList.toggle("opacity-0", !visible);
+          btn.classList.toggle("pointer-events-none", !visible);
+          btn.setAttribute("aria-hidden", String(!visible));
+          btn.setAttribute("tabindex", visible ? "0" : "-1");
+        };
+
+        window.addEventListener("scroll", update, { passive: true });
+        update();
+
+        btn.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: motionQuery.matches ? "instant" : "smooth",
+          });
+        });
+
+        btn.addEventListener("keydown", (e) => {
+          if (e.key === " ") {
+            e.preventDefault();
+            window.scrollTo({
+              top: 0,
+              behavior: motionQuery.matches ? "instant" : "smooth",
+            });
+          }
+        });
+      })();
+    </script>
+    {
+      /* La couleur de la barre mobile vient du rôle `fond`, relevé sur le
+        document plutôt que recopié en dur. */
+    }
+    <script is:inline>
+      (() => {
+        const meta = document.querySelector('meta[name="theme-color"]');
+        const fond = getComputedStyle(document.documentElement)
+          .getPropertyValue("--fond")
+          .trim();
+        if (meta && fond) meta.setAttribute("content", fond);
+      })();
+    </script>
+  </body>
+</html>

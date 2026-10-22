@@ -1,0 +1,122 @@
+---
+/**
+ * Pied de page — bande nocturne : `data-theme="nocturne"` rebascule les rôles
+ * de la charte pour toute la zone, comme la bande de contact qui la précède.
+ * Les classes restent celles du site, elles pointent sur les mêmes rôles.
+ */
+const currentYear = new Date().getFullYear();
+
+const columnTitleClass = "eyebrow mb-3 block";
+const linkClass =
+  "block text-sm text-grey hover:text-ink transition-colors py-1.5";
+---
+
+<footer data-theme="nocturne" class="bg-paper text-ink">
+  <div class="container-custom px-6 md:px-8 py-12 md:py-16 lg:py-20">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 lg:gap-x-14 gap-y-10 md:gap-y-12"
+    >
+      {/* Colonne 1 — Identité */}
+      <div>
+        <a
+          href="/"
+          class="inline-flex items-center gap-4 hover:opacity-90 transition-opacity mb-4"
+        >
+          <img
+            src="https://cdn.avqn.ch/logo/logo-black.svg"
+            alt="AVQN"
+            class="h-8 w-auto brightness-0 invert"
+          />
+          <span class="font-display text-2xl tracking-[0.18em]">AVQN</span>
+        </a>
+        <p class="font-serif text-lg italic text-ink mb-5">
+          Aussi vite que nécessaire
+        </p>
+        <p class="text-sm text-grey leading-relaxed">
+          Agents IA, automatisation<br />
+          &amp; formation pour les indépendants<br />
+          et les PME de Suisse romande.
+        </p>
+      </div>
+
+      {/* Colonne 2 — Offres */}
+      <div class="max-md:border-t max-md:border-divider max-md:pt-8">
+        <h3 class={columnTitleClass}>Offres</h3>
+        <nav class="flex flex-col">
+          <a href="/coaching-ia-independant-suisse" class={linkClass}
+            >Coaching IA pour indépendants</a
+          >
+          <a href="/formation-ia-entreprise-suisse" class={linkClass}
+            >Formation IA en entreprise</a
+          >
+          <a href="/expert-ia-suisse" class={linkClass}>CTO IA à la demande</a>
+          <a href="/bootcamp-ia-suisse" class={linkClass}>Bootcamp IA</a>
+          <a href="/services" class={linkClass}>Quelle offre pour vous</a>
+        </nav>
+      </div>
+
+      {/* Colonne 3 — Guides */}
+      <div class="max-md:border-t max-md:border-divider max-md:pt-8">
+        <h3 class={columnTitleClass}>Guides</h3>
+        <nav class="flex flex-col">
+          <a href="/claude-code-suisse" class={linkClass}>Claude Code</a>
+          <a href="/n8n-suisse" class={linkClass}>Guide n8n Suisse</a>
+          <a href="/agents-ia" class={linkClass}>Agents IA</a>
+          <a href="/n8n-suisse/claude-code-ou-n8n" class={linkClass}
+            >Claude Code ou n8n ?</a
+          >
+          <a href="/ia-lpd-suisse" class={linkClass}
+            >IA, LPD & données suisses</a
+          >
+          <a href="/consultant-ia-suisse-romande" class={linkClass}
+            >Consultant IA en Suisse romande</a
+          >
+          <a href="/ia-pour-independants" class={linkClass}
+            >L'IA pour les indépendants</a
+          >
+        </nav>
+      </div>
+
+      {/* Colonne 4 — AVQN */}
+      <div class="max-md:border-t max-md:border-divider max-md:pt-8">
+        <h3 class={columnTitleClass}>AVQN</h3>
+        <nav class="flex flex-col">
+          <a href="/a-propos" class={linkClass}>À propos</a>
+          <a href="/contact" class={linkClass}>Contact</a>
+          <a
+            href="https://www.linkedin.com/in/emmbernard/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={linkClass}
+          >
+            LinkedIn
+          </a>
+          <a href="mailto:hello@avqn.ch" class={linkClass}>hello@avqn.ch</a>
+        </nav>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 md:mt-16 pt-8 border-t border-divider flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[12px] text-grey"
+    >
+      <p class="order-2 sm:order-1">
+        © {currentYear} AVQN.CH — Tous droits réservés
+      </p>
+      <p class="order-1 sm:order-2 sm:text-right">
+        AVQN · C/O Emmanuel Bernard · 1006 Lausanne
+      </p>
+      {
+        /* Crédit exigé par la licence des icônes de la charte
+          (`apps/styleguide/public/doctrine/icones.md`). */
+      }
+      <p class="order-3 sm:text-right">
+        Icônes : Solar, par 480 Design (<a
+          href="https://creativecommons.org/licenses/by/4.0/"
+          target="_blank"
+          rel="noopener noreferrer license"
+          class="underline underline-offset-2 hover:text-ink">CC BY 4.0</a
+        >)
+      </p>
+    </div>
+  </div>
+</footer>

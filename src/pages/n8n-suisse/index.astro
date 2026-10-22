@@ -1,0 +1,533 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+
+const title = "n8n en Suisse romande : le guide complet pour PME | AVQN";
+const description =
+  "Tout n8n sur une page : définition, comparatif n8n vs Zapier/Make, hébergement en Suisse (LPD), méthode d'apprentissage et cas d'usage — par un expert qui le déploie en PME romandes.";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "n8n, c'est quoi en une phrase ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "n8n connecte vos outils et exécute automatiquement les tâches répétitives entre eux — sans que vous ayez à intervenir à chaque fois.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "n8n est-il adapté aux PME suisses ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui. C'est même l'un des outils les mieux adaptés : hébergement possible en Suisse, contrôle des données (LPD), prix maîtrisé et flexibilité pour coller aux vrais processus métier.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "n8n ou Zapier/Make : que choisir ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Besoin simple sans contrainte data : Zapier ou Make. Logique métier réelle, volume, conformité ou hébergement suisse obligatoire : n8n, sans discussion.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Combien de temps pour apprendre n8n ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Avec 2 à 4 heures par semaine sur un cas concret, la plupart des participants de mes bootcamps construisent leur premier workflow utile en moins de 10 heures.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Pourquoi héberger n8n en Suisse ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Pour garder le contrôle sur vos données, simplifier la conformité LPD, et renforcer la confiance de vos clients qui ont des exigences de souveraineté des données.",
+      },
+    },
+  ],
+};
+---
+
+<Layout title={title} description={description} structuredData={faqSchema}>
+  <PageHeader
+    title="Guide n8n en Suisse romande"
+    subtitle="n8n, comme je l'enseigne en bootcamp et le déploie chez mes clients : ce qu'il fait, ce qu'il ne fait pas et par où commencer."
+    breadcrumb={[{ label: "Guide n8n Suisse" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Qu'est-ce que n8n */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-12"
+      >
+        <div class="max-w-4xl space-y-5">
+          <h2 class="text-3xl md:text-4xl">Qu'est-ce que n8n ?</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            n8n connecte vos outils et exécute automatiquement les tâches qui se
+            répètent. Un lead entre dans un formulaire, la fiche CRM se crée
+            toute seule, le commercial reçoit une notification, et la séquence
+            de suivi se lance.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Vous le configurez une fois. Après, ça tourne — que vous soyez au
+            bureau, en réunion, ou en vacances. C'est la brique
+            <strong>automatisation</strong> de mon travail ; pour la brique
+            <a href="/agents-ia" class="font-bold underline">agents IA</a>,
+            voyez la page
+            <a href="/claude-code-suisse" class="font-bold underline"
+              >Claude Code</a
+            >.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Déclencheur</h3>
+            <p class="text-grey">
+              Ce qui lance le workflow : un formulaire soumis, un email reçu, un
+              nouveau paiement, une heure précise, un webhook.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Traitement</h3>
+            <p class="text-grey">
+              Ce qui se passe entre les deux : vérification, transformation des
+              données, décision conditionnelle, appel à une IA.
+            </p>
+          </div>
+          <div class="border border-divider rounded-md p-6">
+            <h3 class="text-xl mb-2">Action</h3>
+            <p class="text-grey">
+              Le résultat : CRM mis à jour, email envoyé, facture générée, Slack
+              notifié, feuille Google remplie.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Pourquoi n8n */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <h2 class="text-3xl md:text-4xl">Pourquoi utiliser n8n ?</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Dans les PME que je rencontre, des équipes compétentes passent trop
+            de temps à copier-coller des données entre outils. n8n prend ces
+            tâches répétitives en charge. Rien de magique, mais beaucoup moins
+            de temps perdu.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Les gains arrivent vite</h3>
+            <p class="text-grey">
+              Si on choisit bien le premier use case — fréquent, répétitif, à
+              impact visible — les résultats sont souvent perceptibles en 2 à 4
+              semaines. Pas en 6 mois.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Vos règles, pas celles du logiciel</h3>
+            <p class="text-grey">
+              Avec un outil grand public, vous adaptez vos processus à l'outil.
+              Avec n8n, c'est l'inverse : vous implémentez votre logique métier
+              réelle, pas une version simplifiée.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Ça tient en production</h3>
+            <p class="text-grey">
+              Conditions, reprises automatiques, gestion d'erreurs, alertes,
+              appels API : n8n gère les cas réels sans bricolage fragile.
+            </p>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Vos données restent en Suisse</h3>
+            <p class="text-grey">
+              n8n peut s'héberger sur votre infrastructure, en Suisse. Vos
+              données ne transitent pas chez un éditeur américain — un argument
+              concret pour vos clients et vos obligations de conformité.
+            </p>
+          </div>
+        </div>
+        <div class="max-w-4xl space-y-4">
+          <h3 class="text-2xl">Quand n8n n'est pas la bonne réponse</h3>
+          <p class="text-lg text-grey leading-relaxed">
+            Je le dis souvent en début de projet : "si le process est flou,
+            l'automatisation va juste accélérer le chaos." Si la tâche est rare,
+            instable, ou sans impact mesurable — stabilisez d'abord, automatisez
+            ensuite. Et si le besoin demande du jugement, du contexte et des
+            décisions, c'est un
+            <a href="/agents-ia" class="font-bold underline">agent IA</a> qu'il vous
+            faut, pas un workflow.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. n8n vs Zapier vs Make */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl">
+          <h2 class="text-3xl md:text-4xl mb-4">n8n vs Zapier vs Make</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            La vraie question n'est pas "quel est le meilleur ?" mais : quel
+            outil correspond à votre maturité, vos contraintes data, et la
+            complexité de vos workflows dans 12 mois ? Mon avis après avoir
+            utilisé les trois en conditions réelles :
+          </p>
+        </div>
+        <div class="overflow-x-auto border border-divider rounded-md">
+          <table class="w-full text-left text-sm md:text-base">
+            <thead class="bg-paper2 border-b border-divider">
+              <tr>
+                <th class="p-4 font-semibold">Critère</th>
+                <th class="p-4 font-semibold">n8n</th>
+                <th class="p-4 font-semibold">Zapier</th>
+                <th class="p-4 font-semibold">Make</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-divider">
+                <td class="p-4 font-bold">Prise en main initiale</td>
+                <td class="p-4">Quelques heures</td>
+                <td class="p-4">Très rapide</td>
+                <td class="p-4">Rapide</td>
+              </tr>
+              <tr class="border-b border-divider">
+                <td class="p-4 font-bold">Logique métier complexe</td>
+                <td class="p-4">Excellente</td>
+                <td class="p-4">Limitée</td>
+                <td class="p-4">Bonne</td>
+              </tr>
+              <tr class="border-b border-divider">
+                <td class="p-4 font-bold">Contrôle des données</td>
+                <td class="p-4">Total (self-host possible)</td>
+                <td class="p-4">Aucun</td>
+                <td class="p-4">Aucun</td>
+              </tr>
+              <tr class="border-b border-divider">
+                <td class="p-4 font-bold">Hébergement en Suisse</td>
+                <td class="p-4">Oui</td>
+                <td class="p-4">Non</td>
+                <td class="p-4">Non</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-bold">Coût quand le volume monte</td>
+                <td class="p-4">Maîtrisé</td>
+                <td class="p-4">Peut exploser</td>
+                <td class="p-4">Variable</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="max-w-4xl border border-divider rounded-md p-8">
+          <h3 class="text-2xl mb-4">Décision rapide</h3>
+          <ul class="space-y-3 text-lg text-grey">
+            <li class="flex gap-3">
+              <span class="font-semibold">→</span><span
+                >Besoin simple, test rapide, pas de contrainte data : Zapier ou
+                Make.</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="font-semibold">→</span><span
+                >Logique métier réelle, volume, conformité, évolutivité : n8n.</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="font-semibold">→</span><span
+                >Données sensibles ou hébergement suisse obligatoire : n8n, sans
+                discussion.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Héberger n8n en Suisse */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-4">
+          <h2 class="text-3xl md:text-4xl">
+            Héberger n8n en Suisse : sécurité et LPD
+          </h2>
+          <p class="text-lg text-grey leading-relaxed">
+            n8n est le centre nerveux de votre automatisation : il touche vos
+            données clients, votre CRM, vos emails, vos flux financiers.
+            Héberger en Suisse n'est pas qu'un argument commercial — c'est une
+            décision d'architecture qui simplifie votre gouvernance des données.
+            Mais attention : un audit LPD ne valide pas une adresse IP suisse,
+            il valide une gouvernance. J'ai détaillé le sujet dans
+            <a href="/ia-lpd-suisse" class="font-bold underline"
+              >IA, LPD et données suisses</a
+            >.
+          </p>
+        </div>
+        <div class="max-w-4xl border border-divider rounded-md p-8 bg-paper">
+          <h3 class="text-2xl mb-4">Ma checklist avant mise en production</h3>
+          <ul class="space-y-3 text-lg text-grey">
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Une restauration de sauvegarde a été effectuée et validée en
+                conditions réelles</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Des alertes existent pour chaque workflow critique (pas juste
+                les logs)</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Les credentials sont limités, documentés et tracés</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Chaque flux a un owner clairement identifié</span
+              >
+            </li>
+            <li class="flex gap-3">
+              <span class="text-swiss">✓</span><span
+                >Les environnements test et prod sont séparés</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. Apprendre n8n */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-4">
+          <h2 class="text-3xl md:text-4xl">Comment apprendre n8n</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Le piège numéro un, ce sont les tutos en boucle. On peut regarder
+            des vidéos pendant des heures sans jamais ouvrir n8n. En bootcamp,
+            on le lance dans les vingt premières minutes et on travaille sur un
+            vrai irritant de votre semaine.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            La progression réaliste : poser les bases (triggers, nœuds,
+            variables), construire un premier workflow qui tourne, le fiabiliser
+            (gestion d'erreurs, alertes), puis standardiser (nommage,
+            documentation). Avec 2 à 4 heures par semaine sur un cas concret, la
+            plupart des participants construisent leur premier workflow utile en
+            moins de 10 heures.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/bootcamp-ia-suisse"
+            class="inline-block px-6 py-4 rounded-md bg-swiss text-paper font-semibold text-sm hover:bg-swiss-dark transition-colors"
+          >
+            Formation IA & n8n
+          </a>
+          <a
+            href="/contact"
+            class="inline-block px-6 py-4 rounded-md border border-ink text-ink font-semibold text-sm hover:bg-ink hover:text-paper transition-colors"
+          >
+            S'inscrire au bootcamp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 6. Cas d'usage — ancre stable /n8n-suisse#cas-usage */}
+    <section
+      id="cas-usage"
+      class="border-b border-divider bg-paper2 scroll-mt-24"
+    >
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker mb-4 block">Ce que j'automatise</span>
+          <h2 class="text-3xl md:text-4xl">Ce que j'automatise avec n8n</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Les meilleurs cas d'usage ne sont pas les plus spectaculaires. Ce
+            sont ceux qui tournent tous les jours sans qu'on y pense. Je
+            commence par les tâches fréquentes, simples et visibles.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Voici les cinq terrains où les demandes reviennent le plus, chez les
+            indépendants comme dans les PME romandes. Des exemples, pas une
+            liste de références clients : le seul projet client documenté en
+            détail sur ce site est le
+            <a href="/expert-ia-suisse" class="font-bold underline"
+              >tableau de bord de Vetmint</a
+            >.
+          </p>
+        </div>
+
+        <div class="max-w-4xl border-t border-divider">
+          <div class="py-8 border-b border-divider space-y-4">
+            <h3 class="text-2xl">Prospection et suivi commercial</h3>
+            <p class="text-grey leading-relaxed">
+              Un nouveau contact arrive par le formulaire du site : enregistré
+              dans le CRM, analysé, classé selon vos critères. Vous êtes prévenu
+              tout de suite si c'est un dossier chaud. Le prospect, lui, a déjà
+              reçu une réponse pendant que vous étiez en rendez-vous.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Ensuite vient tout ce qu'on oublie : le devis envoyé il y a douze
+              jours sans réponse, le prospect qui s'est tu après deux échanges
+              prometteurs, le client qui n'a plus rien commandé depuis six mois.
+              Ces relances ne demandent aucune intelligence, juste d'être faites
+              systématiquement.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Le workflow surveille aussi les signaux qui comptent. Un prospect
+              qui revient trois fois sur votre page tarifs ne se découvre pas le
+              mois suivant dans un rapport.
+            </p>
+          </div>
+
+          <div class="py-8 border-b border-divider space-y-4">
+            <h3 class="text-2xl">Facturation, paiements et comptabilité</h3>
+            <p class="text-grey leading-relaxed">
+              Une prestation est marquée terminée dans votre outil de gestion :
+              la facture part, avec les bonnes lignes et les bonnes références.
+              Une facture dépasse son échéance : les rappels s'enchaînent
+              d'eux-mêmes, du plus courtois au plus ferme.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Côté comptabilité, deux choses. Rapprocher : les mouvements
+              bancaires sont confrontés à ce qui est enregistré, les écarts
+              remontent quand ils se produisent, pas à la clôture. Classer :
+              chaque dépense est analysée à réception et rangée dans la bonne
+              catégorie, justificatif attaché.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Le trimestre où vous remettez vos pièces à la fiduciaire, tout est
+              déjà collecté, classé et complet.
+            </p>
+          </div>
+
+          <div class="py-8 border-b border-divider space-y-4">
+            <h3 class="text-2xl">Emails, formulaires et demandes entrantes</h3>
+            <p class="text-grey leading-relaxed">
+              Une PME de dix personnes reçoit plus de sollicitations qu'elle ne
+              peut en trier. C'est là que n8n s'associe le mieux avec un modèle
+              d'IA : le workflow transporte, l'IA lit et comprend.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Chaque demande entrante est lue, son sujet et son urgence
+              identifiés, puis elle part vers la bonne personne. Un ticket
+              technique n'attend plus dans une boîte générique.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Les questions qui reviennent en boucle reçoivent une réponse
+              immédiate, tirée de votre documentation, avec passage à un humain
+              dès que la demande sort du cadre. Et les tickets qui traînent sont
+              détectés avant que le client ne s'énerve.
+            </p>
+          </div>
+
+          <div class="py-8 border-b border-divider space-y-4">
+            <h3 class="text-2xl">Reporting, alertes et veille</h3>
+            <p class="text-grey leading-relaxed">
+              Le chiffre d'affaires est dans la facturation, le pipeline dans le
+              CRM, la fréquentation dans les statistiques du site, le reste dans
+              un tableur. Personne n'a envie d'aller chercher tout ça chaque
+              semaine, donc personne ne le fait.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Un workflow consolide ces sources dans une vue unique, tenue à
+              jour en continu. Le rapport de la semaine est prêt le lundi matin,
+              pas préparé le lundi matin.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Plus utile encore que le rapport : l'alerte. Un indicateur qui
+              sort de sa plage habituelle vous prévient à ce moment-là. Une
+              baisse remarquée en fin de mois est une baisse qu'on a subie tout
+              le mois.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Même logique pour la veille : personne ne surveille cinquante
+              sources à la main sur la durée. Un résumé hebdomadaire, oui.
+            </p>
+          </div>
+
+          <div class="py-8 border-b border-divider space-y-4">
+            <h3 class="text-2xl">Onboarding, RH et moments de bascule</h3>
+            <p class="text-grey leading-relaxed">
+              Certains moments d'une entreprise déclenchent toujours la même
+              liste de choses à faire. Des candidats parfaits : la séquence est
+              connue d'avance et l'oublier coûte cher.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Un contrat est signé : la séquence d'accueil démarre, accès créés,
+              documents envoyés, premier rendez-vous proposé. Un collaborateur
+              arrive : ses comptes, ses outils et ses contacts sont prêts avant
+              son premier café.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Un collaborateur part, le cas qu'on néglige le plus : accès
+              révoqués le jour même, dossiers transférés, clôture administrative
+              lancée. Personne n'aime y penser, ce qui est exactement la raison
+              de l'automatiser.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Plus quotidien : les demandes de congé, où le solde se vérifie
+              tout seul. Et les comptes-rendus de réunion, distribués dans la
+              foulée plutôt qu'écrits le lendemain, ou jamais.
+            </p>
+          </div>
+
+          <div class="py-8 space-y-4">
+            <h3 class="text-2xl">Par où commencer chez vous</h3>
+            <p class="text-grey leading-relaxed">
+              Le premier workflow est le plus important : c'est lui qui décide
+              si l'équipe adhère. Un cas fréquent, répétitif, avec un résultat
+              visible par tout le monde. Le spectaculaire, on le garde pour plus
+              tard.
+            </p>
+            <p class="text-grey leading-relaxed">
+              Et si votre besoin demande du jugement plutôt qu'une séquence, la
+              réponse n'est pas un workflow. C'est le sujet du comparatif
+              ci-dessous.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/contact"
+            class="inline-block px-6 py-4 rounded-md bg-swiss text-paper font-semibold text-sm hover:bg-swiss-dark transition-colors"
+          >
+            Parler de votre projet
+          </a>
+          <a
+            href="/n8n-suisse/claude-code-ou-n8n"
+            class="inline-block px-6 py-4 rounded-md border border-ink text-ink font-semibold text-sm hover:bg-ink hover:text-paper transition-colors"
+          >
+            Claude Code ou n8n : quel outil pour quel besoin
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

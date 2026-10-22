@@ -1,0 +1,48 @@
+---
+/**
+ * Champ de texte court. Le `name` est la clé transmise telle quelle dans la
+ * soumission — ni le socle ni le serveur n'ont besoin de le connaître.
+ */
+import { CHAMP, LIBELLE } from "./classes";
+
+/** Types de saisie sur une ligne — le reste a son propre champ. */
+type TypeChamp = "text" | "email" | "tel" | "url" | "number" | "date";
+
+interface Props {
+  /** Nom du champ = clé de la soumission. */
+  name: string;
+  label: string;
+  /** Type HTML du contrôle. */
+  type?: TypeChamp;
+  autocomplete?: string;
+  placeholder?: string;
+  required?: boolean;
+  /** Identifiant HTML si le `name` ne suffit pas (deux formulaires par page). */
+  id?: string;
+}
+
+const {
+  name,
+  label,
+  type = "text",
+  autocomplete,
+  placeholder,
+  required = false,
+  id = name,
+} = Astro.props;
+---
+
+<div>
+  <label for={id} class={LIBELLE}
+    >{label}{required && <span class="text-swiss"> *</span>}</label
+  >
+  <input
+    type={type}
+    name={name}
+    id={id}
+    required={required}
+    autocomplete={autocomplete}
+    placeholder={placeholder}
+    class={CHAMP}
+  />
+</div>

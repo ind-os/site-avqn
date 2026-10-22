@@ -1,0 +1,438 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import TestimonialsSection from "../../components/TestimonialsSection.astro";
+import HomeCta from "../../components/HomeCta.astro";
+
+const title =
+  "Services IA en Suisse romande : coaching, formation, CTO IA | AVQN";
+const description =
+  "Trois façons de travailler avec moi, mises côte à côte : coaching individuel Claude Code, accompagnement d'équipe, CTO IA à la demande. Plus le bootcamp, en groupe.";
+
+const serviceStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "Services IA : coaching Claude Code, accompagnement d'équipe et CTO IA à la demande",
+  serviceType:
+    "Coaching Claude Code, accompagnement d'équipe, direction technique d'un projet IA et bootcamp",
+  description,
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Suisse romande" },
+    { "@type": "Country", name: "Suisse" },
+  ],
+  provider: {
+    "@type": "Organization",
+    name: "AVQN",
+    url: "https://www.avqn.ch",
+  },
+  offers: [
+    { "@type": "Offer", name: "Coaching individuel Claude Code" },
+    { "@type": "Offer", name: "Accompagnement d'équipe" },
+    { "@type": "Offer", name: "CTO IA à la demande" },
+    { "@type": "Offer", name: "Bootcamp IA" },
+  ],
+};
+
+// Les trois offres, telles qu'on les départage.
+const offres = [
+  {
+    nom: "Coaching individuel",
+    href: "/coaching-ia-independant-suisse",
+    ancre: "Voir le coaching",
+  },
+  {
+    nom: "Accompagnement d'équipe",
+    href: "/formation-ia-entreprise-suisse",
+    ancre: "Voir l'accompagnement d'équipe",
+  },
+  {
+    nom: "CTO IA à la demande",
+    href: "/expert-ia-suisse",
+    ancre: "Voir le CTO IA à la demande",
+  },
+];
+
+// Les critères qui départagent les trois. Une ligne = un critère.
+const criteres = [
+  {
+    critere: "Qui construit",
+    coaching: "Vous.",
+    equipe: "Votre équipe.",
+    cto: "Moi, avec vous en copilote.",
+  },
+  {
+    critere: "Vous êtes",
+    coaching:
+      "Indépendant, développeur ou dirigeant d'une petite structure, seul aux commandes.",
+    equipe:
+      "Une équipe de développement qui veut des pratiques communes plutôt que dix usages parallèles.",
+    cto: "Une direction qui lance un projet IA sans personne pour tenir la technique.",
+  },
+  {
+    critere: "Le format",
+    coaching:
+      "Trois séances de deux heures sur quatre à six semaines, à Lausanne ou en visio.",
+    equipe:
+      "Six semaines, quatre à six personnes, sur vos dépôts et votre backlog.",
+    cto: "Quatre semaines, de la première séance à la mise en ligne.",
+  },
+  {
+    critere: "Ce qui reste à la fin",
+    coaching:
+      "Votre autonomie : cadrer une demande, relire l'agent, mettre en ligne sans trembler.",
+    equipe:
+      "Une méthode d'équipe écrite : CLAUDE.md par dépôt, règle de revue, garde-fous automatiques.",
+    cto: "Un système en production à votre nom, documenté, et la formation pour le tenir.",
+  },
+  {
+    critere: "La techno",
+    coaching: "L'outil suit le besoin : Claude Code, n8n, souvent les deux.",
+    equipe: "L'outil suit le besoin : Claude Code, n8n, souvent les deux.",
+    cto: "L'outil suit le besoin : Claude Code, n8n, souvent les deux.",
+  },
+];
+
+const methode = [
+  {
+    titre: "On part de votre réalité.",
+    texte:
+      "Pas d'un modèle de processus, pas d'un cas fictif. Vos fichiers, vos clients, vos vraies journées.",
+  },
+  {
+    titre: "On vise l'autonomie.",
+    texte:
+      "L'objectif d'une mission est le moment où vous n'en avez plus besoin. Un prestataire qui vous rend captif se protège lui, pas vous.",
+  },
+  {
+    titre: "On travaille au forfait.",
+    texte:
+      "Le cadre et le prix sont posés après un premier échange. Vous savez ce que vous payez avant de commencer.",
+  },
+  {
+    titre: "On regarde les données avant de coder.",
+    texte:
+      "Hébergement en Suisse quand il le faut. Une réponse claire à « où vont mes données ».",
+  },
+];
+
+const limites = [
+  {
+    titre: "Remplacer vos équipes.",
+    texte:
+      "L'IA prend les tâches répétitives, elle ne prend pas les décisions. Une mission qui commence par « on va supprimer des postes » n'est pas une mission pour moi.",
+  },
+  {
+    titre: "Vendre de l'enthousiasme.",
+    texte:
+      "Il y a des cas où l'IA n'apporte rien. Je le dis dès le premier échange plutôt qu'à la facture.",
+  },
+  {
+    titre: "Livrer une boîte noire.",
+    texte:
+      "Tout ce que je construis reste chez vous, documenté, avec les accès pour le faire évoluer.",
+  },
+];
+---
+
+<Layout
+  title={title}
+  description={description}
+  structuredData={serviceStructuredData}
+  hideGlobalCta={true}
+>
+  <PageHeader
+    title="Choisir comment travailler avec moi"
+    subtitle="Trois formats, plus le bootcamp. Ils se départagent sur une seule question : qui construit, et ce qui doit rester chez vous à la fin."
+    breadcrumb={[{ label: "Services" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Voir le comparatif"
+    ctaSecondaryHref="#comparatif"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. La question */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">La bonne question</span>
+          <h2 class="text-3xl md:text-4xl">
+            La question n'est pas « quoi », c'est « comment »
+          </h2>
+          <p class="text-lg leading-relaxed text-grey">
+            L'outil se tranche en vingt minutes : construire ce qui n'existe pas
+            relève de <a href="/claude-code-suisse" class="font-bold underline"
+              >Claude Code</a
+            >, faire circuler de l'information entre des logiciels existants
+            relève de <a href="/n8n-suisse" class="font-bold underline">n8n</a>,
+            et beaucoup de projets prennent un peu des deux — c'est l'objet du
+            <a href="/n8n-suisse/claude-code-ou-n8n" class="font-bold underline"
+              >comparatif Claude Code ou n8n</a
+            >.
+          </p>
+          <p class="text-lg leading-relaxed text-grey">
+            Ce qui se décide vraiment, c'est la place que vous prenez : vous
+            construisez, votre équipe construit, ou je construis et je vous
+            passe les clés. Les trois formats ci-dessous répondent à cette
+            question-là.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Le comparateur */}
+    <section
+      id="comparatif"
+      class="border-b border-divider bg-paper2 scroll-mt-24"
+    >
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">Laquelle est pour vous</span>
+          <h2 class="text-3xl md:text-4xl">Les trois formats, côte à côte</h2>
+        </div>
+
+        {/* Mobile : une carte par critère. Desktop : le tableau. */}
+        <div class="space-y-4 md:hidden">
+          {
+            criteres.map((ligne) => (
+              <div class="border border-divider bg-paper rounded-md p-5">
+                <h3 class="text-lg mb-3">{ligne.critere}</h3>
+                <dl class="space-y-2 text-sm">
+                  {offres.map((offre, index) => (
+                    <div class="flex flex-col gap-0.5">
+                      <dt class="eyebrow normal-case tracking-normal text-ink">
+                        {offre.nom}
+                      </dt>
+                      <dd class="text-grey">
+                        {[ligne.coaching, ligne.equipe, ligne.cto][index]}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))
+          }
+        </div>
+
+        <div
+          class="hidden md:block overflow-x-auto border border-divider rounded-md bg-paper"
+        >
+          <table class="w-full text-left text-sm md:text-base">
+            <thead class="bg-paper2 border-b border-divider">
+              <tr>
+                <th class="p-4 font-semibold">Critère</th>
+                {
+                  offres.map((offre) => (
+                    <th class="p-4 font-semibold">{offre.nom}</th>
+                  ))
+                }
+              </tr>
+            </thead>
+            <tbody>
+              {
+                criteres.map((ligne, index) => (
+                  <tr
+                    class={
+                      index !== criteres.length - 1
+                        ? "border-b border-divider"
+                        : ""
+                    }
+                  >
+                    <td class="p-4 font-bold">{ligne.critere}</td>
+                    <td class="p-4">{ligne.coaching}</td>
+                    <td class="p-4">{ligne.equipe}</td>
+                    <td class="p-4">{ligne.cto}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+          {
+            offres.map((offre) => (
+              <a
+                href={offre.href}
+                class="flex items-center justify-between gap-4 rounded-md border border-divider bg-paper px-5 py-4 font-medium text-ink transition-colors duration-150 hover:border-ink"
+              >
+                {offre.ancre}
+                <span aria-hidden="true">→</span>
+              </a>
+            ))
+          }
+        </div>
+
+        <p class="max-w-4xl text-lg leading-relaxed text-grey">
+          Une ligne mérite d'être relue deux fois : ce qui reste à la fin. C'est
+          le critère qui fait basculer la plupart des décisions, alors qu'on le
+          regarde presque toujours en dernier.
+        </p>
+      </div>
+    </section>
+
+    {/* 3. Le bootcamp, quatrième voie */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <span class="kicker block">La quatrième voie</span>
+          <h2 class="text-3xl md:text-4xl">
+            Le bootcamp : en groupe, à date fixe
+          </h2>
+          <p class="text-lg leading-relaxed text-grey">
+            Les trois formats ci-dessus démarrent quand vous êtes prêt. Le
+            bootcamp, lui, est un format collectif : un petit groupe, un
+            programme sur quatre semaines, aucun prérequis technique, et vous
+            repartez avec vos propres automatisations qui tournent.
+          </p>
+          <p class="text-lg leading-relaxed text-grey">
+            La session 2027 est en préinscription : les dates partent d'abord
+            aux préinscrits.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a href="/bootcamp-ia-suisse" class="btn-primary px-6 py-4">
+            Voir le bootcamp IA
+          </a>
+          <a href="/n8n-suisse" class="btn-outline px-6 py-4">
+            Le guide n8n en Suisse romande
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 4. Le point de départ */}
+    <section class="border-b border-divider">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="grid grid-cols-1 md:grid-cols-12">
+          <div class="px-6 py-14 md:col-span-7 md:px-8 md:py-20">
+            <span class="kicker mb-6">Le point de départ</span>
+            <h2 class="type-display-section mb-8 text-3xl md:text-4xl">
+              On commence par un échange. Il ne sert pas à vous vendre quelque
+              chose
+            </h2>
+            <div class="max-w-2xl space-y-6 text-lg leading-relaxed text-grey">
+              <p>
+                Vous me racontez comment vous travaillez aujourd'hui, ce qui
+                vous prend du temps, ce que vous aimeriez construire. Je regarde
+                vos outils et je vous dis ce que je ferais à votre place.
+              </p>
+              <p>
+                Vous repartez avec une priorité et, s'il y en a une, l'offre qui
+                correspond. Il arrive aussi qu'il n'y ait rien à automatiser.
+              </p>
+            </div>
+            <a href="/contact" class="btn-primary mt-10 px-8 py-4">
+              Parler de votre projet
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div
+            class="border-t border-divider bg-paper2 px-6 py-12 md:col-span-5 md:border-l md:border-t-0 md:px-8 md:py-20"
+          >
+            <ul class="space-y-5">
+              {
+                [
+                  "Un entretien d'environ une heure, à Lausanne ou en visio",
+                  "Sans engagement",
+                  "Une recommandation écrite : par quoi commencer et pourquoi",
+                  "Y compris quand la réponse est « attendez »",
+                ].map((item) => (
+                  <li class="flex items-start gap-3 leading-relaxed text-grey">
+                    <span
+                      class="mt-2 h-1.5 w-1.5 shrink-0 bg-swiss"
+                      aria-hidden="true"
+                    />
+                    {item}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 5. La méthode */}
+    <section class="border-b border-divider bg-paper2">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="px-6 py-14 md:px-8 md:py-20">
+          <span class="kicker mb-6">La méthode</span>
+          <h2 class="type-display-section mb-6 text-3xl md:text-5xl">
+            Ce qui ne change pas d'un format à l'autre
+          </h2>
+
+          <div class="grid gap-0 border-t border-divider">
+            {
+              methode.map((point, index) => (
+                <div class="border-b border-divider py-8">
+                  <div class="flex gap-4 md:gap-6">
+                    <span class="kicker shrink-0 self-start pt-1 tabular-nums">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3 class="mb-2 text-lg md:text-xl">{point.titre}</h3>
+                      <p class="max-w-3xl leading-relaxed text-grey">
+                        {point.texte}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <p class="mt-8 text-grey">
+            Voir <a href="/ia-lpd-suisse" class="link-underline"
+              >l'approche LPD en détail</a
+            >.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 6. Ce que je ne fais pas */}
+    <section class="border-b border-divider">
+      <div class="container-custom border-divider xl:border-l xl:border-r">
+        <div class="px-6 py-14 md:px-8 md:py-20">
+          <span class="kicker mb-6">Cadrage</span>
+          <h2 class="type-display-section mb-10 text-3xl md:text-5xl">
+            Ce que je ne fais pas
+          </h2>
+          <div class="grid gap-6 md:grid-cols-3">
+            {
+              limites.map((limite) => (
+                <div class="rounded-md border border-divider p-6 md:p-8">
+                  <h3 class="mb-3 text-lg text-ink md:text-xl">
+                    {limite.titre}
+                  </h3>
+                  <p class="leading-relaxed text-grey">{limite.texte}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <TestimonialsSection
+      title="Ce qu'en disent ceux qui sont passés par là"
+      order={["ewen-kerharo", "serge-reymond", "olivier-dommange"]}
+    />
+
+    <HomeCta
+      kicker="Contact"
+      title="On commence par un entretien"
+      body="Racontez-moi où vous en êtes. Je vous dirai par quoi démarrer et lequel de ces formats correspond, s'il y en a un."
+      ctaText="Parler de votre projet"
+      ctaHref="/contact"
+    />
+  </main>
+</Layout>

@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Page introuvable - AVQN"
+  description="Cette page n'existe pas ou a été déplacée."
+  hideGlobalCta
+>
+  <main class="quadrillage min-h-[60vh] flex items-center">
+    {/* Deux groupes de deux cases, dans les marges hautes. */}
+    <i class="case" style="--x:0;--y:0;--c:var(--appoint-4)" aria-hidden="true"
+    ></i>
+    <i class="case" style="--x:1;--y:1;--c:var(--appoint-1)" aria-hidden="true"
+    ></i>
+    <i
+      class="case"
+      data-bord="droit"
+      style="--x:0;--y:1;--c:var(--appoint-2)"
+      aria-hidden="true"></i>
+    <i
+      class="case"
+      data-bord="droit"
+      style="--x:1;--y:0;--c:var(--appoint-5)"
+      aria-hidden="true"></i>
+    <div class="relative max-w-3xl mx-auto px-6 py-24 text-center">
+      <p class="kicker mb-6">Erreur 404</p>
+      <h1 class="type-display-mega text-ink mb-6">Page introuvable</h1>
+      <p class="text-lg text-grey mb-10">
+        Cette page n'existe pas ou a été déplacée. Le site a été réorganisé en
+        2026 — l'essentiel se retrouve depuis l'accueil.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/" class="btn-outline">Retour à l'accueil</a>
+        <a href="/services" class="btn-outline">Voir les services</a>
+        <a href="/contact" class="btn-outline">Contact</a>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,63 @@
+{
+  "name": "avqn-site",
+  "type": "module",
+  "version": "0.0.3",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:optimize:clean": "node scripts/optimize-images.mjs --delete-sources",
+    "images:list": "node scripts/optimize-images.mjs --list",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:all": "pnpm exec astro check && pnpm run lint && pnpm run format:check",
+    "check:all:build": "pnpm run check:all && pnpm run build",
+    "test:dist": "node scripts/smoke-dist.mjs",
+    "test:unit": "node --experimental-strip-types --test scripts/test-contact.mjs"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.4.5",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^5.16.4",
+    "embla-carousel-react": "^8.6.0",
+    "nodemailer": "^10.1.2",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "tailwindcss": "^4.1.17"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@eslint/js": "^9.39.4",
+    "@fontsource/geist-mono": "^5.2.8",
+    "@fontsource/geist-sans": "^5.2.5",
+    "@fontsource/instrument-serif": "^5.2.8",
+    "@iconify-json/solar": "^1.2.12",
+    "@types/nodemailer": "^8.0.2",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-astro": "^1.6.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2"
+  },
+  "packageManager": "pnpm@10.18.3",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
+}

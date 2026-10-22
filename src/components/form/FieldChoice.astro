@@ -1,0 +1,39 @@
+---
+/**
+ * Choix unique — un groupe de boutons radio dans un `fieldset`/`legend`.
+ * La valeur retenue part sous la clé `name`.
+ */
+import { CONTROLE, LEGENDE, OPTION } from "./classes";
+
+interface Props {
+  /** Nom du groupe = clé de la soumission. */
+  name: string;
+  legend: string;
+  options: { value: string; label: string }[];
+  required?: boolean;
+}
+
+const { name, legend, options, required = false } = Astro.props;
+---
+
+<fieldset>
+  <legend class={LEGENDE}
+    >{legend}{required && <span class="text-swiss"> *</span>}</legend
+  >
+  <div class="space-y-2">
+    {
+      options.map((option) => (
+        <label class={OPTION}>
+          <input
+            type="radio"
+            name={name}
+            value={option.value}
+            required={required}
+            class={CONTROLE}
+          />
+          <span>{option.label}</span>
+        </label>
+      ))
+    }
+  </div>
+</fieldset>

@@ -1,0 +1,135 @@
+---
+import ActionPageLayout from "../../components/ActionPageLayout.astro";
+import ActionForm from "../../components/form/ActionForm.astro";
+import FieldText from "../../components/form/FieldText.astro";
+import FieldTextarea from "../../components/form/FieldTextarea.astro";
+
+const suite = [
+  {
+    titre: "Je lis votre message.",
+    texte: "C'est moi qui lis, pas un formulaire de tri.",
+  },
+  {
+    titre: "On en parle,",
+    texte: "à Lausanne ou en visio.",
+  },
+  {
+    titre: "Vous repartez avec une recommandation.",
+    texte:
+      "Par quoi commencer et l'offre qui correspond, s'il y en a une. Il m'arrive de vous orienter ailleurs.",
+  },
+];
+
+const offres = [
+  {
+    label: "Le coaching IA pour indépendants",
+    href: "/coaching-ia-independant-suisse",
+  },
+  {
+    label: "La formation IA en entreprise",
+    href: "/formation-ia-entreprise-suisse",
+  },
+  { label: "Le CTO IA à la demande", href: "/expert-ia-suisse" },
+  {
+    label: "Les préinscriptions au bootcamp 2027",
+    href: "/bootcamp-ia-suisse",
+  },
+];
+---
+
+<ActionPageLayout
+  title="Parlons de votre projet"
+  description="Un projet, une question, ou juste l'envie de savoir si l'IA peut vous faire gagner du temps : laissez votre email, je vous réponds moi-même."
+  pageTitle="Contact : parler de votre projet d'automatisation | AVQN"
+  pageDescription="Une question, un projet, une envie d'automatiser ce qui vous prend du temps ? Laissez votre email, je vous réponds moi-même. À Lausanne, en Suisse romande ou en visio."
+  location="Lausanne et en visio partout ailleurs"
+>
+  <ActionForm
+    slot="formulaire"
+    source="avqn-contact"
+    buttonText="Envoyer ma demande"
+    successMessage="Message reçu. Je vous réponds depuis hello@avqn.ch, pensez à regarder vos indésirables."
+  >
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <FieldText name="firstName" label="Prénom" autocomplete="given-name" />
+      <FieldText name="lastName" label="Nom" autocomplete="family-name" />
+    </div>
+    <FieldText name="company" label="Entreprise" autocomplete="organization" />
+    <FieldText name="phone" label="Téléphone" type="tel" autocomplete="tel" />
+    <FieldText
+      name="website"
+      label="Site web"
+      type="url"
+      placeholder="https://"
+    />
+    <FieldText
+      name="linkedin"
+      label="LinkedIn"
+      type="url"
+      placeholder="https://"
+    />
+    <FieldTextarea
+      name="message"
+      label="Votre message"
+      placeholder="Ce sur quoi vous travaillez, ce qui coince, ce que vous aimeriez construire (facultatif)"
+    />
+  </ActionForm>
+
+  {/* Ce qui se passe ensuite */}
+  <section class="border-b border-divider">
+    <div class="container-custom border-divider xl:border-l xl:border-r">
+      <div class="px-6 py-12 md:px-8 md:py-16">
+        <span class="kicker mb-6">La suite</span>
+        <h2 class="type-display-section mb-10 text-3xl md:text-4xl">
+          Ce qui se passe après votre message
+        </h2>
+        <div class="grid gap-6 md:grid-cols-3">
+          {
+            suite.map((etape, index) => (
+              <div class="border-t border-divider pt-5">
+                <span class="kicker mb-4 tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p class="leading-relaxed text-grey">
+                  <span class="font-semibold text-ink">{etape.titre}</span>{" "}
+                  {etape.texte}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Les offres citées */}
+  <section class="border-b border-divider bg-paper2">
+    <div class="container-custom border-divider xl:border-l xl:border-r">
+      <div class="px-6 py-12 md:px-8 md:py-16">
+        <span class="kicker mb-6">
+          Vous savez déjà ce que vous cherchez ?
+        </span>
+        <ul class="grid gap-4 md:grid-cols-2">
+          {
+            offres.map((offre) => (
+              <li>
+                <a
+                  href={offre.href}
+                  class="flex items-center justify-between gap-4 rounded-md border border-divider bg-paper px-5 py-4 font-medium text-ink transition-colors duration-150 hover:border-ink"
+                >
+                  {offre.label}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 text-grey">
+          Vous hésitez&nbsp;? <a href="/services" class="link-underline"
+            >Les formats côte à côte</a
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+</ActionPageLayout>

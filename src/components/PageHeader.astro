@@ -1,0 +1,212 @@
+---
+interface Props {
+  title: string;
+  /** Classes supplémentaires sur le H1 (largeur, marges) — la taille vient de l'échelle. */
+  titleClass?: string;
+  subtitle: string;
+  breadcrumb?: {
+    label: string;
+    href?: string;
+  }[];
+  ctaText?: string;
+  ctaHref?: string;
+  ctaSecondaryText?: string;
+  ctaSecondaryHref?: string;
+  /** Image de fond pleine largeur (ex. page À propos). Filigrane + texte clair. */
+  heroImage?: string;
+  heroImageAlt?: string;
+}
+
+const {
+  title,
+  titleClass = "",
+  subtitle,
+  breadcrumb,
+  ctaText,
+  ctaHref,
+  ctaSecondaryText,
+  ctaSecondaryHref,
+  heroImage,
+  heroImageAlt = "",
+} = Astro.props;
+
+const hasHero = Boolean(heroImage);
+const baseUrl = Astro.site ?? Astro.url.origin;
+const currentUrl = new URL(Astro.url.pathname, baseUrl).href;
+const breadcrumbJsonLd =
+  breadcrumb && breadcrumb.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Accueil",
+            item: new URL("/", baseUrl).href,
+          },
+          ...breadcrumb.map((item, index) => ({
+            "@type": "ListItem",
+            position: index + 2,
+            name: item.label,
+            item: item.href ? new URL(item.href, baseUrl).href : currentUrl,
+          })),
+        ],
+      }
+    : null;
+---
+
+{
+  breadcrumbJsonLd && (
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(breadcrumbJsonLd)}
+      is:inline
+    />
+  )
+}
+
+<section
+  class:list={[
+    "border-t border-b border-divider relative overflow-hidden",
+    /* Le quadrillage habille l'entrée de page ; sous une photo, il n'a pas lieu d'être. */
+    !hasHero && "quadrillage",
+    /* Bandeau photo : même ancrage haut du texte que les pages sans image */
+    hasHero && "min-h-[48vh] md:min-h-[52vh]",
+  ]}
+>
+  {
+    /* Un groupe de deux cases dans la bande du haut, à droite : le fil d'Ariane
+       tient le coin gauche, et le titre commence sous la première rangée. */
+    !hasHero && (
+      <>
+        <i
+          class="case"
+          data-bord="droit"
+          style="--x:0;--y:0;--c:var(--appoint-3)"
+          aria-hidden="true"
+        />
+        <i
+          class="case"
+          data-bord="droit"
+          style="--x:1;--y:0;--c:var(--appoint-1)"
+          aria-hidden="true"
+        />
+      </>
+    )
+  }
+  {
+    hasHero && (
+      <>
+        <img
+          src={heroImage}
+          alt={heroImageAlt}
+          class="absolute inset-0 h-full w-full object-cover object-center"
+        />
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-ink/88 via-ink/55 to-ink/25 md:to-ink/15"
+          aria-hidden="true"
+        />
+      </>
+    )
+  }
+  <div
+    class:list={[
+      "container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 pt-16 md:pt-20 pb-12 relative z-10",
+    ]}
+  >
+    {
+      breadcrumb && (
+        <nav class="absolute top-6 md:top-8 left-6 md:left-8 z-20 text-sm">
+          <ol class="flex flex-wrap items-center gap-2">
+            {breadcrumb.map((item, index) => (
+              <li class="flex items-center gap-2">
+                {index > 0 && (
+                  <span class:list={[hasHero ? "text-paper/45" : "text-grey"]}>
+                    /
+                  </span>
+                )}
+                {item.href ? (
+                  <a
+                    href={item.href}
+                    class:list={[
+                      "transition-colors",
+                      hasHero
+                        ? "text-paper/75 hover:text-paper"
+                        : "text-grey hover:text-ink",
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <span
+                    class:list={[
+                      "font-semibold",
+                      hasHero ? "text-paper" : "text-ink",
+                    ]}
+                  >
+                    {item.label}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+    <div class="w-full">
+      <h1
+        class:list={[
+          "type-display-mega mb-6",
+          titleClass,
+          hasHero && "text-paper",
+        ]}
+        set:html={title}
+      />
+      <p
+        class:list={[
+          "text-lg md:text-2xl font-medium leading-relaxed max-w-4xl text-pretty",
+          hasHero ? "text-paper/90" : "text-grey",
+          (ctaText && ctaHref) || (ctaSecondaryText && ctaSecondaryHref)
+            ? "mb-8"
+            : "",
+        ]}
+      >
+        {subtitle}
+      </p>
+      <div class="flex flex-wrap gap-4">
+        {
+          ctaText && ctaHref && (
+            <a
+              href={ctaHref}
+              class:list={[
+                "inline-flex items-center gap-2 rounded-md border px-8 py-4 text-sm font-semibold transition-colors duration-150",
+                hasHero
+                  ? "border-transparent bg-paper text-ink hover:bg-paper2"
+                  : "border-transparent bg-swiss text-paper hover:bg-swiss-dark",
+              ]}
+            >
+              {ctaText}
+              <span aria-hidden="true">→</span>
+            </a>
+          )
+        }
+        {
+          ctaSecondaryText && ctaSecondaryHref && (
+            <a
+              href={ctaSecondaryHref}
+              class:list={[
+                "inline-flex items-center rounded-md border px-8 py-4 text-sm font-semibold transition-colors duration-150",
+                hasHero
+                  ? "border-paper text-paper hover:bg-paper hover:text-ink"
+                  : "border-ink text-ink hover:bg-ink/[0.06]",
+              ]}
+            >
+              {ctaSecondaryText}
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

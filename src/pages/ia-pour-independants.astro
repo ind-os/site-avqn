@@ -1,0 +1,174 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+
+const title = "IA pour indépendants : gagnez des heures chaque semaine | AVQN";
+const description =
+  "Vous êtes indépendant·e en Suisse romande ? Admin, prospection, outils sur mesure : ce que l'IA, Claude Code et les agents peuvent prendre en charge quand chaque heure compte.";
+---
+
+<Layout title={title} description={description}>
+  <PageHeader
+    title="L'IA pour les indépendants"
+    subtitle="Vous êtes seul·e à bord et chaque heure compte. L'administratif, la prospection et les outils qui vous manquent : c'est là que l'IA rend le plus de service."
+    breadcrumb={[{ label: "IA pour indépendants" }]}
+    ctaText="Parler de votre projet"
+    ctaHref="/contact"
+    ctaSecondaryText="Le coaching Claude Code"
+    ctaSecondaryHref="/coaching-ia-independant-suisse"
+  />
+
+  <main class="min-h-screen">
+    {/* 1. Le problème */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-10"
+      >
+        <div class="max-w-4xl space-y-5">
+          <h2 class="text-3xl md:text-4xl">Le vrai coût, c'est votre temps</h2>
+          <p class="text-lg text-grey leading-relaxed">
+            Chaque heure passée sur la facturation, les relances ou la saisie
+            administrative est une heure qui n'est ni facturée, ni passée à
+            développer l'activité. Les agences IA visent les PME de 10 à 50
+            personnes ; je travaille d'abord avec celles et ceux qui font tout,
+            tout seuls.
+          </p>
+          <p class="text-lg text-grey leading-relaxed">
+            Je suis indépendant moi-même : mon entreprise tourne sur les agents
+            IA et les automatisations que je construis.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {/* 2. Cas d'usage solo */}
+    <section class="border-b border-divider bg-paper2">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20"
+      >
+        <h2 class="text-3xl md:text-4xl mb-10">
+          Ce que l'IA peut prendre en charge chez vous
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Facturation & relances</h3>
+            <p class="text-grey mb-4">
+              Facture envoyée dès la prestation terminée, rappels progressifs
+              pour les impayés, justificatifs classés pour la fiduciaire.
+            </p>
+            <a
+              href="/n8n-suisse#cas-usage"
+              class="text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              Ce que j'automatise avec n8n →
+            </a>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Prospection & suivi</h3>
+            <p class="text-grey mb-4">
+              Un agent IA qualifie chaque demande entrante, relance les devis
+              sans réponse et les prospects silencieux, au bon moment.
+            </p>
+            <a
+              href="/agents-ia"
+              class="text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              Ce que je construis comme agents →
+            </a>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Communication</h3>
+            <p class="text-grey mb-4">
+              Résumé matinal de vos emails importants, réponses aux formulaires
+              de contact, email complet rédigé depuis une note vocale.
+            </p>
+            <a
+              href="/n8n-suisse#cas-usage"
+              class="text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              Ce que j'automatise avec n8n →
+            </a>
+          </div>
+          <div class="border border-divider bg-paper2 rounded-md p-6">
+            <h3 class="text-xl mb-2">Votre outil, construit par vous</h3>
+            <p class="text-grey mb-4">
+              Le tableau de bord ou l'outil métier qui vous manque, construit
+              avec Claude Code en quelques semaines. Et que vous savez faire
+              évoluer seul.
+            </p>
+            <a
+              href="/claude-code-suisse"
+              class="text-sm font-semibold border-b border-ink pb-1 hover:text-swiss hover:border-swiss transition-colors"
+            >
+              Découvrir Claude Code →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 3. Comment ça démarre */}
+    <section class="border-b border-divider">
+      <div
+        class="container-custom border-divider xl:border-l xl:border-r px-6 md:px-8 py-14 md:py-20 space-y-8"
+      >
+        <div class="max-w-4xl space-y-5">
+          <h2 class="text-3xl md:text-4xl">Comment ça démarre, concrètement</h2>
+          <ol class="space-y-4 text-lg text-grey">
+            <li class="flex gap-4">
+              <span class="font-semibold text-2xl">1.</span><span
+                ><strong>Un premier échange</strong> : on liste ce qui vous prend
+                du temps chaque semaine, on identifie les 2-3 actions à plus fort
+                impact.</span
+              >
+            </li>
+            <li class="flex gap-4">
+              <span class="font-semibold text-2xl">2.</span><span
+                ><strong>Un premier périmètre réduit</strong> : une automatisation
+                ou un agent IA qui tourne en quelques semaines, pas un chantier de
+                six mois.</span
+              >
+            </li>
+            <li class="flex gap-4">
+              <span class="font-semibold text-2xl">3.</span><span
+                ><strong>L'autonomie</strong> : des outils que vous maîtrisez, hébergés
+                en Suisse, que vous faites évoluer sans moi.</span
+              >
+            </li>
+          </ol>
+        </div>
+        <div class="max-w-4xl space-y-5">
+          <p class="text-lg text-grey leading-relaxed">
+            Deux chemins, selon le temps que vous voulez y mettre : apprendre à
+            construire vos outils vous-même, en tête-à-tête sur vos vrais
+            projets — c'est le
+            <a
+              href="/coaching-ia-independant-suisse"
+              class="font-bold underline">coaching IA pour indépendants</a
+            > ; ou me confier le projet et récupérer un système en production à votre
+            nom, c'est le
+            <a href="/expert-ia-suisse" class="font-bold underline"
+              >CTO IA à la demande</a
+            >. <a href="/services" class="font-bold underline"
+              >Les formats côte à côte</a
+            > si vous hésitez.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <a
+            href="/contact"
+            class="inline-block px-8 py-4 rounded-md bg-swiss text-paper font-semibold text-sm hover:bg-swiss-dark transition-colors"
+          >
+            Parler de votre projet
+          </a>
+          <a
+            href="/coaching-ia-independant-suisse"
+            class="inline-block px-8 py-4 rounded-md border border-ink text-ink font-semibold text-sm hover:bg-ink hover:text-paper transition-colors"
+          >
+            Voir le coaching
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
