@@ -1,0 +1,101 @@
+# Publie le site à chaque poussée sur main :
+#   1. construit l'image par le Dockerfile, avec GIT_SHA au commit, et la pousse
+#      sur ghcr.io/<compte>/<dépôt>, étiquetée `main` et par le commit ;
+#   2. si le site est installé sur un serveur (les secrets REDEPLOIEMENT_ADRESSE
+#      et REDEPLOIEMENT_JETON existent), demande au serveur de reprendre
+#      l'image, puis attend que la sonde du site en ligne (variable SITE_ADRESSE)
+#      rende ce commit ; rouge après dix minutes. Sans ces secrets, rien n'est
+#      publié, et le résumé le dit.
+name: Publier
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+# Les poussées passent l'une après l'autre ; aucune n'est annulée en cours.
+concurrency:
+  group: publier
+  cancel-in-progress: false
+
+jobs:
+  publier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - id: image
+        name: Nommer l'image
+        run: echo "nom=ghcr.io/${GITHUB_REPOSITORY,,}" >>"$GITHUB_OUTPUT"
+
+      - name: Se connecter au registre
+        env:
+          JETON: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$JETON" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+
+      - name: Construire l'image
+        env:
+          IMAGE: ${{ steps.image.outputs.nom }}
+        run: |
+          docker build \
+            --build-arg GIT_SHA="$GITHUB_SHA" \
+            --label org.opencontainers.image.source="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" \
+            --label org.opencontainers.image.revision="$GITHUB_SHA" \
+            --tag "$IMAGE:$GITHUB_SHA" \
+            --tag "$IMAGE:main" \
+            .
+
+      - name: Pousser l'image
+        env:
+          IMAGE: ${{ steps.image.outputs.nom }}
+        run: |
+          docker push "$IMAGE:$GITHUB_SHA"
+          docker push "$IMAGE:main"
+          echo "Image : \`$IMAGE:main\` (\`$IMAGE:$GITHUB_SHA\`)" >>"$GITHUB_STEP_SUMMARY"
+
+      - name: Publier sur le serveur
+        env:
+          ADRESSE: ${{ secrets.REDEPLOIEMENT_ADRESSE }}
+          JETON: ${{ secrets.REDEPLOIEMENT_JETON }}
+          SITE: ${{ vars.SITE_ADRESSE }}
+        run: |
+          if [ -z "$ADRESSE" ] && [ -z "$JETON" ]; then
+            echo "Rien n'est publié : le site n'est installé sur aucun serveur (les secrets REDEPLOIEMENT_ADRESSE et REDEPLOIEMENT_JETON manquent)." >>"$GITHUB_STEP_SUMMARY"
+            echo "::notice::Rien n'est publié : le site n'est installé sur aucun serveur."
+            exit 0
+          fi
+          if [ -z "$ADRESSE" ] || [ -z "$JETON" ] || [ -z "$SITE" ]; then
+            echo "::error::Il manque REDEPLOIEMENT_ADRESSE, REDEPLOIEMENT_JETON (secrets) ou SITE_ADRESSE (variable du dépôt)."
+            exit 1
+          fi
+
+          code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 -X POST \
+            -H "Authorization: Bearer $JETON" "$ADRESSE" || true)"
+          case "$code" in
+            2??) echo "Le serveur reprend l'image (HTTP $code)." ;;
+            *) echo "::error::Le serveur a refusé de reprendre l'image (HTTP $code)."; exit 1 ;;
+          esac
+
+          sonde="${SITE%/}/healthz.json"
+          fin=$(( $(date +%s) + 600 ))
+          while [ "$(date +%s)" -lt "$fin" ]; do
+            sha="$(curl -s --max-time 10 "$sonde" | jq -r '.sha // empty' 2>/dev/null || true)"
+            if [ "$sha" = "$GITHUB_SHA" ]; then
+              echo "Publié : ${SITE%/} rend le commit \`$GITHUB_SHA\`." >>"$GITHUB_STEP_SUMMARY"
+              echo "Publié : ${SITE%/} rend le commit $GITHUB_SHA."
+              exit 0
+            fi
+            echo "En attente : la sonde rend « ${sha:-rien} »."
+            sleep 10
+          done
+          echo "Pas publié : après dix minutes, ${SITE%/} ne rend pas le commit \`$GITHUB_SHA\`." >>"$GITHUB_STEP_SUMMARY"
+          echo "::error::Après dix minutes, ${SITE%/} ne rend pas le commit $GITHUB_SHA."
+          exit 1

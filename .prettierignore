@@ -6,5 +6,8 @@ pnpm-lock.yaml
 .astro
 plan-page-*.md
 
+# CLAUDE.md garde la forme du modèle de site d'Indos : Prettier en casserait les commandes dans les listes.
+CLAUDE.md
+
 # Copies de la charte (apps/styleguide) — on ne les édite pas, on les recopie.
 src/styles/charte/
